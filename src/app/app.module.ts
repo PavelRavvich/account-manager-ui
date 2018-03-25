@@ -3,7 +3,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
-import {MaterialModule} from './material.module';
+import {SharedModule} from './shared/common.module';
+import {AuthModule} from './auth/auth.module';
+import {AuthRoutingModule} from './auth/auth-routing.module';
+import {AuthService} from './shared/auth.service';
 
 
 @NgModule({
@@ -13,9 +16,11 @@ import {MaterialModule} from './material.module';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    MaterialModule
+    SharedModule,
+    AuthModule,
+    AuthRoutingModule
   ],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

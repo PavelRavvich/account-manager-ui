@@ -1,0 +1,47 @@
+<div class="signin-content">
+  <mat-card>
+    <mat-card-content>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <h3>Please enter you're personal information</h3>
+        <mat-input-container class="full-width-input">
+          <input matInput placeholder="Username"
+                 formControlName="username" required>
+          <mat-error *ngIf="isFieldInvalid('username')">
+            Please inform your user name. Minimum 5 symbol.
+          </mat-error>
+        </mat-input-container>
+
+        <mat-input-container class="full-width-input">
+          <input matInput placeholder="Email"
+                 formControlName="email" required email>
+          <mat-error *ngIf="isFieldInvalid('email')">
+            Please inform your Email
+          </mat-error>
+        </mat-input-container>
+
+        <mat-input-container class="full-width-input">
+          <input matInput type="password" placeholder="Create new password"
+                 formControlName="password" required>
+          <mat-error *ngIf="isFieldInvalid('password')">
+            Please inform your password. Minimum 5 symbol.
+          </mat-error>
+        </mat-input-container>
+
+        <mat-input-container class="full-width-input">
+          <input matInput type="password" placeholder="Repeat you're password"
+                 formControlName="dpassword" required>
+          <mat-error *ngIf="isFieldInvalid('dpassword')">
+            Passwords do not match
+          </mat-error>
+        </mat-input-container>
+
+        <button mat-raised-button color="primary" type="submit">Register</button>
+
+      </form>
+      <br>
+      <div>
+        <a class="small-text" [routerLink]="'/login'">Already have account? Sign In.</a>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
