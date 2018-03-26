@@ -10,6 +10,8 @@ import {Vds} from '../shared/model/vds.model';
 export class VdsListComponent implements AfterViewInit {
 
   displayedColumns = ['id', 'ip', 'password', 'startDate', 'endDate', 'detail'];
+
+  // Custom filter example: https://plnkr.co/edit/oQOYQgW0vCx8tfAgb1w9?p=preview
   dataSource: MatTableDataSource<Vds>;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
