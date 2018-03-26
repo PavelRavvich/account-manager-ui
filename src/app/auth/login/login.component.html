@@ -4,10 +4,10 @@
       <form [formGroup]="form" (ngSubmit)="onSubmit()">
         <h3>Please login to continue</h3>
         <mat-input-container class="full-width-input">
-          <input matInput placeholder="Username"
-                 formControlName="userName" required>
-          <mat-error *ngIf="isFieldInvalid('userName')">
-            Please inform your user name. Minimum 5 symbol.
+          <input matInput placeholder="Email"
+                 formControlName="email" required>
+          <mat-error *ngIf="isFieldInvalid('email')">
+            This is not Email.
           </mat-error>
         </mat-input-container>
         <mat-input-container class="full-width-input">
@@ -19,6 +19,10 @@
         </mat-input-container>
         <button mat-raised-button color="primary" type="submit">Login</button>
 
+        <br>
+        <span *ngIf="userNotFound">
+          <mat-error>User not found.</mat-error>
+        </span>
       </form>
       <br>
       <div>

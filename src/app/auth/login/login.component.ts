@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {AuthService} from '../../shared/auth.service';
+import {AuthService} from '../../shared/services/auth.service';
+import {UserService} from '../../shared/services/user.service';
+import {User} from '../../shared/model/user.model';
 
 @Component({
   selector: 'am-login',
@@ -9,34 +11,34 @@ import {AuthService} from '../../shared/auth.service';
 })
 export class LoginComponent implements OnInit {
 
-  form: FormGroup;                    // {1}
-  private formSubmitAttempt: boolean; // {2}
-  password: string;
+  form: FormGroup;
+  userNotFound = false;
 
-  constructor(
-    private fb: FormBuilder,         // {3}
-    private authService: AuthService // {4}
-  ) {}
+  constructor(private fb: FormBuilder,
+              private authService: AuthService,
+              private userService: UserService) {
+  }
 
   ngOnInit() {
-    this.form = this.fb.group({     // {5}
-      userName: ['', [Validators.required, Validators.minLength(5)]],
+    this.form = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(5)]]
     });
   }
 
-  isFieldInvalid(field: string) { // {6}
-    return (
-      (!this.form.get(field).valid && this.form.get(field).touched) ||
-      (this.form.get(field).untouched && this.formSubmitAttempt)
-    );
+  isFieldInvalid(field: string) {
+    return !this.form.get(field).valid && this.form.get(field).touched;
   }
 
   onSubmit() {
-    if (this.form.valid) {
-      console.log(this.form.value);
-      this.authService.login(this.form.value); // {7}
-    }
-    this.formSubmitAttempt = true;             // {8}
+    const formData = this.form.value;
+    this.userService.getUserByEmail(formData.email)
+      .subscribe((user: User) => {
+        if (user !== undefined && user.password === formData.password) {
+          this.authService.login(this.form.value);
+        } else {
+          this.userNotFound = true;
+        }
+      });
   }
 }
