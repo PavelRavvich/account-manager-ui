@@ -2,7 +2,7 @@ import {PreloadAllModules, RouterModule, Routes} from '@angular/router';
 import {NgModule} from '@angular/core';
 
 const  routes: Routes = [
-  {path: 'system', loadChildren: './system/system.module#SystemModule'}
+  {path: '', redirectTo: 'vds-list', pathMatch: 'full'}
 ];
 
 @NgModule({

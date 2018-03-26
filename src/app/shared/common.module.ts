@@ -6,8 +6,8 @@ import {
   MatFormFieldModule,
   MatIconModule,
   MatInputModule,
-  MatMenuModule, MatNativeDateModule,
-  MatSidenavModule,
+  MatMenuModule, MatNativeDateModule, MatPaginatorModule,
+  MatSidenavModule, MatTableModule,
   MatTooltipModule
 } from '@angular/material';
 import {MatToolbarModule} from '@angular/material/toolbar';
@@ -28,7 +28,9 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
     MatMenuModule,
     MatFormFieldModule,
     MatTooltipModule,
-    MatIconModule
+    MatIconModule,
+    MatTableModule,
+    MatPaginatorModule
   ],
   exports: [
     CommonModule,
@@ -43,7 +45,9 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
     MatNativeDateModule,
     MatFormFieldModule,
     MatTooltipModule,
-    MatIconModule
+    MatIconModule,
+    MatTableModule,
+    MatPaginatorModule
   ]
 })
 export class SharedModule {

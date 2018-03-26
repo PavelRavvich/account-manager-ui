@@ -9,7 +9,7 @@ const routes: Routes = [
   {
     path: '',
     component: SystemComponent,
-    // canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
     children: [
       {path: 'vds-list', component: VdsListComponent},
       {path: 'phone-list', component: PhonesListComponent}
