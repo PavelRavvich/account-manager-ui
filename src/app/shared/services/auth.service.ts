@@ -5,23 +5,24 @@ import {User} from '../model/user.model';
 
 @Injectable()
 export class AuthService {
-  private loggedIn = new BehaviorSubject<boolean>(false);
+
+  private loggedIn = false;
 
   get isLoggedIn() {
-    return this.loggedIn.asObservable();
+    return this.loggedIn;
   }
 
   constructor(private router: Router) {
   }
 
   login(user: User) {
-    this.loggedIn.next(true);
+    this.loggedIn = true;
     window.localStorage.setItem('user', JSON.stringify(user));
-    this.router.navigate(['/']);
+    this.router.navigate(['/vds-list']);
   }
 
   logout() {
-    this.loggedIn.next(false);
+    this.loggedIn = false;
     window.localStorage.clear();
     this.router.navigate(['/login']);
   }
