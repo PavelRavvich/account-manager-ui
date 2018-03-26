@@ -9,45 +9,28 @@ import {AuthService} from '../../shared/auth.service';
 })
 export class RegistrationComponent implements OnInit {
 
-  private formSubmitAttempt: boolean; // {2}
-  form: FormGroup;                    // {1}
+  passwordIsMatch = true;
 
-  constructor(private fb: FormBuilder,         // {3}
-              private authService: AuthService // {4}
-  ) {
+  form: FormGroup;
+
+  constructor(private fb: FormBuilder,
+              private authService: AuthService) {
   }
 
   ngOnInit() {
-    console.log('!!!!!!!!');
-    this.form = this.fb.group({     // {5}
+    this.form = this.fb.group({
       username: ['', [Validators.required, Validators.minLength(5)]],
+      email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(5)]],
-      dpassword: ['', [Validators.required, this.validateMatchPasswords.bind(this)]],
-      email: ['', [Validators.required, Validators.email]]
+      dpassword: ['', [Validators.required, Validators.minLength(5)]]
     });
   }
 
-  validateMatchPasswords(control: FormControl) {
-    // const err = this.form.get('password').value === this.form.get('dpassword').value;
-    return {
-      error: false
-    };
-  }
-
   onSubmit() {
-
+    this.passwordIsMatch = this.form.get('password').value === this.form.get('dpassword').value;
   }
 
-  isFieldInvalid(field: string) { // {6}
-    if (field === 'dpassword') {
-      return (!this.form.get(field).valid && this.form.get(field).touched) ||
-        (this.form.get(field).untouched && this.formSubmitAttempt) ||
-        (this.form.get('dpassword') !== this.form.get('password'));
-    }
-
-    return (
-      (!this.form.get(field).valid && this.form.get(field).touched) ||
-      (this.form.get(field).untouched && this.formSubmitAttempt)
-    );
+  isFieldInvalid(field: string) {
+    return !this.form.get(field).valid && this.form.get(field).touched;
   }
 }

@@ -31,11 +31,16 @@
           <input matInput type="password" placeholder="Repeat you're password"
                  formControlName="dpassword" required>
           <mat-error *ngIf="isFieldInvalid('dpassword')">
-            Passwords do not match
+            Please inform your password. Minimum 5 symbol.
           </mat-error>
         </mat-input-container>
 
         <button mat-raised-button color="primary" type="submit">Register</button>
+
+        <br>
+        <span *ngIf="!passwordIsMatch">
+          <mat-error>Passwords not match</mat-error>
+          </span>
 
       </form>
       <br>
