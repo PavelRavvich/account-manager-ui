@@ -18,11 +18,17 @@ export class VdsListComponent implements OnInit {
     'endDate',
     'detail'
   ];
-  dataSource: MatTableDataSource<Vds>;
+  dataSource: MatTableDataSource<Vds> = new MatTableDataSource([]);
   filterForm: FormGroup;
-  dataIsLoded = false;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  dataIsLoaded = false;
+
+  paginator: MatPaginator;
+
+  @ViewChild(MatPaginator)
+  set appBacon(paginator: MatPaginator) {
+    this.paginator = paginator;
+    this.dataSource.paginator = this.paginator;
+  }
 
   constructor(private vdsService: VdsService) {
   }
@@ -37,9 +43,7 @@ export class VdsListComponent implements OnInit {
 
     this.vdsService.getVds().subscribe((vds: Vds[]) => {
       this.dataSource = new MatTableDataSource(vds);
-      this.dataIsLoded = true;
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
+      this.dataIsLoaded = true;
     });
   }
 
