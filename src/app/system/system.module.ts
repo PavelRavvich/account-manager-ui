@@ -6,6 +6,7 @@ import {CommonModule} from '@angular/common';
 import { SystemComponent } from './system.component';
 import { VdsListComponent } from './vds-list/vds-list.component';
 import { PhonesListComponent } from './phones-list/phones-list.component';
+import {VdsService} from './shared/services/vds.service';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,9 @@ import { PhonesListComponent } from './phones-list/phones-list.component';
     SharedModule,
     CommonModule,
     AppRoutingModule
+  ],
+  providers: [
+    VdsService
   ]
 })
 export class SystemModule {

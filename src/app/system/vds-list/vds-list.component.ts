@@ -1,47 +1,54 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {Vds} from '../shared/model/vds.model';
+import {FormControl, FormGroup} from '@angular/forms';
+import {VdsService} from '../shared/services/vds.service';
 
 @Component({
   selector: 'am-vds-list',
   templateUrl: './vds-list.component.html',
   styleUrls: ['./vds-list.component.css']
 })
-export class VdsListComponent implements AfterViewInit {
-
-  displayedColumns = ['id', 'ip', 'password', 'startDate', 'endDate', 'detail'];
-
-  // Custom filter example: https://plnkr.co/edit/oQOYQgW0vCx8tfAgb1w9?p=preview
+export class VdsListComponent implements OnInit {
+  displayedColumns = [
+    'id',
+    'ip',
+    'password',
+    'startDate',
+    'endDate',
+    'detail'
+  ];
   dataSource: MatTableDataSource<Vds>;
-
+  filterForm: FormGroup;
+  dataIsLoded = false;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor() {
-    // Create 100 users
-    const vdsArr: Vds[] = [];
-    for (let i = 1; i <= 100; i++) {
-      const vds = new Vds('172.169.0.3.5', 'Administrator', 'asse4Kh', '12/23/87', '11/23/19', i);
-      vdsArr.push(vds);
-    }
-
-    // Assign the data to the data source for the table to render
-    this.dataSource = new MatTableDataSource(vdsArr);
+  constructor(private vdsService: VdsService) {
   }
 
-  /**
-   * Set the paginator and sort after the view init since this component will
-   * be able to query its view for the initialized paginator and sort.
-   */
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+  ngOnInit() {
+    this.filterForm = new FormGroup({
+      'ip': new FormControl(null, []),
+      'id': new FormControl(null, []),
+      'dateFrom': new FormControl(null, []),
+      'dateTo': new FormControl(null, [])
+    });
+
+    this.vdsService.getVds().subscribe((vds: Vds[]) => {
+      this.dataSource = new MatTableDataSource(vds);
+      this.dataIsLoded = true;
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    });
   }
 
-  applyFilterByIp(filterValue: string) {
-    filterValue = filterValue.trim(); // Remove whitespace
-    filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
-    this.dataSource.filter = filterValue;
+  applyFilter() {
+    console.log(this.filterForm);
+  }
+
+  disableFilter() {
+    console.log(this.filterForm);
   }
 
   getDetail(id: number) {

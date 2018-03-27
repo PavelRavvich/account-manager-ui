@@ -22,3 +22,13 @@
   overflow: auto;
   max-height: 100%;
 }
+
+.filter {
+  width: 300px;
+}
+
+.in-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}

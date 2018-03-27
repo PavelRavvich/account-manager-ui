@@ -1,58 +1,85 @@
 <h4 class="text-center">VDSs</h4>
 
-<div class="example-header">
-  <mat-form-field>
-    <input matInput (keyup)="applyFilterByIp($event.target.value)" placeholder="Common filter">
-  </mat-form-field>
+<div class="filter">
+  <form [formGroup]="filterForm">
+    <mat-form-field>
+      <input matInput placeholder="ID" id="id" formControlName="id">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput placeholder="IP" id="ip" formControlName="ip">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput [matDatepicker]="picker1" placeholder="From" id="dateFrom" formControlName="dateFrom">
+      <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+      <mat-datepicker #picker1></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput [matDatepicker]="picker2" placeholder="To" id="dateTo" formControlName="dateTo">
+      <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+      <mat-datepicker #picker2></mat-datepicker>
+    </mat-form-field>
+
+    <div class="in-row">
+      <button mat-fab color="primary" (click)="applyFilter()">Apply</button>
+      <button mat-fab color="accent" (click)="disableFilter()">Off</button>
+    </div>
+    <br>
+  </form>
 </div>
 
-<div class="example-container mat-elevation-z8">
+<div *ngIf="dataIsLoded">
+  <div class="example-container mat-elevation-z8">
 
-  <mat-table [dataSource]="dataSource" matSort>
+    <mat-table [dataSource]="dataSource" matSort>
 
-    <!-- ID Column -->
-    <ng-container matColumnDef="id">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
-    </ng-container>
+      <!-- ID Column -->
+      <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> ID</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.id}}</mat-cell>
+      </ng-container>
 
-    <!-- IP Column -->
-    <ng-container matColumnDef="ip">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> IP </mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.ip}} </mat-cell>
-    </ng-container>
+      <!-- IP Column -->
+      <ng-container matColumnDef="ip">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> IP</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.ip}}</mat-cell>
+      </ng-container>
 
-    <!-- Password Column -->
-    <ng-container matColumnDef="password">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Password </mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.password}} </mat-cell>
-    </ng-container>
+      <!-- Password Column -->
+      <ng-container matColumnDef="password">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Password</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.password}}</mat-cell>
+      </ng-container>
 
-    <!-- Date Column -->
-    <ng-container matColumnDef="startDate">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Start Date </mat-header-cell>
-      <mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.activatedDate}} </mat-cell>
-    </ng-container>
+      <!-- Date Column -->
+      <ng-container matColumnDef="startDate">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Start Date</mat-header-cell>
+        <mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.activatedDate}}</mat-cell>
+      </ng-container>
 
-    <!-- Date Column -->
-    <ng-container matColumnDef="endDate">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> End Date </mat-header-cell>
-      <mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.deactivatedDate}} </mat-cell>
-    </ng-container>
+      <!-- Date Column -->
+      <ng-container matColumnDef="endDate">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> End Date</mat-header-cell>
+        <mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.deactivatedDate}}</mat-cell>
+      </ng-container>
 
-    <!-- Detail button -->
-    <ng-container matColumnDef="detail">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Detail </mat-header-cell>
-      <mat-cell *matCellDef="let row" [style.color]="row.color">
-        <button mat-raised-button color="primary" (click)="getDetail(row.id)">Detail</button>
-      </mat-cell>
-    </ng-container>
+      <!-- Detail button -->
+      <ng-container matColumnDef="detail">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Detail</mat-header-cell>
+        <mat-cell *matCellDef="let row" [style.color]="row.color">
+          <button mat-raised-button color="primary" (click)="getDetail(row.id)">Detail</button>
+        </mat-cell>
+      </ng-container>
 
 
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;">
-    </mat-row>
-  </mat-table>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;">
+      </mat-row>
+    </mat-table>
 
-  <mat-paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
+    <mat-paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
+  </div>
 </div>
+
