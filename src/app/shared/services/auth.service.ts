@@ -13,6 +13,14 @@ export class AuthService {
   }
 
   constructor(private router: Router) {
+    try {
+      const userJson = window.localStorage.getItem('user');
+      if (userJson) {
+        const user = JSON.parse(userJson);
+        this.loggedIn = !!user;
+      }
+    } catch (e) {
+    }
   }
 
   login(user: User) {
