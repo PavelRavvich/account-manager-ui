@@ -1,6 +1,11 @@
 <div class="signin-content">
   <mat-card>
     <mat-card-content>
+      <span *ngIf="isAccessDenied">
+          <h2>
+            <mat-error>Access denied</mat-error>
+          </h2>
+        </span>
       <form [formGroup]="form" (ngSubmit)="onSubmit()">
         <h3>Please login to continue</h3>
         <mat-input-container class="full-width-input">
