@@ -18,16 +18,16 @@ export class RegistrationComponent implements OnInit {
 
   form: FormGroup;
 
-  constructor(private fb: FormBuilder,
+  constructor(private formBuilder: FormBuilder,
               private authService: AuthService,
               private userService: UserService,
               private router: Router) {
   }
 
   ngOnInit() {
-    this.form = this.fb.group({
-      username: ['', [Validators.required, Validators.minLength(3)]],
+    this.form = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
+      username: ['', [Validators.required, Validators.minLength(3)]],
       password: ['', [Validators.required, Validators.minLength(5)]],
       confirmPassword: ['', [Validators.required, Validators.minLength(5)]]
     });
@@ -42,9 +42,7 @@ export class RegistrationComponent implements OnInit {
         this.emailIsUnique = user === undefined;
       });
     if (this.emailIsUnique) {
-      const email = this.form.value.email;
-      const password = this.form.value.password;
-      const username = this.form.value.username;
+      const {email, password, username} = this.form.value;
       const newUser = new User(email, password, username);
       this.userService.post('users', newUser)
         .subscribe((u: User) => {
@@ -56,7 +54,7 @@ export class RegistrationComponent implements OnInit {
     }
   }
 
-  isFieldInvalid(field: string) {
+  isFieldInvalid(field: string): boolean {
     return !this.form.get(field).valid && this.form.get(field).touched;
   }
 }

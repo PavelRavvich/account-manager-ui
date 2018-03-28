@@ -37,23 +37,22 @@ export class VdsListComponent implements OnInit {
 
   ngOnInit() {
     this.updateFilterInstance();
-    this.fillDataSource();
+    this.getDataFromServer();
   }
 
-  applyFilter() {
+  applyFilter(): void {
     const {ip, id} = this.filterForm.value;
     this.filterByDate();
     this.filterById(id);
     this.filterByIp(ip);
-    console.log(this.dataSource.data);
   }
 
-  disableFilter() {
-    this.fillDataSource();
+  disableFilter(): void {
+    this.getDataFromServer();
     this.updateFilterInstance();
   }
 
-  private filterByDate() {
+  private filterByDate(): void {
     const {dateFrom, dateTo, byActivate} = this.filterForm.value;
     if (!!dateFrom && dateFrom.length !== 0 && !!dateTo && dateTo.length !== 0) {
       this.dataSource.data = (byActivate === 'activate') ?
@@ -62,7 +61,7 @@ export class VdsListComponent implements OnInit {
     }
   }
 
-  private filterActivateBetween(dateFilterFrom: string, dateFilterTo: string) {
+  private filterActivateBetween(dateFilterFrom: string, dateFilterTo: string): Vds[] {
     const filterFrom = moment(dateFilterFrom);
     const filterTo = moment(dateFilterTo);
     return this.dataSource.data.filter((vds: Vds) => {
@@ -70,8 +69,8 @@ export class VdsListComponent implements OnInit {
       return activate.isBetween(filterFrom, filterTo);
     });
   }
-
-  private filterDeactivateBetween(dateFilterFrom: string, dateFilterTo: string) {
+  
+  private filterDeactivateBetween(dateFilterFrom: string, dateFilterTo: string): Vds[] {
     const filterFrom = moment(dateFilterFrom);
     const filterTo = moment(dateFilterTo);
     return this.dataSource.data.filter((vds: Vds) => {
@@ -82,16 +81,19 @@ export class VdsListComponent implements OnInit {
 
   private filterById(id: string): void {
     if (!!id && id !== '') {
-      this.dataSource.data = [this.dataSource.data.find((vds: Vds) => (vds.id + '') === id)];
+      this.dataSource.data = this.dataSource.data.filter((vds: Vds) => id === (vds.id + ''));
     }
   }
 
   private filterByIp(ip: string): void {
-    this.dataSource.data = this.dataSource.data
-      .filter((vds: Vds) => vds.ip.indexOf(ip) !== -1);
+    if (!!ip && ip !== '') {
+      console.log('ip');
+      this.dataSource.data = this.dataSource.data
+        .filter((vds: Vds) => vds.ip.indexOf(ip) !== -1);
+    }
   }
 
-  private fillDataSource() {
+  private getDataFromServer(): void {
     this.vdsService.getVds().subscribe((vds: Vds[]) => {
       this.dataSource = new MatTableDataSource(vds);
       this.dataIsLoaded = true;

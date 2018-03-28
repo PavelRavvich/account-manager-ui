@@ -1,39 +1,36 @@
 <div class="signin-content">
-  <mat-card>
-    <mat-card-content>
-      <span *ngIf="isAccessDenied">
+    <mat-card>
+        <mat-card-content>
+            <span *ngIf="isAccessDenied">
           <h2>
             <mat-error>Access denied</mat-error>
           </h2>
         </span>
-      <form [formGroup]="form" (ngSubmit)="onSubmit()">
-        <h3>Please login to continue</h3>
-        <mat-input-container class="full-width-input">
-          <input matInput placeholder="Email"
-                 formControlName="email" required>
-          <mat-error *ngIf="isFieldInvalid('email')">
-            This is not Email.
-          </mat-error>
-        </mat-input-container>
-        <mat-input-container class="full-width-input">
-          <input matInput type="password" placeholder="Password"
-                 formControlName="password" required>
-          <mat-error *ngIf="isFieldInvalid('password')">
-            Please inform your password. Minimum 5 symbol.
-          </mat-error>
-        </mat-input-container>
-        <button mat-raised-button color="primary" type="submit">Login</button>
+            <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                <h3>Please login to continue</h3>
+                <mat-input-container class="full-width-input">
+                    <input matInput placeholder="Email" formControlName="email" required>
+                    <mat-error *ngIf="isFieldInvalid('email')">
+                        This is not Email.
+                    </mat-error>
+                </mat-input-container>
+                <mat-input-container class="full-width-input">
+                    <input matInput type="password" placeholder="Password" formControlName="password" required>
+                    <mat-error *ngIf="isFieldInvalid('password')">
+                        Please inform your password. Minimum 5 symbol.
+                    </mat-error>
+                </mat-input-container>
+                <button mat-raised-button color="primary" type="submit">Login</button>
 
-        <br>
-        <span *ngIf="userNotFound">
+                <br>
+                <span *ngIf="userNotFound">
           <mat-error>User not found.</mat-error>
         </span>
-      </form>
-      <br>
-      <div>
-        <a class="small-text" [routerLink]="'/reg'">No account yet? Registration.</a>
-      </div>
-    </mat-card-content>
-  </mat-card>
+            </form>
+            <br>
+            <div>
+                <a class="small-text" [routerLink]="'/reg'">No account yet? Registration.</a>
+            </div>
+        </mat-card-content>
+    </mat-card>
 </div>
-
