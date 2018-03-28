@@ -15,6 +15,7 @@ export class VdsListComponent implements OnInit {
   displayedColumns = [
     'id',
     'ip',
+    'login',
     'password',
     'startDate',
     'endDate',
@@ -54,10 +55,11 @@ export class VdsListComponent implements OnInit {
 
   private filterByDate(): void {
     const {dateFrom, dateTo, byActivate} = this.filterForm.value;
-    if (!!dateFrom && dateFrom.length !== 0 && !!dateTo && dateTo.length !== 0) {
-      this.dataSource.data = (byActivate === 'activate') ?
+    if (!!dateFrom && !!dateTo) {
+      const result = (byActivate === 'activate') ?
         this.filterActivateBetween(dateFrom, dateTo) :
         this.filterDeactivateBetween(dateFrom, dateTo);
+        this.dataSource = new MatTableDataSource(result);
     }
   }
 
@@ -74,22 +76,23 @@ export class VdsListComponent implements OnInit {
     const filterFrom = moment(dateFilterFrom);
     const filterTo = moment(dateFilterTo);
     return this.dataSource.data.filter((vds: Vds) => {
-      const activate = moment(vds.deactivatedDate, 'DD.MM.YYYY');
-      return activate.isBetween(filterFrom, filterTo);
+      const deactivate = moment(vds.deactivatedDate, 'DD.MM.YYYY');
+      return deactivate.isBetween(filterFrom, filterTo);
     });
   }
 
   private filterById(id: string): void {
     if (!!id && id !== '') {
-      this.dataSource.data = this.dataSource.data.filter((vds: Vds) => id === (vds.id + ''));
+      const result = this.dataSource.data.filter((vds: Vds) => id === (vds.id + ''));
+      this.dataSource = new MatTableDataSource(result);
     }
   }
 
   private filterByIp(ip: string): void {
     if (!!ip && ip !== '') {
-      console.log('ip');
-      this.dataSource.data = this.dataSource.data
+      const result = this.dataSource.data
         .filter((vds: Vds) => vds.ip.indexOf(ip) !== -1);
+      this.dataSource = new MatTableDataSource(result);
     }
   }
 
@@ -108,6 +111,14 @@ export class VdsListComponent implements OnInit {
       'dateTo': new FormControl(null, []),
       'byActivate': new FormControl('activate', [])
     });
+  }
+
+  copyToClipboard(text: string): void {
+    document.addEventListener('copy', (e: ClipboardEvent) => {
+      e.clipboardData.setData('text/plain', text);
+      e.preventDefault();
+    });
+    document.execCommand('copy');
   }
 
   getDetail(id: number) {

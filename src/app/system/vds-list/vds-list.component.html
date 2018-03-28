@@ -34,7 +34,7 @@
                 </mat-radio-group>
             </section>
             <button mat-fab color="primary" (click)="applyFilter()">Apply</button>
-            <button mat-fab color="accent" (click)="disableFilter()">Off</button>
+            <button mat-fab color="accent" (click)="disableFilter()">Clear</button>
         </div>
         <br>
     </form>
@@ -47,19 +47,37 @@
             <!-- ID Column -->
             <ng-container matColumnDef="id">
                 <mat-header-cell *matHeaderCellDef> ID </mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+                <mat-cell *matCellDef="let element">
+                    {{element.id}}
+                    <button class="material-icons" (click)="copyToClipboard(element.id)">content_copy</button>
+                </mat-cell>
             </ng-container>
 
             <!-- IP Column -->
             <ng-container matColumnDef="ip">
                 <mat-header-cell *matHeaderCellDef> IP </mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{element.ip}} </mat-cell>
+                <mat-cell *matCellDef="let element">
+                    {{element.ip}}
+                    <button class="material-icons" (click)="copyToClipboard(element.ip)">content_copy</button>
+                </mat-cell>
+            </ng-container>
+
+            <!-- Username Column -->
+            <ng-container matColumnDef="login">
+                <mat-header-cell *matHeaderCellDef>Login</mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                    {{element.login}}
+                    <button class="material-icons" (click)="copyToClipboard(element.login)">content_copy</button>
+                </mat-cell>
             </ng-container>
 
             <!-- Password Column -->
             <ng-container matColumnDef="password">
                 <mat-header-cell *matHeaderCellDef> Password </mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{element.password}} </mat-cell>
+                <mat-cell *matCellDef="let element">
+                    {{element.password}}
+                    <button class="material-icons" (click)="copyToClipboard(element.password)">content_copy</button>
+                </mat-cell>
             </ng-container>
 
             <!-- Date Column -->
