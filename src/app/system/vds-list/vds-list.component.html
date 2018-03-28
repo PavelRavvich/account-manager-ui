@@ -23,6 +23,18 @@
     </mat-form-field>
 
     <div class="in-row">
+
+      <section class="example-section">
+        <mat-radio-group formControlName="byActivate">
+          <mat-radio-button class="example-margin" value="activate">
+            Activate
+          </mat-radio-button>
+          <mat-radio-button class="example-margin" value="deactivate">
+            Deactivate
+          </mat-radio-button>
+        </mat-radio-group>
+      </section>
+
       <button mat-fab color="primary" (click)="applyFilter()">Apply</button>
       <button mat-fab color="accent" (click)="disableFilter()">Off</button>
     </div>
@@ -68,7 +80,7 @@
 
       <!-- Detail button -->
       <ng-container matColumnDef="detail">
-        <mat-header-cell *matHeaderCellDef> End Date </mat-header-cell>
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
         <mat-cell *matCellDef="let element">
           <button mat-raised-button color="primary" (click)="getDetail(element.id)">Detail</button>
         </mat-cell>
