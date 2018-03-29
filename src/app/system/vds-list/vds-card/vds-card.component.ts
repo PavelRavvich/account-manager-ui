@@ -31,7 +31,6 @@ export class VdsCardComponent implements OnInit, OnDestroy {
     }
 
     navToVdsList(): void {
-        console.log('test')
         this.router.navigate(['vds-list'])
     }
 
