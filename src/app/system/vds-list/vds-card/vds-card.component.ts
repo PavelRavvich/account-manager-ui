@@ -27,23 +27,49 @@ export class VdsCardComponent implements OnInit, OnDestroy {
                 private socialService: SocialService) {}
 
     ngOnInit() {
+        this.loadVds();
+        this.loadSocialAccounts();
+        // this.subscriptionBaseData = this.rote.params
+        //     .subscribe((params: Params) =>  {
+        //         return this.vdsSrrvice.getVdsById(params['id'])
+        //             .subscribe((vds: Vds) => {
+        //                 this.vds = vds;
+        //                 this.baseDataIsLoaded = true;
+        //             });
+        //     });
+
+        // this.subscriptionSocialData = this.rote.params
+        //     .subscribe((params: Params) =>  {
+        //         return this.socialService.getSocialAccountsById(params['id'])
+        //             .subscribe((acc: SocialAccount[]) => {
+        //                 this.accounts = acc;
+        //                 this.socialDtaIdLoaded = true;
+        //             });
+        //     });
+    }
+
+    private loadVds(): void {
         this.subscriptionBaseData = this.rote.params
             .subscribe((params: Params) =>  {
-                return this.vdsSrrvice.getVdsById(params['id'])
+                return this.vdsSrrvice
+                    .getVdsById(params['id'])
                     .subscribe((vds: Vds) => {
                         this.vds = vds;
                         this.baseDataIsLoaded = true;
-                    });
-            });
+                });
+        });
+    }
 
-        this.subscriptionBaseData = this.rote.params
+    private loadSocialAccounts(): void {
+        this.subscriptionSocialData = this.rote.params
             .subscribe((params: Params) =>  {
-                return this.socialService.getSocialAccountsById(params['id'])
+                return this.socialService
+                    .getSocialAccountsById(params['id'])
                     .subscribe((acc: SocialAccount[]) => {
                         this.accounts = acc;
                         this.socialDtaIdLoaded = true;
-                    });
-            });
+                });
+        });
     }
 
     navToVdsList(): void {
