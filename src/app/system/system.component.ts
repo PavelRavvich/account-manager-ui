@@ -1,23 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 
-@Component({
-  selector: 'am-system',
-  templateUrl: './system.component.html',
-  styleUrls: ['./system.component.css']
-})
+@Component({selector: 'am-system', templateUrl: './system.component.html', styleUrls: ['./system.component.css']})
 export class SystemComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  constructor(private router : Router) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   navigateToVDSs() {
-    this.router.navigate(['/vds-list']);
+    this
+      .router
+      .navigate(['/vds-list']);
   }
 
   navigateToPhones() {
-    this.router.navigate(['/phone-list']);
+    this
+      .router
+      .navigate(['/phone-list']);
   }
 }

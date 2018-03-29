@@ -1,11 +1,9 @@
 <mat-toolbar>
-  <button mat-button [matMenuTriggerFor]="menu">Menu</button>
-  <mat-menu #menu="matMenu">
-    <button mat-menu-item (click)="navigateToVDSs()">VDSs</button>
-    <button mat-menu-item (click)="navigateToPhones()">Phones</button>
-  </mat-menu>
-  <div>Account Manager</div>
+    <button mat-button [matMenuTriggerFor]="menu">Menu</button>
+    <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="navigateToVDSs()">VDSs</button>
+        <button mat-menu-item (click)="navigateToPhones()">Phones</button>
+    </mat-menu>
+    <div>Account Manager</div>
 </mat-toolbar>
 <router-outlet></router-outlet>
-
-

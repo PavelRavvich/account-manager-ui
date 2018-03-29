@@ -8,16 +8,14 @@ import {RegistrationComponent} from './registration/registration.component';
 import {CommonModule} from '@angular/common';
 
 @NgModule({
-  declarations: [
-    AuthComponent,
-    LoginComponent,
-    RegistrationComponent
-  ],
-  imports: [
-    SharedModule,
-    CommonModule,
-    AppRoutingModule
-  ]
+    declarations: [
+        AuthComponent, 
+        LoginComponent, 
+        RegistrationComponent
+    ],
+    imports: [SharedModule, 
+        CommonModule, 
+        AppRoutingModule
+    ]
 })
-export class AuthModule {
-}
+export class AuthModule {}

@@ -9,11 +9,11 @@ import {Vds} from '../model/vds.model';
 @Injectable()
 export class VdsService extends CoreApi {
 
-  constructor(public http: HttpClient) {
-    super(http);
-  }
+    constructor(public http : HttpClient) {
+        super(http);
+    }
 
-  getVds(): Observable<Vds[]> {
-    return this.get(`vds-list`).map((data: Vds[]) => data);
-  }
+    getVds() : Observable < Vds[] > {
+        return this.get(`vds-list`).map((data : Vds[]) => data);
+    }
 }

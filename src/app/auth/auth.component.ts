@@ -1,15 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
-  selector: 'am-auth',
-  templateUrl: './auth.component.html',
-  styleUrls: ['./auth.component.css']
+    selector: 'am-auth', 
+    templateUrl: './auth.component.html', 
+    styleUrls: ['./auth.component.css']
 })
-export class AuthComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit() {
-  }
-
+export class AuthComponent {
 }

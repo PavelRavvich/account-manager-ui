@@ -13,29 +13,23 @@ import {SystemModule} from './system/system.module';
 import {SystemRoutingModule} from './system/system-routing.module';
 import {AuthGuard} from './shared/services/auth.guard';
 
-
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    HttpClientModule,
-    SharedModule,
-    AuthModule,
-    SystemModule,
-    AuthRoutingModule,
-    SystemRoutingModule
-  ],
-  providers: [
-    AuthService,
-    UserService,
-    AuthGuard
-  ],
-  bootstrap: [
-    AppComponent
-  ]
+    declarations: [AppComponent],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        HttpClientModule,
+        SharedModule,
+        AuthModule,
+        SystemModule,
+        AuthRoutingModule,
+        SystemRoutingModule
+    ],
+    providers: [
+        AuthService, 
+        UserService, 
+        AuthGuard
+    ],
+    bootstrap: [AppComponent]
 })
-export class AppModule {
-}
+export class AppModule {}

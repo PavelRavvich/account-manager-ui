@@ -1,44 +1,58 @@
 <h4 class="text-center">VDSs</h4>
 
-<div class="filter">
-    <form [formGroup]="filterForm">
-        <mat-form-field>
-            <input matInput placeholder="ID" id="id" formControlName="id">
-        </mat-form-field>
+<mat-accordion>
+    <mat-expansion-panel (opened)="filterOpenState = true" (closed)="filterOpenState = false">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                Filters
+            </mat-panel-title>
+            <mat-panel-description>
+                You can use filters for select by VDS's parameters. Click for open.
+            </mat-panel-description>
+        </mat-expansion-panel-header>
 
-        <mat-form-field>
-            <input matInput placeholder="IP" id="ip" formControlName="ip">
-        </mat-form-field>
+        <div class="filter">
+            <form [formGroup]="filterForm">
+                <mat-form-field>
+                    <input matInput placeholder="ID" id="id" formControlName="id">
+                </mat-form-field>
 
-        <mat-form-field>
-            <input matInput [matDatepicker]="picker1" placeholder="From" id="dateFrom" formControlName="dateFrom">
-            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-            <mat-datepicker #picker1></mat-datepicker>
-        </mat-form-field>
+                <mat-form-field>
+                    <input matInput placeholder="IP" id="ip" formControlName="ip">
+                </mat-form-field>
 
-        <mat-form-field>
-            <input matInput [matDatepicker]="picker2" placeholder="To" id="dateTo" formControlName="dateTo">
-            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-            <mat-datepicker #picker2></mat-datepicker>
-        </mat-form-field>
+                <mat-form-field>
+                    <input matInput [matDatepicker]="picker1" placeholder="From" id="dateFrom" formControlName="dateFrom">
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                </mat-form-field>
 
-        <div class="in-row">
-            <section class="example-section">
-                <mat-radio-group formControlName="byActivate">
-                    <mat-radio-button class="example-margin" value="activate">
-                        Activate
-                    </mat-radio-button>
-                    <mat-radio-button class="example-margin" value="deactivate">
-                        Deactivate
-                    </mat-radio-button>
-                </mat-radio-group>
-            </section>
-            <button mat-fab color="primary" (click)="applyFilter()">Apply</button>
-            <button mat-fab color="accent" (click)="disableFilter()">Clear</button>
+                <mat-form-field>
+                    <input matInput [matDatepicker]="picker2" placeholder="To" id="dateTo" formControlName="dateTo">
+                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                    <mat-datepicker #picker2></mat-datepicker>
+                </mat-form-field>
+
+                <div class="in-row">
+                    <section class="example-section">
+                        <mat-radio-group formControlName="byActivate">
+                            <mat-radio-button class="example-margin" value="activate">
+                                Activate
+                            </mat-radio-button>
+                            <mat-radio-button class="example-margin" value="deactivate">
+                                Deactivate
+                            </mat-radio-button>
+                        </mat-radio-group>
+                    </section>
+                    <button mat-raised-button color="primary" (click)="applyFilter()">Apply</button>
+                    <button mat-raised-button color="accent" (click)="disableFilter()">Clear</button>
+                </div>
+                <br>
+            </form>
         </div>
-        <br>
-    </form>
-</div>
+
+    </mat-expansion-panel>
+</mat-accordion>
 
 <div *ngIf="dataIsLoaded">
     <div class="example-container mat-elevation-z8">
