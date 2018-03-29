@@ -3,5 +3,6 @@ export class SocialAccount {
                 public name: string, 
                 public login: string,
                 public password: string,
-                public notes?: string) {}
+                public notes?: string,
+                public id?: number) {}
 }

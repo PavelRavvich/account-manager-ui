@@ -9,6 +9,7 @@ import {PhonesListComponent} from './phones-list/phones-list.component';
 import {VdsService} from './shared/services/vds.service';
 import { VdsCardComponent } from './vds-list/vds-card/vds-card.component';
 import { SocialService } from './shared/services/social.service';
+import { ClipboardService } from './shared/services/clipboard.service';
 
 @NgModule({
     declarations: [
@@ -17,6 +18,6 @@ import { SocialService } from './shared/services/social.service';
     imports: [
         SharedModule, CommonModule, AppRoutingModule
     ],
-    providers: [VdsService, SocialService]
+    providers: [VdsService, SocialService, ClipboardService]
 })
 export class SystemModule {}

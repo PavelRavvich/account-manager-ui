@@ -1,10 +1,12 @@
 import {Component, OnInit, Input, OnDestroy} from '@angular/core';
-import { Vds } from '../../shared/model/vds.model';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { VdsService } from '../../shared/services/vds.service';
 import { Subscription } from 'rxjs/Subscription';
+
+import { Vds } from '../../shared/model/vds.model';
+import { VdsService } from '../../shared/services/vds.service';
 import { SocialService } from '../../shared/services/social.service';
 import { SocialAccount } from '../../shared/model/socilal-account.model';
+import { ClipboardService } from '../../shared/services/clipboard.service';
 
 @Component({
     selector: 'am-vds-card', 
@@ -24,28 +26,12 @@ export class VdsCardComponent implements OnInit, OnDestroy {
     constructor(private router: Router,
                 private rote: ActivatedRoute,
                 private vdsSrrvice: VdsService,
-                private socialService: SocialService) {}
+                private socialService: SocialService,
+                private clipboardService: ClipboardService) {}
 
     ngOnInit() {
         this.loadVds();
         this.loadSocialAccounts();
-        // this.subscriptionBaseData = this.rote.params
-        //     .subscribe((params: Params) =>  {
-        //         return this.vdsSrrvice.getVdsById(params['id'])
-        //             .subscribe((vds: Vds) => {
-        //                 this.vds = vds;
-        //                 this.baseDataIsLoaded = true;
-        //             });
-        //     });
-
-        // this.subscriptionSocialData = this.rote.params
-        //     .subscribe((params: Params) =>  {
-        //         return this.socialService.getSocialAccountsById(params['id'])
-        //             .subscribe((acc: SocialAccount[]) => {
-        //                 this.accounts = acc;
-        //                 this.socialDtaIdLoaded = true;
-        //             });
-        //     });
     }
 
     private loadVds(): void {
@@ -74,6 +60,10 @@ export class VdsCardComponent implements OnInit, OnDestroy {
 
     navToVdsList(): void {
         this.router.navigate(['vds-list'])
+
+    }
+    copyToClipboard(text : string) : void {
+        this.clipboardService.copyToClipboard(text);
     }
 
     ngOnDestroy() {

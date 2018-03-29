@@ -6,6 +6,7 @@ import {Vds} from '../shared/model/vds.model';
 import {FormControl, FormGroup} from '@angular/forms';
 import {VdsService} from '../shared/services/vds.service';
 import { Router } from '@angular/router';
+import { ClipboardService } from '../shared/services/clipboard.service';
 
 @Component({
 		selector: 'am-vds-list', 
@@ -38,8 +39,9 @@ export class VdsListComponent implements OnInit {
         this.dataSource.paginator = this.paginator;
     }
 
-    constructor(private vdsService : VdsService,
-                private router: Router) {}
+    constructor(private clipboardService: ClipboardService,
+                private vdsService : VdsService,
+                private router: Router,) {}
 
     ngOnInit() {
         this.updateFilterInstance();
@@ -98,18 +100,14 @@ export class VdsListComponent implements OnInit {
 
     private filterByIp(ip : string) : void {
         if(!!ip && ip !== '') {
-            const result = this
-                .dataSource
-                .data
+            const result = this.dataSource.data
                 .filter((vds : Vds) => vds.ip.indexOf(ip) !== -1);
             this.dataSource = new MatTableDataSource(result);
         }
     }
 
     private getDataFromServer() : void {
-        this
-            .vdsService
-            .getVdsList()
+        this.vdsService.getVdsList()
             .subscribe((vds : Vds[]) => {
                 this.dataSource = new MatTableDataSource(vds);
                 this.dataIsLoaded = true;
@@ -127,14 +125,10 @@ export class VdsListComponent implements OnInit {
     }
 
     copyToClipboard(text : string) : void {
-        document.addEventListener('copy', (e : ClipboardEvent) => {
-            e.clipboardData.setData('text/plain', text);
-            e.preventDefault();
-        });
-        document.execCommand('copy');
+        this.clipboardService.copyToClipboard(text);
     }
 
     getDetail(id : number) {
-        this.router.navigate(['vds-list', id + '']);
+        this.router.navigate(['vds-list', id.toString()]);
     }
 }

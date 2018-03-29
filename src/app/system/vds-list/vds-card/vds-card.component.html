@@ -17,12 +17,26 @@
     </mat-card>
 </div>
 <div *ngIf="socialDtaIdLoaded">
-    <ul>
-        <li *ngFor="let acc of accounts">
-            <p>Social: {{acc.name}}</p>
-            <p>Login: {{acc.login}}</p>
-            <p>Password: {{acc.password}}</p>
-            <p>Notes: {{acc.notes}}</p>
-        </li>
-    </ul>
+    <mat-tab-group>
+        <div *ngFor="let acc of accounts">
+            <mat-tab label={{acc.name}}>
+                <p>
+                    ID: {{acc.id}}
+                    <button class="material-icons" (click)="copyToClipboard(acc.id)">content_copy</button>
+                </p>
+                <p>
+                    Login: {{acc.login}}
+                    <button class="material-icons" (click)="copyToClipboard(acc.login)">content_copy</button>
+                </p>
+                <p>
+                    Password: {{acc.password}}
+                    <button class="material-icons" (click)="copyToClipboard(acc.password)">content_copy</button>
+                </p>
+                <p>
+                    Notes: {{acc.notes}}
+                    <button class="material-icons" (click)="copyToClipboard(acc.notes)">content_copy</button>
+                </p>
+            </mat-tab>
+        </div>
+    </mat-tab-group>
 </div>
