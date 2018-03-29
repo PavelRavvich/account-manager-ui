@@ -4,6 +4,7 @@ import {SystemComponent} from './system.component';
 import {VdsListComponent} from './vds-list/vds-list.component';
 import {PhonesListComponent} from './phones-list/phones-list.component';
 import {AuthGuard} from '../shared/services/auth.guard';
+import { VdsCardComponent } from './vds-list/vds-card/vds-card.component';
 
 const routes : Routes = [
   {
@@ -14,7 +15,12 @@ const routes : Routes = [
       {
         path: 'vds-list',
         component: VdsListComponent
-      }, {
+      },
+      {
+        path: 'vds-list/:id',
+        component: VdsCardComponent
+      },
+      {
         path: 'phone-list',
         component: PhonesListComponent
       }

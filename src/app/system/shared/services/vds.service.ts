@@ -13,7 +13,11 @@ export class VdsService extends CoreApi {
         super(http);
     }
 
-    getVds() : Observable < Vds[] > {
+    getVdsList() : Observable < Vds[] > {
         return this.get(`vds-list`).map((data : Vds[]) => data);
+    }
+
+    getVdsById(id: string): Observable < Vds > {
+        return this.get(`vds-list/${id}`)
     }
 }

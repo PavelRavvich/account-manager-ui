@@ -5,6 +5,7 @@ import * as moment from 'moment';
 import {Vds} from '../shared/model/vds.model';
 import {FormControl, FormGroup} from '@angular/forms';
 import {VdsService} from '../shared/services/vds.service';
+import { Router } from '@angular/router';
 
 @Component({
 		selector: 'am-vds-list', 
@@ -37,7 +38,8 @@ export class VdsListComponent implements OnInit {
         this.dataSource.paginator = this.paginator;
     }
 
-    constructor(private vdsService : VdsService) {}
+    constructor(private vdsService : VdsService,
+                private router: Router) {}
 
     ngOnInit() {
         this.updateFilterInstance();
@@ -107,7 +109,7 @@ export class VdsListComponent implements OnInit {
     private getDataFromServer() : void {
         this
             .vdsService
-            .getVds()
+            .getVdsList()
             .subscribe((vds : Vds[]) => {
                 this.dataSource = new MatTableDataSource(vds);
                 this.dataIsLoaded = true;
@@ -133,6 +135,6 @@ export class VdsListComponent implements OnInit {
     }
 
     getDetail(id : number) {
-        console.log(id);
+        this.router.navigate(['vds-list', id + '']);
     }
 }

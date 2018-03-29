@@ -1,0 +1,18 @@
+<div *ngIf="dataIsLaded">
+    <mat-card class="example-card">
+        <mat-card-header>
+            <mat-card-title>VDS</mat-card-title>
+            <mat-card-subtitle>ID: {{vds.id}}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+            <p>Activated date: {{vds.activatedDate}}</p>
+            <p>Deactivated date: {{vds.deactivatedDate}}</p>
+            <p>IP: {{vds.ip}}</p>
+            <p>Login: {{vds.login}}</p>
+            <p>Password: {{vds.password}}</p>
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-raised-button color="primary" (click)="navToVdsList()">Back to VDS list</button>
+        </mat-card-actions>
+    </mat-card>
+</div>
