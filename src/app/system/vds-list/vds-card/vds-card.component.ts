@@ -3,6 +3,8 @@ import { Vds } from '../../shared/model/vds.model';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { VdsService } from '../../shared/services/vds.service';
 import { Subscription } from 'rxjs/Subscription';
+import { SocialService } from '../../shared/services/social.service';
+import { SocialAccount } from '../../shared/model/socilal-account.model';
 
 @Component({
     selector: 'am-vds-card', 
@@ -12,20 +14,34 @@ import { Subscription } from 'rxjs/Subscription';
 export class VdsCardComponent implements OnInit, OnDestroy {
 
     vds: Vds;
-    dataIsLaded = false;
-    subscription: Subscription;
+    baseDataIsLoaded = false;
+    subscriptionBaseData: Subscription;
+
+    accounts: SocialAccount[] = [];
+    socialDtaIdLoaded = false;
+    subscriptionSocialData: Subscription;
 
     constructor(private router: Router,
                 private rote: ActivatedRoute,
-                private vdsSrrvice: VdsService) {}
+                private vdsSrrvice: VdsService,
+                private socialService: SocialService) {}
 
     ngOnInit() {
-        this.subscription = this.rote.params
+        this.subscriptionBaseData = this.rote.params
             .subscribe((params: Params) =>  {
                 return this.vdsSrrvice.getVdsById(params['id'])
                     .subscribe((vds: Vds) => {
                         this.vds = vds;
-                        this.dataIsLaded = true;
+                        this.baseDataIsLoaded = true;
+                    });
+            });
+
+        this.subscriptionBaseData = this.rote.params
+            .subscribe((params: Params) =>  {
+                return this.socialService.getSocialAccountsById(params['id'])
+                    .subscribe((acc: SocialAccount[]) => {
+                        this.accounts = acc;
+                        this.socialDtaIdLoaded = true;
                     });
             });
     }
@@ -35,8 +51,11 @@ export class VdsCardComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        if (this.subscription) {
-            this.subscription.unsubscribe();
+        if (this.subscriptionBaseData) {
+            this.subscriptionBaseData.unsubscribe();
+        }
+        if (this.subscriptionSocialData) {
+            this.subscriptionSocialData.unsubscribe();
         }
     }
 }
