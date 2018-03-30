@@ -1,7 +1,7 @@
 import {Component, OnInit, Input, OnDestroy} from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatDialogRef } from '@angular/material';
 
 import { Vds } from '../../shared/model/vds.model';
 import { VdsService } from '../../shared/services/vds.service';
@@ -52,8 +52,8 @@ export class VdsCardComponent implements OnInit, OnDestroy {
         this.loadSocialAccounts();
     }
 
-    openDialog(): void {
-        let dialogRef = this.dialog.open(AddSocialComponent, {
+    openDialogAddSocial(): MatDialogRef < AddSocialComponent > {
+        return this.dialog.open(AddSocialComponent, {
             width: '100%',
             data: { 
                 socialType: this.socialType,
@@ -63,22 +63,25 @@ export class VdsCardComponent implements OnInit, OnDestroy {
                 notes: this.notes,
             }
         });
-    
-        dialogRef.afterClosed().subscribe(data => {
-            if (!!data) {
-                this.socialService.addSocialAccount(
-                    new SocialAccount(
-                        this.vds.id, 
-                        data.socialType, 
-                        data.login, 
-                        data.password, 
-                        data.notes
-                    )
-                ).subscribe((result: SocialAccount) => {
-                    this.loadSocialAccounts();
-                        console.log(result);
-                    });
-            }
+    }
+
+    openDialog(): void {
+        this.openDialogAddSocial()
+            .afterClosed().subscribe(data => {
+                if (!!data) {
+                    this.socialService.addSocialAccount(
+                        new SocialAccount(
+                            this.vds.id, 
+                            data.socialType, 
+                            data.login, 
+                            data.password, 
+                            data.notes
+                        )
+                    ).subscribe((result: SocialAccount) => {
+                        this.loadSocialAccounts();
+                            console.log(result);
+                        });
+                }
         });
     }
 

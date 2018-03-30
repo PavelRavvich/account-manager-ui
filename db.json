@@ -1,242 +1,254 @@
 {
-    "users": [{
-        "id": 1,
-        "email": "123@1",
-        "password": "12345",
-        "username": "John"
-    }],
-    "vds-list": [{
-            "id": 1,
-            "ip": "172.168.34.5",
-            "login": "Administrator",
-            "password": "sd7hHkfdL",
-            "activatedDate": "28.03.2018",
-            "deactivatedDate": "28.04.2018"
-        },
-        {
-            "id": 2,
-            "ip": "172.168.3844.5",
-            "login": "Administrator",
-            "password": "sd7hfE4tL",
-            "activatedDate": "18.05.2017",
-            "deactivatedDate": "18.06.2017"
-        },
-        {
-            "id": 3,
-            "ip": "172.168.784.5",
-            "login": "Administrator",
-            "password": "sdFFHkLL",
-            "activatedDate": "22.08.2017",
-            "deactivatedDate": "22.09.2017"
-        },
-        {
-            "id": 4,
-            "ip": "172.178.23.33",
-            "login": "Administrator",
-            "password": "sd7hHgghkLL",
-            "activatedDate": "02.05.2017",
-            "deactivatedDate": "02.06.2017"
-        },
-        {
-            "id": 5,
-            "ip": "172.169.34.76",
-            "login": "Administrator",
-            "password": "sfhgHkLL",
-            "activatedDate": "17.05.2017",
-            "deactivatedDate": "17.06.2017"
-        },
-        {
-            "id": 6,
-            "ip": "172.168.84.54",
-            "login": "Administrator",
-            "password": "jg7hHkLL",
-            "activatedDate": "21.03.2017",
-            "deactivatedDate": "21.04.2017"
-        },
-        {
-            "id": 7,
-            "ip": "172.168.34.5",
-            "login": "Administrator",
-            "password": "sd7hHkfdL",
-            "activatedDate": "12.05.2017",
-            "deactivatedDate": "12.06.2017"
-        },
-        {
-            "id": 8,
-            "ip": "172.168.3844.5",
-            "login": "Administrator",
-            "password": "sd7hfE4tL",
-            "activatedDate": "18.05.2017",
-            "deactivatedDate": "18.06.2017"
-        },
-        {
-            "id": 9,
-            "ip": "172.168.784.5",
-            "login": "Administrator",
-            "password": "sdFFHkLL",
-            "activatedDate": "22.08.2017",
-            "deactivatedDate": "22.09.2017"
-        },
-        {
-            "id": 10,
-            "ip": "172.178.23.33",
-            "login": "Administrator",
-            "password": "sd7hHgghkLL",
-            "activatedDate": "02.05.2017",
-            "deactivatedDate": "02.06.2017"
-        },
-        {
-            "id": 11,
-            "ip": "172.169.34.76",
-            "login": "Administrator",
-            "password": "sfhgHkLL",
-            "activatedDate": "17.05.2017",
-            "deactivatedDate": "17.06.2017"
-        },
-        {
-            "id": 12,
-            "ip": "172.168.84.54",
-            "login": "Administrator",
-            "password": "jg7hHkLL",
-            "activatedDate": "21.03.2017",
-            "deactivatedDate": "21.04.2017"
-        },
-        {
-            "id": 13,
-            "ip": "172.168.34.5",
-            "login": "Administrator",
-            "password": "sd7hHkfdL",
-            "activatedDate": "12.05.2017",
-            "deactivatedDate": "12.06.2017"
-        },
-        {
-            "id": 14,
-            "ip": "172.168.3844.5",
-            "login": "Administrator",
-            "password": "sd7hfE4tL",
-            "activatedDate": "18.05.2017",
-            "deactivatedDate": "18.06.2017"
-        },
-        {
-            "id": 15,
-            "ip": "172.168.784.5",
-            "login": "Administrator",
-            "password": "sdFFHkLL",
-            "activatedDate": "22.08.2017",
-            "deactivatedDate": "22.09.2017"
-        },
-        {
-            "id": 16,
-            "ip": "172.178.23.33",
-            "login": "Administrator",
-            "password": "sd7hHgghkLL",
-            "activatedDate": "02.05.2017",
-            "deactivatedDate": "02.06.2017"
-        },
-        {
-            "id": 17,
-            "ip": "172.169.34.76",
-            "login": "Administrator",
-            "password": "sfhgHkLL",
-            "activatedDate": "17.05.2017",
-            "deactivatedDate": "17.06.2017"
-        },
-        {
-            "id": 18,
-            "ip": "172.168.84.54",
-            "login": "Administrator",
-            "password": "jg7hHkLL",
-            "activatedDate": "21.03.2017",
-            "deactivatedDate": "21.04.2017"
-        },
-        {
-            "id": 19,
-            "ip": "172.168.84.54",
-            "login": "Administrator",
-            "password": "jg7hHkLL",
-            "activatedDate": "21.03.2017",
-            "deactivatedDate": "21.04.2017"
-        },
-        {
-            "id": 20,
-            "ip": "172.168.34.5",
-            "login": "Administrator",
-            "password": "sd7hHkfdL",
-            "activatedDate": "12.05.2017",
-            "deactivatedDate": "12.06.2017"
-        },
-        {
-            "id": 21,
-            "ip": "172.168.3844.5",
-            "login": "Administrator",
-            "password": "sd7hfE4tL",
-            "activatedDate": "18.05.2017",
-            "deactivatedDate": "18.06.2017"
-        },
-        {
-            "id": 22,
-            "ip": "172.168.784.5",
-            "login": "Administrator",
-            "password": "sdFFHkLL",
-            "activatedDate": "22.08.2017",
-            "deactivatedDate": "22.09.2017"
-        },
-        {
-            "id": 23,
-            "ip": "172.178.23.33",
-            "login": "Administrator",
-            "password": "sd7hHgghkLL",
-            "activatedDate": "02.05.2017",
-            "deactivatedDate": "02.06.2017"
-        },
-        {
-            "id": 24,
-            "ip": "172.169.34.76",
-            "login": "Administrator",
-            "password": "sfhgHkLL",
-            "activatedDate": "17.05.2017",
-            "deactivatedDate": "17.06.2017"
-        },
-        {
-            "id": 25,
-            "ip": "172.168.84.54",
-            "login": "Administrator",
-            "password": "jg7hHkLL",
-            "activatedDate": "21.03.2017",
-            "deactivatedDate": "21.04.2017"
-        },
-        {
-            "id": 26,
-            "ip": "172.168.84.54",
-            "login": "Administrator",
-            "password": "jg7hHkLL",
-            "activatedDate": "21.03.2017",
-            "deactivatedDate": "21.04.2017"
-        }
-    ],
-    "social-accounts": [{
-            "vdsId": 1,
-            "name": "vk",
-            "login": "vsili_vk_login_mock",
-            "password": "vkPassMock",
-            "notes": "some test note 1",
-            "id": 1
-        },
-        {
-            "vdsId": 1,
-            "name": "youtube",
-            "login": "vsili_youtube_login_mock",
-            "password": "ytPassMock",
-            "notes": "some test note 2",
-            "id": 2
-        },
-        {
-            "vdsId": 1,
-            "name": "twitter",
-            "login": "vsili_twitter_login_mock",
-            "password": "trPassMock",
-            "notes": "some test note 3",
-            "id": 3
-        }
-    ]
+  "users": [
+    {
+      "id": 1,
+      "email": "123@1",
+      "password": "12345",
+      "username": "John"
+    }
+  ],
+  "vds-list": [
+    {
+      "id": 1,
+      "ip": "172.168.34.5",
+      "login": "Administrator",
+      "password": "sd7hHkfdL",
+      "activatedDate": "28.03.2018",
+      "deactivatedDate": "28.04.2018"
+    },
+    {
+      "id": 2,
+      "ip": "172.168.3844.5",
+      "login": "Administrator",
+      "password": "sd7hfE4tL",
+      "activatedDate": "18.05.2017",
+      "deactivatedDate": "18.06.2017"
+    },
+    {
+      "id": 3,
+      "ip": "172.168.784.5",
+      "login": "Administrator",
+      "password": "sdFFHkLL",
+      "activatedDate": "22.08.2017",
+      "deactivatedDate": "22.09.2017"
+    },
+    {
+      "id": 4,
+      "ip": "172.178.23.33",
+      "login": "Administrator",
+      "password": "sd7hHgghkLL",
+      "activatedDate": "02.05.2017",
+      "deactivatedDate": "02.06.2017"
+    },
+    {
+      "id": 5,
+      "ip": "172.169.34.76",
+      "login": "Administrator",
+      "password": "sfhgHkLL",
+      "activatedDate": "17.05.2017",
+      "deactivatedDate": "17.06.2017"
+    },
+    {
+      "id": 6,
+      "ip": "172.168.84.54",
+      "login": "Administrator",
+      "password": "jg7hHkLL",
+      "activatedDate": "21.03.2017",
+      "deactivatedDate": "21.04.2017"
+    },
+    {
+      "id": 7,
+      "ip": "172.168.34.5",
+      "login": "Administrator",
+      "password": "sd7hHkfdL",
+      "activatedDate": "12.05.2017",
+      "deactivatedDate": "12.06.2017"
+    },
+    {
+      "id": 8,
+      "ip": "172.168.3844.5",
+      "login": "Administrator",
+      "password": "sd7hfE4tL",
+      "activatedDate": "18.05.2017",
+      "deactivatedDate": "18.06.2017"
+    },
+    {
+      "id": 9,
+      "ip": "172.168.784.5",
+      "login": "Administrator",
+      "password": "sdFFHkLL",
+      "activatedDate": "22.08.2017",
+      "deactivatedDate": "22.09.2017"
+    },
+    {
+      "id": 10,
+      "ip": "172.178.23.33",
+      "login": "Administrator",
+      "password": "sd7hHgghkLL",
+      "activatedDate": "02.05.2017",
+      "deactivatedDate": "02.06.2017"
+    },
+    {
+      "id": 11,
+      "ip": "172.169.34.76",
+      "login": "Administrator",
+      "password": "sfhgHkLL",
+      "activatedDate": "17.05.2017",
+      "deactivatedDate": "17.06.2017"
+    },
+    {
+      "id": 12,
+      "ip": "172.168.84.54",
+      "login": "Administrator",
+      "password": "jg7hHkLL",
+      "activatedDate": "21.03.2017",
+      "deactivatedDate": "21.04.2017"
+    },
+    {
+      "id": 13,
+      "ip": "172.168.34.5",
+      "login": "Administrator",
+      "password": "sd7hHkfdL",
+      "activatedDate": "12.05.2017",
+      "deactivatedDate": "12.06.2017"
+    },
+    {
+      "id": 14,
+      "ip": "172.168.3844.5",
+      "login": "Administrator",
+      "password": "sd7hfE4tL",
+      "activatedDate": "18.05.2017",
+      "deactivatedDate": "18.06.2017"
+    },
+    {
+      "id": 15,
+      "ip": "172.168.784.5",
+      "login": "Administrator",
+      "password": "sdFFHkLL",
+      "activatedDate": "22.08.2017",
+      "deactivatedDate": "22.09.2017"
+    },
+    {
+      "id": 16,
+      "ip": "172.178.23.33",
+      "login": "Administrator",
+      "password": "sd7hHgghkLL",
+      "activatedDate": "02.05.2017",
+      "deactivatedDate": "02.06.2017"
+    },
+    {
+      "id": 17,
+      "ip": "172.169.34.76",
+      "login": "Administrator",
+      "password": "sfhgHkLL",
+      "activatedDate": "17.05.2017",
+      "deactivatedDate": "17.06.2017"
+    },
+    {
+      "id": 18,
+      "ip": "172.168.84.54",
+      "login": "Administrator",
+      "password": "jg7hHkLL",
+      "activatedDate": "21.03.2017",
+      "deactivatedDate": "21.04.2017"
+    },
+    {
+      "id": 19,
+      "ip": "172.168.84.54",
+      "login": "Administrator",
+      "password": "jg7hHkLL",
+      "activatedDate": "21.03.2017",
+      "deactivatedDate": "21.04.2017"
+    },
+    {
+      "id": 20,
+      "ip": "172.168.34.5",
+      "login": "Administrator",
+      "password": "sd7hHkfdL",
+      "activatedDate": "12.05.2017",
+      "deactivatedDate": "12.06.2017"
+    },
+    {
+      "id": 21,
+      "ip": "172.168.3844.5",
+      "login": "Administrator",
+      "password": "sd7hfE4tL",
+      "activatedDate": "18.05.2017",
+      "deactivatedDate": "18.06.2017"
+    },
+    {
+      "id": 22,
+      "ip": "172.168.784.5",
+      "login": "Administrator",
+      "password": "sdFFHkLL",
+      "activatedDate": "22.08.2017",
+      "deactivatedDate": "22.09.2017"
+    },
+    {
+      "id": 23,
+      "ip": "172.178.23.33",
+      "login": "Administrator",
+      "password": "sd7hHgghkLL",
+      "activatedDate": "02.05.2017",
+      "deactivatedDate": "02.06.2017"
+    },
+    {
+      "id": 24,
+      "ip": "172.169.34.76",
+      "login": "Administrator",
+      "password": "sfhgHkLL",
+      "activatedDate": "17.05.2017",
+      "deactivatedDate": "17.06.2017"
+    },
+    {
+      "id": 25,
+      "ip": "172.168.84.54",
+      "login": "Administrator",
+      "password": "jg7hHkLL",
+      "activatedDate": "21.03.2017",
+      "deactivatedDate": "21.04.2017"
+    },
+    {
+      "id": 26,
+      "ip": "172.168.84.54",
+      "login": "Administrator",
+      "password": "jg7hHkLL",
+      "activatedDate": "21.03.2017",
+      "deactivatedDate": "21.04.2017"
+    }
+  ],
+  "social-accounts": [
+    {
+      "vdsId": 1,
+      "name": "vk",
+      "login": "vsili_vk_login_mock",
+      "password": "vkPassMock",
+      "notes": "some test note 1",
+      "id": 1
+    },
+    {
+      "vdsId": 1,
+      "name": "youtube",
+      "login": "vsili_youtube_login_mock",
+      "password": "ytPassMock",
+      "notes": "some test note 2",
+      "id": 2
+    },
+    {
+      "vdsId": 1,
+      "name": "twitter",
+      "login": "vsili_twitter_login_mock",
+      "password": "trPassMock",
+      "notes": "some test note 3",
+      "id": 3
+    },
+    {
+      "vdsId": 1,
+      "name": "YouTube",
+      "login": "asdf",
+      "password": "fda",
+      "notes": "asd",
+      "id": 4
+    }
+  ]
 }
