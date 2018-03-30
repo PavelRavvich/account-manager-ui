@@ -67,14 +67,14 @@ export class VdsCardComponent implements OnInit, OnDestroy {
         dialogRef.afterClosed().subscribe(data => {
             if (!!data) {
                 this.socialService.addSocialAccount(
-                        new SocialAccount(
-                            this.vds.id, 
-                            data.socialType, 
-                            data.login, 
-                            data.password, 
-                            data.notes
-                        )
-                    ).subscribe((result: SocialAccount) => {
+                    new SocialAccount(
+                        this.vds.id, 
+                        data.socialType, 
+                        data.login, 
+                        data.password, 
+                        data.notes
+                    )
+                ).subscribe((result: SocialAccount) => {
                     this.loadSocialAccounts();
                         console.log(result);
                     });
