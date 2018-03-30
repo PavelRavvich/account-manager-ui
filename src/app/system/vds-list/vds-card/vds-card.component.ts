@@ -16,7 +16,6 @@ import { AddSocialComponent } from './add-social/add-social.component';
     styleUrls: ['./vds-card.component.css']
 })
 export class VdsCardComponent implements OnInit, OnDestroy {
-
     /**
      * Base info about current VDS.
      */
@@ -117,8 +116,8 @@ export class VdsCardComponent implements OnInit, OnDestroy {
                     .subscribe((vds: Vds) => {
                         this.vds = vds;
                         this.vdsDataIsLoaded = true;
-                });
-        });
+                    });
+            });
     }
 
     /**
@@ -133,8 +132,8 @@ export class VdsCardComponent implements OnInit, OnDestroy {
                     .subscribe((acc: SocialAccount[]) => {
                         this.accounts = acc;
                         this.socialDataIdLoaded = true;
-                });
-        });
+                    });
+            });
     }
 
     /**
