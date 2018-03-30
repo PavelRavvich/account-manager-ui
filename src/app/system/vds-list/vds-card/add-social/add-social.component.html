@@ -1,0 +1,30 @@
+<h1 mat-dialog-title>Add social account</h1>
+<div mat-dialog-content>
+    <mat-form-field>
+        <mat-select placeholder="Social Type" [(ngModel)]="data.socialType">
+            <mat-option value="YouTube">YouTube</mat-option>
+            <mat-option value="Twitter">Twitter</mat-option>
+            <mat-option value="Instagram">Instagram</mat-option>
+            <mat-option value="VK">VK</mat-option>
+            <mat-option value="OK">OK</mat-option>
+            <mat-option value="Facebook">Facebook</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+        <input matInput [(ngModel)]="data.login" placeholder="Login">
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+        <input matInput [(ngModel)]="data.password" placeholder="Password">
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+        <input matInput type="number" [(ngModel)]="data.phone" placeholder="Phone">
+    </mat-form-field>
+    <br>
+    <mat-form-field class="example-full-width">
+        <textarea matInput [(ngModel)]="data.notes" placeholder="notes"></textarea>
+    </mat-form-field>
+    <div mat-dialog-actions>
+        <button mat-button (click)="onNoClick()">No Thanks</button>
+        <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
+    </div>

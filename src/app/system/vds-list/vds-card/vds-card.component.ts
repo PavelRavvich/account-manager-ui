@@ -1,12 +1,14 @@
 import {Component, OnInit, Input, OnDestroy} from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
+import { MatDialog } from '@angular/material';
 
 import { Vds } from '../../shared/model/vds.model';
 import { VdsService } from '../../shared/services/vds.service';
 import { SocialService } from '../../shared/services/social.service';
 import { SocialAccount } from '../../shared/model/socilal-account.model';
 import { ClipboardService } from '../../shared/services/clipboard.service';
+import { AddSocialComponent } from './add-social/add-social.component';
 
 @Component({
     selector: 'am-vds-card', 
@@ -15,15 +17,31 @@ import { ClipboardService } from '../../shared/services/clipboard.service';
 })
 export class VdsCardComponent implements OnInit, OnDestroy {
 
+    /**
+     * Base info about current VDS.
+     */
     vds: Vds;
     baseDataIsLoaded = false;
     subscriptionBaseData: Subscription;
 
+    /**
+     * All social account attached to current VDS.
+     */
     accounts: SocialAccount[] = [];
     socialDtaIdLoaded = false;
     subscriptionSocialData: Subscription;
 
-    constructor(private router: Router,
+    /**
+     * Fields of dialog flow rod addition of new social account.
+     */
+    socialType: string;
+    login: string;
+    password: string;
+    phone: string;
+    notes: string;
+
+    constructor(public dialog: MatDialog,
+                private router: Router,
                 private rote: ActivatedRoute,
                 private vdsSrrvice: VdsService,
                 private socialService: SocialService,
@@ -32,6 +50,28 @@ export class VdsCardComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.loadVds();
         this.loadSocialAccounts();
+    }
+
+    openDialog(): void {
+        let dialogRef = this.dialog.open(AddSocialComponent, {
+            width: '100%',
+            data: { 
+                socialType: this.socialType,
+                login: this.login,
+                password: this.password,
+                phone: this.phone,
+                notes: this.notes,
+            }
+        });
+    
+        dialogRef.afterClosed().subscribe(result => {
+            this.socialType = result.socialType;
+            this.password = result.password;
+            this.login = result.login;
+            this.phone = result.phone;
+            this.notes = result.notes;
+            console.log(result);
+        });
     }
 
     private loadVds(): void {
