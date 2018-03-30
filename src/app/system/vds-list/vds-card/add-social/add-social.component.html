@@ -1,7 +1,7 @@
 <h1 mat-dialog-title>Add social account</h1>
 <div mat-dialog-content>
     <mat-form-field>
-        <mat-select placeholder="Social Type" [(ngModel)]="data.socialType">
+        <mat-select [(value)]="selectedDefaultSocialType" placeholder="Social Type" [(ngModel)]="data.socialType">
             <mat-option value="YouTube">YouTube</mat-option>
             <mat-option value="Twitter">Twitter</mat-option>
             <mat-option value="Instagram">Instagram</mat-option>

@@ -37,6 +37,7 @@
                     Notes: {{acc.notes}}
                     <button class="material-icons" (click)="copyToClipboard(acc.notes)">content_copy</button>
                 </p>
+                <button mat-raised-button color="warn" (click)="deleteAccount(acc.id)">Delete account</button>
             </mat-tab>
         </div>
     </mat-tab-group>

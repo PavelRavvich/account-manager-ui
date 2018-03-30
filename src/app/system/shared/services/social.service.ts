@@ -21,4 +21,8 @@ export class SocialService extends CoreApi {
     addSocialAccount(account: SocialAccount): Observable < SocialAccount > {
         return this.post(`social-accounts`, account);
     }
+
+    deleteSocialAccount(id: number): Observable < SocialAccount > {
+        return this.delete(`social-accounts/`, id.toString());
+    }
 }

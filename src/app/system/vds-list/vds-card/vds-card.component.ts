@@ -31,15 +31,6 @@ export class VdsCardComponent implements OnInit, OnDestroy {
     socialDtaIdLoaded = false;
     subscriptionSocialData: Subscription;
 
-    /**
-     * Fields of dialog flow rod addition of new social account.
-     */
-    socialType: string;
-    login: string;
-    password: string;
-    phone: string;
-    notes: string;
-
     constructor(public dialog: MatDialog,
                 private router: Router,
                 private rote: ActivatedRoute,
@@ -53,16 +44,7 @@ export class VdsCardComponent implements OnInit, OnDestroy {
     }
 
     openDialogAddSocial(): MatDialogRef < AddSocialComponent > {
-        return this.dialog.open(AddSocialComponent, {
-            width: '100%',
-            data: { 
-                socialType: this.socialType,
-                login: this.login,
-                password: this.password,
-                phone: this.phone,
-                notes: this.notes,
-            }
-        });
+        return this.dialog.open(AddSocialComponent, { width: '100%', data: { socialType: 'YouTube' } });
     }
 
     openDialog(): void {
@@ -116,6 +98,11 @@ export class VdsCardComponent implements OnInit, OnDestroy {
     }
     copyToClipboard(text : string) : void {
         this.clipboardService.copyToClipboard(text);
+    }
+
+    deleteAccount(id: number): void {
+        this.socialService.deleteSocialAccount(id)
+            .subscribe(data => this.loadSocialAccounts());
     }
 
     ngOnDestroy() {

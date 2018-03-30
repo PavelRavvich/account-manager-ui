@@ -220,34 +220,15 @@
   "social-accounts": [
     {
       "vdsId": 1,
-      "name": "vk",
-      "login": "vsili_vk_login_mock",
-      "password": "vkPassMock",
-      "notes": "some test note 1",
-      "id": 1
-    },
-    {
-      "vdsId": 1,
-      "name": "youtube",
-      "login": "vsili_youtube_login_mock",
-      "password": "ytPassMock",
-      "notes": "some test note 2",
-      "id": 2
-    },
-    {
-      "vdsId": 1,
-      "name": "twitter",
-      "login": "vsili_twitter_login_mock",
-      "password": "trPassMock",
-      "notes": "some test note 3",
+      "name": "OK",
       "id": 3
     },
     {
       "vdsId": 1,
       "name": "YouTube",
       "login": "asdf",
-      "password": "fda",
-      "notes": "asd",
+      "password": "sds",
+      "notes": "erdgfd",
       "id": 4
     }
   ]
