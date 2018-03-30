@@ -8,8 +8,6 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 })
 export class AddSocialComponent {
 
-    selectedDefaultSocialType = 'YouTube';
-
     constructor(public dialogRef: MatDialogRef<AddSocialComponent>,
                 @Inject(MAT_DIALOG_DATA) public data: any) { }
 
