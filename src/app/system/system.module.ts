@@ -10,14 +10,16 @@ import {VdsService} from './shared/services/vds.service';
 import { VdsCardComponent } from './vds-list/vds-card/vds-card.component';
 import { SocialService } from './shared/services/social.service';
 import { ClipboardService } from './shared/services/clipboard.service';
+import { AddSocialComponent } from './vds-list/vds-card/add-social/add-social.component';
 
 @NgModule({
     declarations: [
-        SystemComponent, VdsListComponent, PhonesListComponent, VdsCardComponent
+        SystemComponent, VdsListComponent, PhonesListComponent, VdsCardComponent, AddSocialComponent
     ],
     imports: [
         SharedModule, CommonModule, AppRoutingModule
     ],
-    providers: [VdsService, SocialService, ClipboardService]
+    providers: [VdsService, SocialService, ClipboardService],
+    entryComponents: [AddSocialComponent]
 })
 export class SystemModule {}

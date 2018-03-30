@@ -15,6 +15,10 @@ export class SocialService extends CoreApi {
     }
 
     getSocialAccountsById(vdsId: string): Observable < SocialAccount[] > {
-        return this.get(`social-accounts?vdsId=${vdsId}`)
+        return this.get(`social-accounts?vdsId=${vdsId}`);
+    }
+
+    addSocialAccount(account: SocialAccount): Observable < SocialAccount > {
+        return this.post(`social-accounts`, account);
     }
 }

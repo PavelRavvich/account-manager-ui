@@ -8,13 +8,13 @@ export class CoreApi {
 
   constructor(public http: HttpClient) {
   }
-
-  public post(url: string, data: any = {}) {
-    return this.http.post(this.getUrl(url), data);
-  }
-
+  
   public get(url: string = ''): Observable<any> {
     return this.http.get(this.getUrl(url));
+  }
+
+  public post(url: string, data: any = {}): Observable < any > {
+    return this.http.post(this.getUrl(url), data);
   }
 
   private getUrl(url: string = ''): string {
