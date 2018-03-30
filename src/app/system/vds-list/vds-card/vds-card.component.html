@@ -1,4 +1,4 @@
-<div *ngIf="baseDataIsLoaded">
+<div *ngIf="vdsDataIsLoaded">
     <mat-card class="example-card">
         <mat-card-header>
             <mat-card-title>VDS</mat-card-title>
@@ -13,14 +13,14 @@
         </mat-card-content>
         <mat-card-actions>
             <button mat-raised-button color="primary" (click)="navToVdsList()">Back to VDS list</button>
-            <button mat-raised-button (click)="openDialog()">Add social account</button>
+            <button mat-raised-button (click)="addSocialAccount()">Add social account</button>
         </mat-card-actions>
     </mat-card>
 </div>
-<div *ngIf="socialDtaIdLoaded">
+<div *ngIf="socialDataIdLoaded">
     <mat-tab-group>
         <div *ngFor="let acc of accounts">
-            <mat-tab label={{acc.name}}>
+            <mat-tab label={{acc.socialType}}>
                 <p>
                     ID: {{acc.id}}
                     <button class="material-icons" (click)="copyToClipboard(acc.id)">content_copy</button>
@@ -38,6 +38,7 @@
                     <button class="material-icons" (click)="copyToClipboard(acc.notes)">content_copy</button>
                 </p>
                 <button mat-raised-button color="warn" (click)="deleteAccount(acc.id)">Delete account</button>
+                <button mat-raised-button color="primary" (click)="editSocialAccount(acc)">Edit account</button>
             </mat-tab>
         </div>
     </mat-tab-group>

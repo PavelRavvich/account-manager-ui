@@ -17,6 +17,10 @@ export class CoreApi {
     return this.http.post(this.getUrl(url), data);
   }
 
+  public put(url: string, data: any = {}): Observable < any > {
+    return this.http.put(this.getUrl(url), data);
+  }
+
   public delete(url: string, id: string): Observable < any > {
     return this.http.delete(`${this.getUrl(url) + id}`);
   }

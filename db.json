@@ -219,16 +219,27 @@
   ],
   "social-accounts": [
     {
+      "id": 1,
       "vdsId": 1,
-      "name": "OK",
-      "id": 3
+      "socialType": "YouTube",
+      "login": "44hk",
+      "password": "56",
+      "notes": "23"
+    },
+    {
+      "vdsId": 2,
+      "id": 2,
+      "socialType": "Instagram",
+      "login": "564",
+      "password": "67",
+      "notes": "89"
     },
     {
       "vdsId": 1,
-      "name": "YouTube",
-      "login": "asdf",
-      "password": "sds",
-      "notes": "erdgfd",
+      "socialType": "Twitter",
+      "login": "5678",
+      "password": "8765",
+      "notes": "56",
       "id": 4
     }
   ]
