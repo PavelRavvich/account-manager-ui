@@ -64,13 +64,21 @@ export class VdsCardComponent implements OnInit, OnDestroy {
             }
         });
     
-        dialogRef.afterClosed().subscribe(result => {
-            this.socialType = result.socialType;
-            this.password = result.password;
-            this.login = result.login;
-            this.phone = result.phone;
-            this.notes = result.notes;
-            console.log(result);
+        dialogRef.afterClosed().subscribe(data => {
+            if (!!data) {
+                this.socialService.addSocialAccount(
+                        new SocialAccount(
+                            this.vds.id, 
+                            data.socialType, 
+                            data.login, 
+                            data.password, 
+                            data.notes
+                        )
+                    ).subscribe((result: SocialAccount) => {
+                    this.loadSocialAccounts();
+                        console.log(result);
+                    });
+            }
         });
     }
 
@@ -87,6 +95,7 @@ export class VdsCardComponent implements OnInit, OnDestroy {
     }
 
     private loadSocialAccounts(): void {
+        this.socialDtaIdLoaded = false;
         this.subscriptionSocialData = this.rote.params
             .subscribe((params: Params) =>  {
                 return this.socialService
