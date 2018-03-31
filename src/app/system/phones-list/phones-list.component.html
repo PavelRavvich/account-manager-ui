@@ -1,3 +1,127 @@
-<p>
-  phones-list works!
-</p>
+<mat-accordion>
+    <mat-expansion-panel (opened)="filterOpenState = true" (closed)="filterOpenState = false">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                Filters
+            </mat-panel-title>
+            <mat-panel-description>
+                You can use filters for select by Phone Number parameters. Click for open.
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <div class="filter">
+            <form [formGroup]="filterForm">
+                <mat-form-field>
+                    <input matInput placeholder="Phone ID" id="id" formControlName="id">
+                </mat-form-field>
+
+                <mat-form-field>
+                    <input matInput placeholder="Phone number" id="number" formControlName="num">
+                </mat-form-field>
+
+                <mat-form-field>
+                    <input matInput placeholder="ID Social Account" id="socialAccId" formControlName="socialAccId">
+                </mat-form-field>
+
+                <mat-form-field>
+                    <input matInput placeholder="GSM Operator" id="operator" formControlName="operator">
+                </mat-form-field>
+
+                <mat-form-field>
+                    <input matInput placeholder="Operator Account Login" id="operatorAccLogin" formControlName="operatorAccLogin">
+                </mat-form-field>
+
+                <mat-form-field>
+                    <input matInput placeholder="Operator Account Password" id="operatorAccPass" formControlName="operatorAccPass">
+                </mat-form-field>
+
+                <div>
+                    <mat-form-field>
+                        <input matInput [matDatepicker]="picker1" placeholder="Active Date From" id="dateFrom" formControlName="dateFrom">
+                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                        <mat-datepicker #picker1></mat-datepicker>
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <input matInput [matDatepicker]="picker2" placeholder="Active Date To" id="dateTo" formControlName="dateTo">
+                        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                        <mat-datepicker #picker2></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="in-row">
+                    <button mat-raised-button color="primary" (click)="applyFilter()">Apply</button>
+                    <button mat-raised-button color="accent" (click)="disableFilter()">Clear</button>
+                </div>
+                <br>
+            </form>
+        </div>
+
+    </mat-expansion-panel>
+</mat-accordion>
+<div *ngIf="phonesIsLoaded">
+    <div class="example-container mat-elevation-z8">
+        <mat-table #table [dataSource]="phones">
+
+            <!-- ID Column -->
+            <ng-container matColumnDef="id">
+                <mat-header-cell *matHeaderCellDef> ID </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+            </ng-container>
+
+            <!-- Number Column -->
+            <ng-container matColumnDef="number">
+                <mat-header-cell *matHeaderCellDef> Number </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.num}} </mat-cell>
+            </ng-container>
+
+            <!-- Active Column -->
+            <ng-container matColumnDef="isActive">
+                <mat-header-cell *matHeaderCellDef> Active </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.isActive ? 'Active' : 'Deactive'}} </mat-cell>
+            </ng-container>
+
+            <!-- Reg Date Column -->
+            <ng-container matColumnDef="regDate">
+                <mat-header-cell *matHeaderCellDef> Reg Date </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.regDate}} </mat-cell>
+            </ng-container>
+
+            <!-- Operator Name Column -->
+            <ng-container matColumnDef="operator">
+                <mat-header-cell *matHeaderCellDef> Operator </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.operatorType}} </mat-cell>
+            </ng-container>
+
+            <!-- Site Column -->
+            <ng-container matColumnDef="site">
+                <mat-header-cell *matHeaderCellDef> Site </mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                    <a target="_blank" href="{{element.operatorUrl}}">To website</a></mat-cell>
+            </ng-container>
+
+            <!-- Login Column -->
+            <ng-container matColumnDef="operatorLogin">
+                <mat-header-cell *matHeaderCellDef> Login </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.operatorAccLogin}} </mat-cell>
+            </ng-container>
+
+            <!-- Password Column -->
+            <ng-container matColumnDef="operatorPassword">
+                <mat-header-cell *matHeaderCellDef> Password </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.operatorAccPass}} </mat-cell>
+            </ng-container>
+
+            <!-- Password Column -->
+            <ng-container matColumnDef="socialAccountIds">
+                <mat-header-cell *matHeaderCellDef> Social Account Ids </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.socialAccountIds}} </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+
+        <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]" [showFirstLastButtons]="true">
+        </mat-paginator>
+    </div>
+</div>
