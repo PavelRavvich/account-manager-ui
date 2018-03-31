@@ -45,40 +45,6 @@ export class PhonesListComponent implements OnInit {
         this.updateFilterInstance();
     }
 
-    private updateFilterInstance() : void {
-        this.filterForm = new FormGroup({
-            'id': new FormControl(null, []),
-            'num': new FormControl(null, []),
-            'dateFrom': new FormControl(null, []),
-            'dateTo': new FormControl(null, []),
-            'operator': new FormControl(null, []),
-            'operatorAccLogin': new FormControl(null, []),
-            'operatorAccPass': new FormControl(null, []),
-            'socialAccId': new FormControl(null, []),
-        });
-    }
-
-    private getDataFromServer() {
-        const data = [
-            new Phone(true, '+79001245000', 'Beeline', 'https://spb.beeline.ru/customers/', '10.03.2018', ['1', '2', '3'], 'max@login', 'max@pass', 1),
-            new Phone(true, '+79001245323', 'MTS', 'https://spb.beeline.ru/customers/', '15.03.2018', ['1', '20', '3'], 'max@login', 'max@pass', 2),
-            new Phone(true, '+79001245323', 'Beeline', 'https://spb.beeline.ru/customers/','15.03.2018', ['1', '2', '3'], 'test@login', 'max@pass', 3),
-            new Phone(true, '+79001245323', 'Beeline', 'https://spb.beeline.ru/customers/', '15.03.2018', ['1', '2', '3'], 'max@login', 'test@pass', 4),
-            new Phone(true, '+79001245323', 'Beeline', 'https://spb.beeline.ru/customers/', '15.03.2018', ['1', '2', '3'], 'max@login', 'max@pass', 5),
-            new Phone(true, '+79001245323', 'Beeline', 'https://spb.beeline.ru/customers/', '15.03.2018', ['1', '2', '3'], 'max@login', 'max@pass', 6),
-            new Phone(true, '+79001245323', 'Beeline', 'https://spb.beeline.ru/customers/', '15.03.2018', ['1', '2', '3'], 'max@login', 'max@pass', 7),
-            new Phone(true, '+79001245323', 'Beeline', 'https://spb.beeline.ru/customers/', '15.03.2018', ['1', '2', '3'], 'max@login', 'max@pass', 8),
-            new Phone(true, '+79001245323', 'Beeline', 'https://spb.beeline.ru/customers/', '15.03.2018', ['1', '2', '3'], 'max@login', 'max@pass', 9),
-            new Phone(true, '+79001245323', 'Beeline', 'https://spb.beeline.ru/customers/', '15.03.2018', ['1', '2', '3'], 'max@login', 'max@pass', 10),
-            new Phone(true, '+79001245323', 'Beeline', 'https://spb.beeline.ru/customers/', '15.03.2018', ['1', '2', '3'], 'max@login', 'max@pass', 11),
-            new Phone(true, '+79001245323', 'Beeline', 'https://spb.beeline.ru/customers/', '15.03.2018', ['1', '2', '3'], 'max@login', 'max@pass', 12),
-            new Phone(true, '+79001245323', 'Beeline', 'https://spb.beeline.ru/customers/', '15.03.2018', ['1', '2', '3'], 'max@login', 'max@pass', 13),
-            new Phone(true, '+79001245323', 'Beeline', 'https://spb.beeline.ru/customers/', '15.03.2018', ['1', '2', '3'], 'max@login', 'max@pass', 14)
-        ];
-        this.phones = new MatTableDataSource<Phone>(data);
-        this.phonesIsLoaded = true;
-    }
-
     applyFilter(): void {
         this.filterById();
         this.filterByNumber();
@@ -87,6 +53,11 @@ export class PhonesListComponent implements OnInit {
         this.filterByOperatorLogin();
         this.filterByOperatorPassword();
         this.filterByRegDate();
+    }
+    
+    disableFilter(): void {
+        this.getDataFromServer();
+        this.updateFilterInstance();
     }
 
     private filterById(): void {
@@ -141,24 +112,49 @@ export class PhonesListComponent implements OnInit {
         const { dateFrom, dateTo } = this.filterForm.value;
         if (!!dateFrom && !!dateTo) {
             const from = moment(dateFrom, 'MM-DD-YYYY');
-            debugger;
             const to = moment(dateTo, 'MM-DD-YYYY');
             const data = this.phones.data.filter((phone: Phone) => {
                 if (!phone.regDate) {
                     return false;
                 }
                 const regDate = moment(phone.regDate, 'DD-MM-YYYY')
-                const result = regDate.isBetween(from, to);
-                console.log(from, to, regDate);
-                debugger;
-                return result;
+                return regDate.isBetween(from, to, 'days', '[]');
             });
             this.phones = new MatTableDataSource<Phone>(data);
         }
     }
 
-    disableFilter() {
-        this.getDataFromServer();
-        this.updateFilterInstance();
+    private updateFilterInstance() : void {
+        this.filterForm = new FormGroup({
+            'id': new FormControl(null, []),
+            'num': new FormControl(null, []),
+            'dateFrom': new FormControl(null, []),
+            'dateTo': new FormControl(null, []),
+            'operator': new FormControl(null, []),
+            'operatorAccLogin': new FormControl(null, []),
+            'operatorAccPass': new FormControl(null, []),
+            'socialAccId': new FormControl(null, []),
+        });
+    }
+
+    private getDataFromServer() {
+        const data = [
+            new Phone(true, '+79001245000', 'Beeline', 'https://spb.beeline.ru/customers/', '10.03.2018', ['1', '2', '3'], 'max@login', 'max@pass', 1),
+            new Phone(true, '+79001245323', 'MTS', 'https://spb.beeline.ru/customers/', '15.03.2018', ['1', '20', '3'], 'max@login', 'max@pass', 2),
+            new Phone(true, '+79001245323', 'Beeline', 'https://spb.beeline.ru/customers/','15.03.2018', ['1', '2', '3'], 'test@login', 'max@pass', 3),
+            new Phone(true, '+79001245323', 'Beeline', 'https://spb.beeline.ru/customers/', '15.03.2018', ['1', '2', '3'], 'max@login', 'test@pass', 4),
+            new Phone(true, '+79001245323', 'Beeline', 'https://spb.beeline.ru/customers/', '15.03.2018', ['1', '2', '3'], 'max@login', 'max@pass', 5),
+            new Phone(true, '+79001245323', 'Beeline', 'https://spb.beeline.ru/customers/', '15.03.2018', ['1', '2', '3'], 'max@login', 'max@pass', 6),
+            new Phone(true, '+79001245323', 'Beeline', 'https://spb.beeline.ru/customers/', '15.03.2018', ['1', '2', '3'], 'max@login', 'max@pass', 7),
+            new Phone(true, '+79001245323', 'Beeline', 'https://spb.beeline.ru/customers/', '15.03.2018', ['1', '2', '3'], 'max@login', 'max@pass', 8),
+            new Phone(true, '+79001245323', 'Beeline', 'https://spb.beeline.ru/customers/', '15.03.2018', ['1', '2', '3'], 'max@login', 'max@pass', 9),
+            new Phone(true, '+79001245323', 'Beeline', 'https://spb.beeline.ru/customers/', '15.03.2018', ['1', '2', '3'], 'max@login', 'max@pass', 10),
+            new Phone(true, '+79001245323', 'Beeline', 'https://spb.beeline.ru/customers/', '15.03.2018', ['1', '2', '3'], 'max@login', 'max@pass', 11),
+            new Phone(true, '+79001245323', 'Beeline', 'https://spb.beeline.ru/customers/', '15.03.2018', ['1', '2', '3'], 'max@login', 'max@pass', 12),
+            new Phone(true, '+79001245323', 'Beeline', 'https://spb.beeline.ru/customers/', '15.03.2018', ['1', '2', '3'], 'max@login', 'max@pass', 13),
+            new Phone(true, '+79001245323', 'Beeline', 'https://spb.beeline.ru/customers/', '15.03.2018', ['1', '2', '3'], 'max@login', 'max@pass', 14)
+        ];
+        this.phones = new MatTableDataSource<Phone>(data);
+        this.phonesIsLoaded = true;
     }
 }
