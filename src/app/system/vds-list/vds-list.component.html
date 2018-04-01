@@ -1,5 +1,3 @@
-<h4 class="text-center">VDSs</h4>
-
 <mat-accordion>
     <mat-expansion-panel (opened)="filterOpenState = true" (closed)="filterOpenState = false">
         <mat-expansion-panel-header>
@@ -21,30 +19,33 @@
                     <input matInput placeholder="IP" id="ip" formControlName="ip">
                 </mat-form-field>
 
+                <br>
                 <mat-form-field>
-                    <input matInput [matDatepicker]="picker1" placeholder="From" id="dateFrom" formControlName="dateFrom">
+                    <input matInput [matDatepicker]="picker1" placeholder="Range From" id="dateFrom" formControlName="dateFrom">
                     <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                     <mat-datepicker #picker1></mat-datepicker>
                 </mat-form-field>
 
                 <mat-form-field>
-                    <input matInput [matDatepicker]="picker2" placeholder="To" id="dateTo" formControlName="dateTo">
+                    <input matInput [matDatepicker]="picker2" placeholder="Range To" id="dateTo" formControlName="dateTo">
                     <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                     <mat-datepicker #picker2></mat-datepicker>
                 </mat-form-field>
 
                 <div class="in-row">
                     <section class="example-section">
-                        <mat-radio-group formControlName="byActivate">
-                            <mat-radio-button class="example-margin" value="activate">
-                                Activate
+                        <mat-radio-group formControlName="dateBy">
+                            <mat-radio-button class="example-margin" value="endDate">
+                                End Date
                             </mat-radio-button>
-                            <mat-radio-button class="example-margin" value="deactivate">
-                                Deactivate
+                            <br>
+                            <mat-radio-button class="example-margin" value="startDate">
+                                Start Date
                             </mat-radio-button>
                         </mat-radio-group>
                     </section>
-                    <button mat-raised-button color="primary" (click)="applyFilter()">Apply</button>
+                    <br>
+                    <button mat-raised-button color="primary" (click)="applyFilter()">Search</button>
                     <button mat-raised-button color="accent" (click)="disableFilter()">Clear</button>
                 </div>
                 <br>

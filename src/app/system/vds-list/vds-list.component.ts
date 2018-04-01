@@ -23,31 +23,65 @@ export class VdsListComponent implements OnInit {
         'endDate',
         'detail'
     ];
+
+    /**
+     * Data of table representation.
+     */
     dataSource : MatTableDataSource < Vds > = new MatTableDataSource([]);
-    filterForm : FormGroup;
     dataIsLoaded = false;
+    
+    /**
+     * Include all FormConstrols in main filter group.
+     */
+    filterForm : FormGroup;
 
-    paginator : MatPaginator;
-
+    /**
+     * Open or close filter flag-switcher.
+     */
     filterOpenState : boolean = false;
-    idFilter : string = '';
-    ipFilter : string = '';
 
+    /**
+     * Pagination properties.
+     */
+    paginator : MatPaginator;
     @ViewChild(MatPaginator)
     set appBacon(paginator : MatPaginator) {
         this.paginator = paginator;
         this.dataSource.paginator = this.paginator;
     }
 
+    /**
+     * Default constructor.
+     * 
+     * @param clipboardService for interactive with clipboard.
+     * @param vdsService move to backend for data.
+     */
     constructor(private clipboardService: ClipboardService,
                 private vdsService : VdsService,
                 private router: Router,) {}
 
     ngOnInit() {
-        this.updateFilterInstance();
-        this.getDataFromServer();
+        this.refreshFilter();
+        this.reqVdsList();
     }
-		
+
+    /**
+     * Create new filter instance instead old object.
+     */
+    private refreshFilter() : void {
+        this.filterForm = new FormGroup({
+            'ip': new FormControl(null, []),
+            'id': new FormControl(null, []),
+            'dateFrom': new FormControl(null, []),
+            'dateTo': new FormControl(null, []),
+            'dateBy': new FormControl('endDate', [])
+        });
+    }
+
+    /**
+     * Apply filter.
+     * Useing all FormConstrol with value not null. If value FormControl will be ignored.
+     */
     applyFilter() : void {
         const {ip, id} = this.filterForm.value;
         this.filterByDate();
@@ -55,38 +89,62 @@ export class VdsListComponent implements OnInit {
         this.filterByIp(ip);
     }
 
+    /**
+     * Update all dynamic data on page.
+     */
     disableFilter() : void {
-        this.getDataFromServer();
-        this.updateFilterInstance();
+        this.reqVdsList();
+        this.refreshFilter();
+    }
+
+    /**
+     * Copy text to clipboard buffer.
+     * 
+     * @param text for copy.
+     */
+    copyToClipboard(text : string) : void {
+        this.clipboardService.copyToClipboard(text);
+    }
+
+    /**
+     * Navigate to VDS ditails page.
+     * 
+     * @param id of Vds.
+     */
+    getDetail(id : number) {
+        this.router.navigate(['vds-list', id.toString()]);
     }
 
     private filterByDate() : void {
-        const {dateFrom, dateTo, byActivate} = this.filterForm.value;
-        if (!!dateFrom && !!dateTo) {
-            const result = (byActivate === 'activate')
-                ? this.filterActivateBetween(dateFrom, dateTo)
-                : this.filterDeactivateBetween(dateFrom, dateTo);
-            this.dataSource = new MatTableDataSource(result);
+        const {dateFrom, dateTo, dateBy} = this.filterForm.value;
+        if (!dateFrom || !dateTo) {
+            return;
         }
+        const filteredData: Vds[] = (dateBy === 'endDate' 
+            ? this.filterByEndDate() : this.filterByStartDate());
+
+        this.dataSource = new MatTableDataSource(filteredData);
     }
 
-    private filterActivateBetween(dateFilterFrom : string, dateFilterTo : string) : Vds[] {
-        const filterFrom = moment(dateFilterFrom);
-        const filterTo = moment(dateFilterTo);
-        return this.dataSource.data
-            .filter((vds : Vds) => {
-                const activate = moment(vds.activatedDate, 'DD.MM.YYYY');
-                return activate.isBetween(filterFrom, filterTo);
+    private filterByEndDate(): Vds[] {
+        const {dateFrom, dateTo} = this.filterForm.value;
+        const from = moment(dateFrom, 'MM-DD-YYYY');
+        const to = moment(dateTo, 'MM-DD-YYYY');
+        return this.dataSource
+            .data.filter((vds: Vds) => {
+                const deactivated = moment(vds.deactivatedDate, 'DD.MM.YYYY');
+                return deactivated.isBetween(from, to, 'days', '[]');
             });
     }
 
-    private filterDeactivateBetween(dateFilterFrom : string, dateFilterTo : string) : Vds[] {
-        const filterFrom = moment(dateFilterFrom);
-        const filterTo = moment(dateFilterTo);
-        return this.dataSource.data
-            .filter((vds : Vds) => {
-                const deactivate = moment(vds.deactivatedDate, 'DD.MM.YYYY');
-                return deactivate.isBetween(filterFrom, filterTo);
+    private filterByStartDate(): Vds[] {
+        const {dateFrom, dateTo} = this.filterForm.value;
+        const from = moment(dateFrom, 'MM-DD-YYYY');
+        const to = moment(dateTo, 'MM-DD-YYYY');
+        return this.dataSource
+            .data.filter((vds: Vds) => {
+                const activated = moment(vds.activatedDate, 'DD.MM.YYYY');
+                return activated.isBetween(from, to, 'days', '[]');
             });
     }
 
@@ -106,29 +164,11 @@ export class VdsListComponent implements OnInit {
         }
     }
 
-    private getDataFromServer() : void {
+    private reqVdsList() : void {
         this.vdsService.getVdsList()
             .subscribe((vds : Vds[]) => {
                 this.dataSource = new MatTableDataSource(vds);
                 this.dataIsLoaded = true;
             });
-    }
-
-    private updateFilterInstance() : void {
-        this.filterForm = new FormGroup({
-            'ip': new FormControl(null, []),
-            'id': new FormControl(null, []),
-            'dateFrom': new FormControl(null, []),
-            'dateTo': new FormControl(null, []),
-            'byActivate': new FormControl('activate', [])
-        });
-    }
-
-    copyToClipboard(text : string) : void {
-        this.clipboardService.copyToClipboard(text);
-    }
-
-    getDetail(id : number) {
-        this.router.navigate(['vds-list', id.toString()]);
     }
 }

@@ -45,6 +45,9 @@ export class PhonesListComponent implements OnInit {
         this.updateFilterInstance();
     }
 
+    /**
+     * Applying all filters.
+     */
     applyFilter(): void {
         this.filterById();
         this.filterByNumber();
