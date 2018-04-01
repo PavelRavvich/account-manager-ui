@@ -23,7 +23,7 @@
 
             <!-- ID Column -->
             <ng-container matColumnDef="id">
-                <mat-header-cell *matHeaderCellDef mat-sort-header> ID Account </mat-header-cell>
+                <mat-header-cell *matHeaderCellDef> ID Account </mat-header-cell>
                 <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
             </ng-container>
 
@@ -35,7 +35,7 @@
 
             <!-- Reg Date Column -->
             <ng-container matColumnDef="regDate">
-                <mat-header-cell *matHeaderCellDef mat-sort-header> Reg Date </mat-header-cell>
+                <mat-header-cell *matHeaderCellDef mat-sort-header (click)="sorting()"> Reg Date </mat-header-cell>
                 <mat-cell *matCellDef="let element"> {{element.regDate}} </mat-cell>
             </ng-container>
 

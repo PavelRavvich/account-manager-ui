@@ -55,7 +55,9 @@ export class VdsCardComponent implements OnInit, OnDestroy {
         this.loadVds();
         this.loadSocialAccounts();
     }
-
+    sorting(){
+        console.log('sort')
+    }
     /**
      * Handle addition SocialAccount event.
      */
@@ -159,7 +161,7 @@ export class VdsCardComponent implements OnInit, OnDestroy {
                 return this.socialService
                     .getSocialAccountsById(params['id'])
                     .subscribe((acc: SocialAccount[]) => {
-                        this.dataSource = new MatTableDataSource(acc);
+                        this.dataSource = new MatTableDataSource(acc.reverse());
                         this.socialAccountsIsLoaded = true;
                     });
             });
