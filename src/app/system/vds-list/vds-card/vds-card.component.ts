@@ -81,6 +81,7 @@ export class VdsCardComponent implements OnInit, OnDestroy {
                     socialType: account.socialType,
                     login: account.login,
                     password: account.password,
+                    phone: account.phone,
                     notes: account.notes
                 } 
             }).afterClosed().subscribe((updated: SocialAccount) => {
