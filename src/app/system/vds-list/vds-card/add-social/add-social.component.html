@@ -10,6 +10,18 @@
             <mat-option value="Facebook">Facebook</mat-option>
         </mat-select>
     </mat-form-field>
+    <mat-form-field>
+        <mat-select placeholder="Status" [(ngModel)]="data.status">
+            <mat-option value="Active">Active</mat-option>
+            <mat-option value="Temporarily Ban">Temporarily Ban</mat-option>
+            <mat-option value="Eternal Ban">Eternal Ban</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput [matDatepicker]="picker" placeholder="Choose a date" [(ngModel)]="data.regDate">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
     <br>
     <mat-form-field>
         <input matInput [(ngModel)]="data.login" placeholder="Login">
@@ -18,7 +30,7 @@
         <input matInput [(ngModel)]="data.password" placeholder="Password">
     </mat-form-field>
     <mat-form-field class="example-full-width">
-        <input matInput type="number" [(ngModel)]="data.phone" placeholder="Phone">
+        <input matInput [(ngModel)]="data.phone" placeholder="Phone">
     </mat-form-field>
     <br>
     <mat-form-field class="example-full-width">

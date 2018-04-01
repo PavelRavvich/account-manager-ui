@@ -1,7 +1,8 @@
-import {Component, OnInit, Input, OnDestroy} from '@angular/core';
+import {Component, OnInit, Input, OnDestroy, ViewChild} from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
-import { MatDialog, MatDialogRef } from '@angular/material';
+import { MatDialog, MatDialogRef, MatSort, MatTableDataSource } from '@angular/material';
+import * as moment from 'moment';
 
 import { Vds } from '../../shared/model/vds.model';
 import { VdsService } from '../../shared/services/vds.service';
@@ -26,9 +27,17 @@ export class VdsCardComponent implements OnInit, OnDestroy {
     /**
      * All social account attached to current VDS.
      */
-    accounts: SocialAccount[] = [];
-    socialDataIdLoaded = false;
     private subscriptionSocialData: Subscription;
+    displayedColumns = ['id', 'socialType', 'regDate', 'status', 'phone', 'login', 'password', 'notes', 'edit', 'delete'];
+    dataSource = new MatTableDataSource([]);
+    socialAccountsIsLoaded = false;
+    
+    sort: MatSort;
+    @ViewChild(MatSort)
+    set appBacon(sort : MatSort) {
+        this.sort = sort;
+        this.dataSource.sort = this.sort;
+    }
 
     /**
      * Default constructor.
@@ -51,10 +60,22 @@ export class VdsCardComponent implements OnInit, OnDestroy {
      * Handle addition SocialAccount event.
      */
     addSocialAccount(): void {
-        this.openAddDialog().afterClosed().subscribe((formData: SocialAccount) => {
-            if (!!formData) {
-                const account = new SocialAccount(this.vds.id, formData.socialType, formData.login, formData.password, formData.notes)
-                this.socialService.addSocialAccount(account).subscribe((result: SocialAccount) => this.loadSocialAccounts());
+        this.openAddDialog().afterClosed()
+            .subscribe((formData: SocialAccount) => {
+                if (!!formData) {
+                    const account = new SocialAccount(
+                        this.vds.id, 
+                        formData.socialType, 
+                        formData.login, 
+                        formData.password, 
+                        formData.notes,
+                        formData.phone,
+                        moment(formData.regDate, 'YYYY-MM-DD').format('DD.MM.YYYY'), 
+                        formData.status,
+                        formData.id 
+                    );
+                    this.socialService.addSocialAccount(account)
+                        .subscribe((result: SocialAccount) => this.loadSocialAccounts());
             }
         });
     }
@@ -63,7 +84,7 @@ export class VdsCardComponent implements OnInit, OnDestroy {
      * Open dialog window for addition new SocialAccount with corresponding form.
      */
     private openAddDialog(): MatDialogRef < AddSocialComponent > {
-        return this.dialog.open(AddSocialComponent, { width: '100%', data: { socialType: 'YouTube' } });
+        return this.dialog.open(AddSocialComponent, { width: '100%', data: { socialType: 'YouTube', status: 'Active', regDate: new Date() } });
     }
 
     /**
@@ -78,14 +99,19 @@ export class VdsCardComponent implements OnInit, OnDestroy {
                 data: { 
                     id: account.id,
                     vdsId: account.vdsId,
-                    socialType: account.socialType,
                     login: account.login,
                     password: account.password,
+                    socialType: account.socialType,
+                    status: account.status,
                     phone: account.phone,
-                    notes: account.notes
+                    notes: account.notes,
+                    regDate: new Date(moment(account.regDate, 'DD.MM.YYYY').format('MM/DD/YYYY'))
                 } 
             }).afterClosed().subscribe((updated: SocialAccount) => {
-                if (JSON.stringify(account) !== JSON.stringify(updated)) {
+                if (!!updated && (JSON.stringify(account) !== JSON.stringify(updated))) {
+                    if (!!updated.regDate) {
+                        updated.regDate = moment(new Date(updated.regDate)).format('DD.MM.YYYY')
+                    }
                     updated.id = account.id;
                     this.editAccount(updated);
                 }
@@ -99,10 +125,12 @@ export class VdsCardComponent implements OnInit, OnDestroy {
      */
     private editAccount(account: SocialAccount): void {
         this.socialService.updateSocialAccount(account)
-            .subscribe((dbVer: SocialAccount) => {
-                const target = this.accounts.find(locVer => dbVer.id === locVer.id);
-                const index = this.accounts.indexOf(target);
-                this.accounts[index] = dbVer;
+            .subscribe((dbVersion: SocialAccount) => {
+                const tmp = this.dataSource.data;
+                const target = tmp.find(localVersion => dbVersion.id === localVersion.id);
+                const index = tmp.indexOf(target);
+                tmp[index] = dbVersion;
+                this.dataSource = new MatTableDataSource(tmp);
             }, error => alert(error));
     }
 
@@ -125,14 +153,14 @@ export class VdsCardComponent implements OnInit, OnDestroy {
      * Loading data about SocialAccounts attached to current VDS form bacend and filling corresponding field `this.accounts`.
      */
     private loadSocialAccounts(): void {
-        this.socialDataIdLoaded = false;
+        this.socialAccountsIsLoaded = false;
         this.subscriptionSocialData = this.rote.params
             .subscribe((params: Params) =>  {
                 return this.socialService
                     .getSocialAccountsById(params['id'])
                     .subscribe((acc: SocialAccount[]) => {
-                        this.accounts = acc;
-                        this.socialDataIdLoaded = true;
+                        this.dataSource = new MatTableDataSource(acc);
+                        this.socialAccountsIsLoaded = true;
                     });
             });
     }

@@ -17,33 +17,76 @@
         </mat-card-actions>
     </mat-card>
 </div>
-<div *ngIf="socialDataIdLoaded">
-    <mat-tab-group>
-        <div *ngFor="let acc of accounts">
-            <mat-tab label={{acc.socialType}}>
-                <p>
-                    ID: {{acc.id}}
-                    <button class="material-icons" (click)="copyToClipboard(acc.id)">content_copy</button>
-                </p>
-                <p>
-                    Phone: {{acc.phone}}
-                    <button class="material-icons" (click)="copyToClipboard(acc.notes)">content_copy</button>
-                </p>
-                <p>
-                    Login: {{acc.login}}
-                    <button class="material-icons" (click)="copyToClipboard(acc.login)">content_copy</button>
-                </p>
-                <p>
-                    Password: {{acc.password}}
-                    <button class="material-icons" (click)="copyToClipboard(acc.password)">content_copy</button>
-                </p>
-                <p>
-                    Notes: {{acc.notes}}
-                    <button class="material-icons" (click)="copyToClipboard(acc.notes)">content_copy</button>
-                </p>
-                <button mat-raised-button color="warn" (click)="deleteAccount(acc.id)">Delete account</button>
-                <button mat-raised-button color="primary" (click)="editSocialAccount(acc)">Edit account</button>
-            </mat-tab>
-        </div>
-    </mat-tab-group>
+<div *ngIf="socialAccountsIsLoaded">
+    <div class="example-container mat-elevation-z8">
+        <mat-table #table [dataSource]="dataSource" matSort>
+
+            <!-- ID Column -->
+            <ng-container matColumnDef="id">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> ID Account </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+            </ng-container>
+
+            <!-- SocialType Column -->
+            <ng-container matColumnDef="socialType">
+                <mat-header-cell *matHeaderCellDef> Social Type </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.socialType}} </mat-cell>
+            </ng-container>
+
+            <!-- Reg Date Column -->
+            <ng-container matColumnDef="regDate">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Reg Date </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.regDate}} </mat-cell>
+            </ng-container>
+
+            <!-- Status Column -->
+            <ng-container matColumnDef="status">
+                <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.status}} </mat-cell>
+            </ng-container>
+
+            <!-- Phone Column -->
+            <ng-container matColumnDef="phone">
+                <mat-header-cell *matHeaderCellDef> Phone </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.phone}} </mat-cell>
+            </ng-container>
+
+            <!-- Login Column -->
+            <ng-container matColumnDef="login">
+                <mat-header-cell *matHeaderCellDef> Login </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.login}} </mat-cell>
+            </ng-container>
+
+            <!-- Password Column -->
+            <ng-container matColumnDef="password">
+                <mat-header-cell *matHeaderCellDef> Password </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.password}} </mat-cell>
+            </ng-container>
+
+            <!-- Notes Column -->
+            <ng-container matColumnDef="notes">
+                <mat-header-cell *matHeaderCellDef> Notes </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.notes}} </mat-cell>
+            </ng-container>
+
+            <!-- Edit Acc -->
+            <ng-container matColumnDef="edit">
+                <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                    <button mat-raised-button color="primary" (click)="editSocialAccount(element)">Edit</button>
+                </mat-cell>
+            </ng-container>
+
+            <!-- Delete Acc -->
+            <ng-container matColumnDef="delete">
+                <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                    <button mat-raised-button color="warn" (click)="deleteAccount(element.id)">Delete</button>
+                </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+    </div>
 </div>

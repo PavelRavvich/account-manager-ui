@@ -5,5 +5,7 @@ export class SocialAccount {
                 public password: string,
                 public notes?: string,
                 public phone?: string,
+                public regDate?: string,
+                public status?: string,
                 public id?: number) {}
 }
