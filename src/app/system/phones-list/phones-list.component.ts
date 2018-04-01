@@ -4,6 +4,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 import * as moment from 'moment';
 
 import { Phone } from '../shared/model/phone.model';
+import { PhoneService } from '../shared/services/phone.service';
 
 @Component({
     selector: 'am-phones-list',
@@ -39,6 +40,9 @@ export class PhonesListComponent implements OnInit {
     
     filterOpenState : boolean = false;
     filterForm : FormGroup;
+
+    constructor(private phoneService: PhoneService) {
+    }
 
     ngOnInit() {
         this.getDataFromServer();
@@ -141,23 +145,28 @@ export class PhonesListComponent implements OnInit {
     }
 
     private getDataFromServer() {
-        const data = [
-            new Phone(true, '+79001245000', 'Beeline', 'https://spb.beeline.ru/customers/', '10.03.2018', ['1', '2', '3'], 'max@login', 'max@pass', 1),
-            new Phone(true, '+79001245323', 'MTS', 'https://spb.beeline.ru/customers/', '15.03.2018', ['1', '20', '3'], 'max@login', 'max@pass', 2),
-            new Phone(true, '+79001245323', 'Beeline', 'https://spb.beeline.ru/customers/','15.03.2018', ['1', '2', '3'], 'test@login', 'max@pass', 3),
-            new Phone(true, '+79001245323', 'Beeline', 'https://spb.beeline.ru/customers/', '15.03.2018', ['1', '2', '3'], 'max@login', 'test@pass', 4),
-            new Phone(true, '+79001245323', 'Beeline', 'https://spb.beeline.ru/customers/', '15.03.2018', ['1', '2', '3'], 'max@login', 'max@pass', 5),
-            new Phone(true, '+79001245323', 'Beeline', 'https://spb.beeline.ru/customers/', '15.03.2018', ['1', '2', '3'], 'max@login', 'max@pass', 6),
-            new Phone(true, '+79001245323', 'Beeline', 'https://spb.beeline.ru/customers/', '15.03.2018', ['1', '2', '3'], 'max@login', 'max@pass', 7),
-            new Phone(true, '+79001245323', 'Beeline', 'https://spb.beeline.ru/customers/', '15.03.2018', ['1', '2', '3'], 'max@login', 'max@pass', 8),
-            new Phone(true, '+79001245323', 'Beeline', 'https://spb.beeline.ru/customers/', '15.03.2018', ['1', '2', '3'], 'max@login', 'max@pass', 9),
-            new Phone(true, '+79001245323', 'Beeline', 'https://spb.beeline.ru/customers/', '15.03.2018', ['1', '2', '3'], 'max@login', 'max@pass', 10),
-            new Phone(true, '+79001245323', 'Beeline', 'https://spb.beeline.ru/customers/', '15.03.2018', ['1', '2', '3'], 'max@login', 'max@pass', 11),
-            new Phone(true, '+79001245323', 'Beeline', 'https://spb.beeline.ru/customers/', '15.03.2018', ['1', '2', '3'], 'max@login', 'max@pass', 12),
-            new Phone(true, '+79001245323', 'Beeline', 'https://spb.beeline.ru/customers/', '15.03.2018', ['1', '2', '3'], 'max@login', 'max@pass', 13),
-            new Phone(true, '+79001245323', 'Beeline', 'https://spb.beeline.ru/customers/', '15.03.2018', ['1', '2', '3'], 'max@login', 'max@pass', 14)
-        ];
-        this.phones = new MatTableDataSource<Phone>(data);
-        this.phonesIsLoaded = true;
+        this.phoneService.getPhoneList()
+            .subscribe((phones: Phone[]) => {
+                this.phones = new MatTableDataSource<Phone>(phones);
+                this.phonesIsLoaded = true;
+            });
+        // const data = [
+        //     new Phone(true, '+79001245000', 'Beeline', 'https://spb.beeline.ru/customers/', '10.03.2018', ['1', '2', '3'], 'max@login', 'max@pass', 1),
+        //     new Phone(true, '+79001245323', 'MTS', 'https://spb.beeline.ru/customers/', '15.03.2018', ['1', '20', '3'], 'max@login', 'max@pass', 2),
+        //     new Phone(true, '+79001245323', 'Beeline', 'https://spb.beeline.ru/customers/','15.03.2018', ['1', '2', '3'], 'test@login', 'max@pass', 3),
+        //     new Phone(true, '+79001245323', 'Beeline', 'https://spb.beeline.ru/customers/', '15.03.2018', ['1', '2', '3'], 'max@login', 'test@pass', 4),
+        //     new Phone(true, '+79001245323', 'Beeline', 'https://spb.beeline.ru/customers/', '15.03.2018', ['1', '2', '3'], 'max@login', 'max@pass', 5),
+        //     new Phone(true, '+79001245323', 'Beeline', 'https://spb.beeline.ru/customers/', '15.03.2018', ['1', '2', '3'], 'max@login', 'max@pass', 6),
+        //     new Phone(true, '+79001245323', 'Beeline', 'https://spb.beeline.ru/customers/', '15.03.2018', ['1', '2', '3'], 'max@login', 'max@pass', 7),
+        //     new Phone(true, '+79001245323', 'Beeline', 'https://spb.beeline.ru/customers/', '15.03.2018', ['1', '2', '3'], 'max@login', 'max@pass', 8),
+        //     new Phone(true, '+79001245323', 'Beeline', 'https://spb.beeline.ru/customers/', '15.03.2018', ['1', '2', '3'], 'max@login', 'max@pass', 9),
+        //     new Phone(true, '+79001245323', 'Beeline', 'https://spb.beeline.ru/customers/', '15.03.2018', ['1', '2', '3'], 'max@login', 'max@pass', 10),
+        //     new Phone(true, '+79001245323', 'Beeline', 'https://spb.beeline.ru/customers/', '15.03.2018', ['1', '2', '3'], 'max@login', 'max@pass', 11),
+        //     new Phone(true, '+79001245323', 'Beeline', 'https://spb.beeline.ru/customers/', '15.03.2018', ['1', '2', '3'], 'max@login', 'max@pass', 12),
+        //     new Phone(true, '+79001245323', 'Beeline', 'https://spb.beeline.ru/customers/', '15.03.2018', ['1', '2', '3'], 'max@login', 'max@pass', 13),
+        //     new Phone(true, '+79001245323', 'Beeline', 'https://spb.beeline.ru/customers/', '15.03.2018', ['1', '2', '3'], 'max@login', 'max@pass', 14)
+        // ];
+        // this.phones = new MatTableDataSource<Phone>(data);
+        // this.phonesIsLoaded = true;
     }
 }

@@ -242,5 +242,82 @@
       "notes": "56",
       "id": 4
     }
+  ],
+  "phone-list": [
+    {
+      "isActive": true,
+      "num": "+790217882313",
+      "operatorType": "Beeline",
+      "operatorUrl": "beeline.ru",
+      "regDate": "10.03.2018",
+      "socialAccountIds": [
+        "1",
+        "4",
+        "6"
+      ],
+      "operatorAccLogin": "vsia@test.ru",
+      "operatorAccPass": "icfgE6",
+      "id": 1
+    },
+    {
+      "isActive": false,
+      "num": "+790217882314",
+      "operatorType": "Beeline",
+      "operatorUrl": "beeline.ru",
+      "regDate": "10.03.2018",
+      "socialAccountIds": [
+        "1",
+        "3",
+        "2"
+      ],
+      "operatorAccLogin": "vsia@test.ru",
+      "operatorAccPass": "iP9hjV6",
+      "id": 2
+    },
+    {
+      "isActive": true,
+      "num": "+790217882452",
+      "operatorType": "Beeline",
+      "operatorUrl": "beeline.ru",
+      "regDate": "10.03.2018",
+      "socialAccountIds": [
+        "1",
+        "4",
+        "6"
+      ],
+      "operatorAccLogin": "vsia@test.ru",
+      "operatorAccPass": "iP9hjV6",
+      "id": 3
+    },
+    {
+      "isActive": true,
+      "num": "+790217882313",
+      "operatorType": "Beeline",
+      "operatorUrl": "beeline.ru",
+      "regDate": "10.03.2018",
+      "socialAccountIds": [
+        "1",
+        "3",
+        "6"
+      ],
+      "operatorAccLogin": "vsia@test.ru",
+      "operatorAccPass": "iP9cvV6",
+      "id": 4
+    },
+    {
+      "isActive": false,
+      "num": "+7503356313",
+      "operatorType": "Beeline",
+      "operatorUrl": "beeline.ru",
+      "regDate": "60.02.2018",
+      "socialAccountIds": [
+        "2",
+        "4",
+        "6"
+      ],
+      "operatorAccLogin": "vsia@test.ru",
+      "operatorAccPass": "iP9hjV6",
+      "id": 5
+    }
   ]
 }
