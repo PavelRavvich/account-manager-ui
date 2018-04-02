@@ -226,7 +226,7 @@
       "password": "test-password-edited",
       "phone": "+72639813",
       "notes": "mock notes 3",
-      "regDate": "23.03.2018",
+      "regDate": "2018-04-01T23:56:30.509Z",
       "status": "Eternal Ban"
     },
     {
@@ -237,7 +237,7 @@
       "password": "test-password-value-2",
       "phone": "+72639823",
       "notes": "mock notes 2",
-      "regDate": "02.03.2018",
+      "regDate": "2018-04-01T23:56:30.509Z",
       "status": "Temporary Ban"
     },
     {
@@ -248,7 +248,7 @@
       "notes": "mock notes 3",
       "phone": "+72639865",
       "id": 4,
-      "regDate": "19.03.2018",
+      "regDate": "2018-04-01T23:56:30.509Z",
       "status": "Active"
     },
     {
@@ -260,7 +260,7 @@
       "status": "Active",
       "phone": "123456788990",
       "notes": "Test notes \n",
-      "regDate": "02.04.2018"
+      "regDate": "2018-04-01T23:56:30.509Z"
     }
   ],
   "phone-list": [

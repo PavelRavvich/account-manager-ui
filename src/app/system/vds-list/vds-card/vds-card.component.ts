@@ -55,9 +55,7 @@ export class VdsCardComponent implements OnInit, OnDestroy {
         this.loadVds();
         this.loadSocialAccounts();
     }
-    sorting(){
-        console.log('sort')
-    }
+
     /**
      * Handle addition SocialAccount event.
      */
@@ -72,7 +70,7 @@ export class VdsCardComponent implements OnInit, OnDestroy {
                         formData.password, 
                         formData.notes,
                         formData.phone,
-                        moment(formData.regDate, 'YYYY-MM-DD').format('DD.MM.YYYY'), 
+                        formData.regDate, 
                         formData.status,
                         formData.id 
                     );
@@ -107,13 +105,10 @@ export class VdsCardComponent implements OnInit, OnDestroy {
                     status: account.status,
                     phone: account.phone,
                     notes: account.notes,
-                    regDate: new Date(moment(account.regDate, 'DD.MM.YYYY').format('MM/DD/YYYY'))
+                    regDate: account.regDate
                 } 
             }).afterClosed().subscribe((updated: SocialAccount) => {
                 if (!!updated && (JSON.stringify(account) !== JSON.stringify(updated))) {
-                    if (!!updated.regDate) {
-                        updated.regDate = moment(new Date(updated.regDate)).format('DD.MM.YYYY')
-                    }
                     updated.id = account.id;
                     this.editAccount(updated);
                 }
