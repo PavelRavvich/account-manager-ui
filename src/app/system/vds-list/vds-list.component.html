@@ -56,6 +56,7 @@
 </mat-accordion>
 
 <div *ngIf="dataIsLoaded">
+    <button mat-raised-button color="primary">Add VDS</button>
     <div class="example-container mat-elevation-z8">
         <mat-table #table [dataSource]="dataSource">
 
@@ -73,7 +74,6 @@
                 <mat-header-cell *matHeaderCellDef> IP </mat-header-cell>
                 <mat-cell *matCellDef="let element">
                     {{element.ip}}
-                    <button class="material-icons" (click)="copyToClipboard(element.ip)">content_copy</button>
                 </mat-cell>
             </ng-container>
 
@@ -82,7 +82,6 @@
                 <mat-header-cell *matHeaderCellDef>Login</mat-header-cell>
                 <mat-cell *matCellDef="let element">
                     {{element.login}}
-                    <button class="material-icons" (click)="copyToClipboard(element.login)">content_copy</button>
                 </mat-cell>
             </ng-container>
 
@@ -91,7 +90,6 @@
                 <mat-header-cell *matHeaderCellDef> Password </mat-header-cell>
                 <mat-cell *matCellDef="let element">
                     {{element.password}}
-                    <button class="material-icons" (click)="copyToClipboard(element.password)">content_copy</button>
                 </mat-cell>
             </ng-container>
 
@@ -109,8 +107,8 @@
 
             <!-- Detail button -->
             <ng-container matColumnDef="detail">
-                <mat-header-cell *matHeaderCellDef></mat-header-cell>
-                <mat-cell *matCellDef="let element">
+                <mat-header-cell [ngClass]="'ditailBtnCol'" *matHeaderCellDef></mat-header-cell>
+                <mat-cell [ngClass]="'ditailBtnCol'" *matCellDef="let element">
                     <button mat-raised-button color="primary" (click)="getDetail(element.id)">Detail</button>
                 </mat-cell>
             </ng-container>

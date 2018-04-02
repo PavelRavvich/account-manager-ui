@@ -60,6 +60,7 @@
 </mat-accordion>
 
 <div *ngIf="phonesIsLoaded">
+    <button mat-raised-button color="primary">Add Phone</button>
     <div class="example-container mat-elevation-z8">
         <mat-table #table [dataSource]="phones">
 
@@ -123,6 +124,7 @@
         </mat-table>
 
         <mat-paginator #paginator [pageSize]="15" [pageSizeOptions]="[15, 30]" [showFirstLastButtons]="true">
+
         </mat-paginator>
     </div>
 </div>
