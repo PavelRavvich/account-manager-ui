@@ -9,7 +9,7 @@ import { VdsService } from '../../shared/services/vds.service';
 import { SocialService } from '../../shared/services/social.service';
 import { SocialAccount } from '../../shared/model/socilal-account.model';
 import { ClipboardService } from '../../shared/services/clipboard.service';
-import { AddSocialComponent } from './add-social/add-social.component';
+import { DialogSocialAcc } from './dialog-social-acc/dialog-social-acc.component';
 
 @Component({
     selector: 'am-vds-card', 
@@ -83,8 +83,8 @@ export class VdsCardComponent implements OnInit, OnDestroy {
     /**
      * Open dialog window for addition new SocialAccount with corresponding form.
      */
-    private openAddDialog(): MatDialogRef < AddSocialComponent > {
-        return this.dialog.open(AddSocialComponent, { width: '100%', data: { socialType: 'YouTube', status: 'Active', regDate: new Date() } });
+    private openAddDialog(): MatDialogRef < DialogSocialAcc > {
+        return this.dialog.open(DialogSocialAcc, { width: '33%', data: { socialType: 'YouTube', status: 'Active', regDate: new Date() } });
     }
 
     /**
@@ -94,8 +94,8 @@ export class VdsCardComponent implements OnInit, OnDestroy {
      */
     editSocialAccount(account: SocialAccount): void {
         this.dialog.open(
-            AddSocialComponent, { 
-                width: '100%', 
+            DialogSocialAcc, { 
+                width: '33%', 
                 data: { 
                     id: account.id,
                     vdsId: account.vdsId,

@@ -10,8 +10,8 @@ import {VdsService} from './shared/services/vds.service';
 import {VdsCardComponent} from './vds-list/vds-card/vds-card.component';
 import {SocialService} from './shared/services/social.service';
 import {ClipboardService} from './shared/services/clipboard.service';
-import {AddSocialComponent} from './vds-list/vds-card/add-social/add-social.component';
 import {PhoneService} from './shared/services/phone.service';
+import { DialogSocialAcc } from './vds-list/vds-card/dialog-social-acc/dialog-social-acc.component';
 
 @NgModule({
     declarations: [
@@ -19,7 +19,7 @@ import {PhoneService} from './shared/services/phone.service';
         VdsListComponent, 
         PhonesListComponent, 
         VdsCardComponent, 
-        AddSocialComponent
+        DialogSocialAcc
     ],
     imports: [
         SharedModule, 
@@ -33,7 +33,7 @@ import {PhoneService} from './shared/services/phone.service';
         PhoneService
     ],
     entryComponents: [
-        AddSocialComponent
+        DialogSocialAcc
     ]
 })
 export class SystemModule {}

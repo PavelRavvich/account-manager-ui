@@ -1,338 +1,354 @@
 {
-    "users": [{
-        "id": 1,
-        "email": "123@1",
-        "password": "12345",
-        "username": "John"
-    }],
-    "vds-list": [{
-            "id": 1,
-            "ip": "172.168.34.5",
-            "login": "Administrator",
-            "password": "sd7hHkfdL",
-            "activatedDate": "2018-03-01T13:56:30.509Z",
-            "deactivatedDate": "2018-03-01T13:56:30.509Z"
-        },
-        {
-            "id": 2,
-            "ip": "172.168.3844.5",
-            "login": "Administrator",
-            "password": "sd7hfE4tL",
-            "activatedDate": "2018-04-01T13:56:30.509Z",
-            "deactivatedDate": "2018-04-01T13:56:30.509Z"
-        },
-        {
-            "id": 3,
-            "ip": "172.168.784.5",
-            "login": "Administrator",
-            "password": "sdFFHkLL",
-            "activatedDate": "2018-04-01T13:56:30.509Z",
-            "deactivatedDate": "2018-04-01T13:56:30.509Z"
-        },
-        {
-            "id": 4,
-            "ip": "172.178.23.33",
-            "login": "Administrator",
-            "password": "sd7hHgghkLL",
-            "activatedDate": "2018-04-01T13:56:30.509Z",
-            "deactivatedDate": "2018-04-01T13:56:30.509Z"
-        },
-        {
-            "id": 5,
-            "ip": "172.169.34.76",
-            "login": "Administrator",
-            "password": "sfhgHkLL",
-            "activatedDate": "2018-04-01T13:56:30.509Z",
-            "deactivatedDate": "2018-04-01T13:56:30.509Z"
-        },
-        {
-            "id": 6,
-            "ip": "172.168.84.54",
-            "login": "Administrator",
-            "password": "jg7hHkLL",
-            "activatedDate": "2018-04-01T13:56:30.509Z",
-            "deactivatedDate": "2018-04-01T13:56:30.509Z"
-        },
-        {
-            "id": 7,
-            "ip": "172.168.34.5",
-            "login": "Administrator",
-            "password": "sd7hHkfdL",
-            "activatedDate": "2018-04-01T13:56:30.509Z",
-            "deactivatedDate": "2018-04-01T13:56:30.509Z"
-        },
-        {
-            "id": 8,
-            "ip": "172.168.3844.5",
-            "login": "Administrator",
-            "password": "sd7hfE4tL",
-            "activatedDate": "2018-04-01T13:56:30.509Z",
-            "deactivatedDate": "2018-04-01T13:56:30.509Z"
-        },
-        {
-            "id": 9,
-            "ip": "172.168.784.5",
-            "login": "Administrator",
-            "password": "sdFFHkLL",
-            "activatedDate": "2018-04-01T13:56:30.509Z",
-            "deactivatedDate": "2018-04-01T13:56:30.509Z"
-        },
-        {
-            "id": 10,
-            "ip": "172.178.23.33",
-            "login": "Administrator",
-            "password": "sd7hHgghkLL",
-            "activatedDate": "2018-04-01T13:56:30.509Z",
-            "deactivatedDate": "2018-04-01T13:56:30.509Z"
-        },
-        {
-            "id": 11,
-            "ip": "172.169.34.76",
-            "login": "Administrator",
-            "password": "sfhgHkLL",
-            "activatedDate": "2018-04-01T13:56:30.509Z",
-            "deactivatedDate": "2018-04-01T13:56:30.509Z"
-        },
-        {
-            "id": 12,
-            "ip": "172.168.84.54",
-            "login": "Administrator",
-            "password": "jg7hHkLL",
-            "activatedDate": "2018-04-01T13:56:30.509Z",
-            "deactivatedDate": "2018-04-01T13:56:30.509Z"
-        },
-        {
-            "id": 13,
-            "ip": "172.168.34.5",
-            "login": "Administrator",
-            "password": "sd7hHkfdL",
-            "activatedDate": "2018-04-01T13:56:30.509Z",
-            "deactivatedDate": "2018-04-01T13:56:30.509Z"
-        },
-        {
-            "id": 14,
-            "ip": "172.168.3844.5",
-            "login": "Administrator",
-            "password": "sd7hfE4tL",
-            "activatedDate": "2018-04-01T13:56:30.509Z",
-            "deactivatedDate": "2018-04-01T13:56:30.509Z"
-        },
-        {
-            "id": 15,
-            "ip": "172.168.784.5",
-            "login": "Administrator",
-            "password": "sdFFHkLL",
-            "activatedDate": "2018-04-01T13:56:30.509Z",
-            "deactivatedDate": "2018-04-01T13:56:30.509Z"
-        },
-        {
-            "id": 16,
-            "ip": "172.178.23.33",
-            "login": "Administrator",
-            "password": "sd7hHgghkLL",
-            "activatedDate": "2018-04-01T13:56:30.509Z",
-            "deactivatedDate": "2018-04-01T13:56:30.509Z"
-        },
-        {
-            "id": 17,
-            "ip": "172.169.34.76",
-            "login": "Administrator",
-            "password": "sfhgHkLL",
-            "activatedDate": "2018-04-01T13:56:30.509Z",
-            "deactivatedDate": "2018-04-01T13:56:30.509Z"
-        },
-        {
-            "id": 18,
-            "ip": "172.168.84.54",
-            "login": "Administrator",
-            "password": "jg7hHkLL",
-            "activatedDate": "2018-04-01T13:56:30.509Z",
-            "deactivatedDate": "2018-04-01T13:56:30.509Z"
-        },
-        {
-            "id": 19,
-            "ip": "172.168.84.54",
-            "login": "Administrator",
-            "password": "jg7hHkLL",
-            "activatedDate": "2018-04-01T13:56:30.509Z",
-            "deactivatedDate": "2018-04-01T13:56:30.509Z"
-        },
-        {
-            "id": 20,
-            "ip": "172.168.34.5",
-            "login": "Administrator",
-            "password": "sd7hHkfdL",
-            "activatedDate": "2018-04-01T13:56:30.509Z",
-            "deactivatedDate": "2018-04-01T13:56:30.509Z"
-        },
-        {
-            "id": 21,
-            "ip": "172.168.3844.5",
-            "login": "Administrator",
-            "password": "sd7hfE4tL",
-            "activatedDate": "2018-04-01T13:56:30.509Z",
-            "deactivatedDate": "2018-04-01T13:56:30.509Z"
-        },
-        {
-            "id": 22,
-            "ip": "172.168.784.5",
-            "login": "Administrator",
-            "password": "sdFFHkLL",
-            "activatedDate": "2018-04-01T13:56:30.509Z",
-            "deactivatedDate": "2018-04-01T13:56:30.509Z"
-        },
-        {
-            "id": 23,
-            "ip": "172.178.23.33",
-            "login": "Administrator",
-            "password": "sd7hHgghkLL",
-            "activatedDate": "2018-04-01T13:56:30.509Z",
-            "deactivatedDate": "2018-04-01T13:56:30.509Z"
-        },
-        {
-            "id": 24,
-            "ip": "172.169.34.76",
-            "login": "Administrator",
-            "password": "sfhgHkLL",
-            "activatedDate": "2018-04-01T13:56:30.509Z",
-            "deactivatedDate": "2018-04-01T13:56:30.509Z"
-        },
-        {
-            "id": 25,
-            "ip": "172.168.84.54",
-            "login": "Administrator",
-            "password": "jg7hHkLL",
-            "activatedDate": "2018-04-01T13:56:30.509Z",
-            "deactivatedDate": "2018-04-01T13:56:30.509Z"
-        },
-        {
-            "id": 26,
-            "ip": "172.168.84.54",
-            "login": "Administrator",
-            "password": "jg7hHkLL",
-            "activatedDate": "2018-04-01T13:56:30.509Z",
-            "deactivatedDate": "2018-04-01T13:56:30.509Z"
-        }
-    ],
-    "social-accounts": [{
-            "id": 1,
-            "vdsId": 1,
-            "socialType": "Twitter",
-            "login": "test-login-value-3",
-            "password": "test-password-edited",
-            "phone": "+72639813",
-            "notes": "mock notes 3",
-            "regDate": "2018-04-01T23:56:30.509Z",
-            "status": "Eternal Ban"
-        },
-        {
-            "vdsId": 2,
-            "id": 2,
-            "socialType": "Instagram",
-            "login": "test-login-value-2",
-            "password": "test-password-value-2",
-            "phone": "+72639823",
-            "notes": "mock notes 2",
-            "regDate": "2018-04-01T23:56:30.509Z",
-            "status": "Temporary Ban"
-        },
-        {
-            "vdsId": 1,
-            "socialType": "Twitter",
-            "login": "test-login-value-3",
-            "password": "test-password-value-3",
-            "notes": "mock notes 3",
-            "phone": "+72639865",
-            "id": 4,
-            "regDate": "2018-04-01T23:56:30.509Z",
-            "status": "Active"
-        },
-        {
-            "id": 5,
-            "vdsId": 1,
-            "login": "test login",
-            "password": "test password",
-            "socialType": "YouTube",
-            "status": "Active",
-            "phone": "123456788990",
-            "notes": "Test notes \n",
-            "regDate": "2018-04-01T23:56:30.509Z"
-        }
-    ],
-    "phone-list": [{
-            "isActive": true,
-            "num": "+790217882313",
-            "operatorType": "Beeline",
-            "operatorUrl": "https://spb.beeline.ru",
-            "regDate": "2018-04-01T10:56:30.509Z",
-            "socialAccountIds": [
-                "1",
-                "4",
-                "6"
-            ],
-            "operatorAccLogin": "vsia@test.ru",
-            "operatorAccPass": "icfgE6",
-            "id": 1
-        },
-        {
-            "isActive": false,
-            "num": "+790217882314",
-            "operatorType": "Beeline",
-            "operatorUrl": "https://spb.beeline.ru",
-            "regDate": "2018-03-01T12:56:30.509Z",
-            "socialAccountIds": [
-                "1",
-                "3",
-                "2"
-            ],
-            "operatorAccLogin": "vsia@test.ru",
-            "operatorAccPass": "iP9hjV6",
-            "id": 2
-        },
-        {
-            "isActive": true,
-            "num": "+790217882452",
-            "operatorType": "Beeline",
-            "operatorUrl": "https://spb.beeline.ru",
-            "regDate": "2018-04-01T13:56:30.509Z",
-            "socialAccountIds": [
-                "1",
-                "4",
-                "6"
-            ],
-            "operatorAccLogin": "vsia@test.ru",
-            "operatorAccPass": "iP9hjV6",
-            "id": 3
-        },
-        {
-            "isActive": true,
-            "num": "+790217882313",
-            "operatorType": "Beeline",
-            "operatorUrl": "https://spb.beeline.ru",
-            "regDate": "2018-04-01T13:56:30.509Z",
-            "socialAccountIds": [
-                "1",
-                "3",
-                "6"
-            ],
-            "operatorAccLogin": "vsia@test.ru",
-            "operatorAccPass": "iP9cvV6",
-            "id": 4
-        },
-        {
-            "isActive": false,
-            "num": "+7503356313",
-            "operatorType": "Beeline",
-            "operatorUrl": "https://spb.beeline.ru",
-            "regDate": "2018-04-01T13:56:30.509Z",
-            "socialAccountIds": [
-                "2",
-                "4",
-                "6"
-            ],
-            "operatorAccLogin": "vsia@test.ru",
-            "operatorAccPass": "iP9hjV6",
-            "id": 5
-        }
-    ]
+  "users": [
+    {
+      "id": 1,
+      "email": "123@1",
+      "password": "12345",
+      "username": "John"
+    }
+  ],
+  "vds-list": [
+    {
+      "id": 1,
+      "ip": "172.168.34.5",
+      "login": "Administrator",
+      "password": "sd7hHkfdL",
+      "activatedDate": "2018-03-01T13:56:30.509Z",
+      "deactivatedDate": "2018-03-01T13:56:30.509Z"
+    },
+    {
+      "id": 2,
+      "ip": "172.168.3844.5",
+      "login": "Administrator",
+      "password": "sd7hfE4tL",
+      "activatedDate": "2018-04-01T13:56:30.509Z",
+      "deactivatedDate": "2018-04-01T13:56:30.509Z"
+    },
+    {
+      "id": 3,
+      "ip": "172.168.784.5",
+      "login": "Administrator",
+      "password": "sdFFHkLL",
+      "activatedDate": "2018-04-01T13:56:30.509Z",
+      "deactivatedDate": "2018-04-01T13:56:30.509Z"
+    },
+    {
+      "id": 4,
+      "ip": "172.178.23.33",
+      "login": "Administrator",
+      "password": "sd7hHgghkLL",
+      "activatedDate": "2018-04-01T13:56:30.509Z",
+      "deactivatedDate": "2018-04-01T13:56:30.509Z"
+    },
+    {
+      "id": 5,
+      "ip": "172.169.34.76",
+      "login": "Administrator",
+      "password": "sfhgHkLL",
+      "activatedDate": "2018-04-01T13:56:30.509Z",
+      "deactivatedDate": "2018-04-01T13:56:30.509Z"
+    },
+    {
+      "id": 6,
+      "ip": "172.168.84.54",
+      "login": "Administrator",
+      "password": "jg7hHkLL",
+      "activatedDate": "2018-04-01T13:56:30.509Z",
+      "deactivatedDate": "2018-04-01T13:56:30.509Z"
+    },
+    {
+      "id": 7,
+      "ip": "172.168.34.5",
+      "login": "Administrator",
+      "password": "sd7hHkfdL",
+      "activatedDate": "2018-04-01T13:56:30.509Z",
+      "deactivatedDate": "2018-04-01T13:56:30.509Z"
+    },
+    {
+      "id": 8,
+      "ip": "172.168.3844.5",
+      "login": "Administrator",
+      "password": "sd7hfE4tL",
+      "activatedDate": "2018-04-01T13:56:30.509Z",
+      "deactivatedDate": "2018-04-01T13:56:30.509Z"
+    },
+    {
+      "id": 9,
+      "ip": "172.168.784.5",
+      "login": "Administrator",
+      "password": "sdFFHkLL",
+      "activatedDate": "2018-04-01T13:56:30.509Z",
+      "deactivatedDate": "2018-04-01T13:56:30.509Z"
+    },
+    {
+      "id": 10,
+      "ip": "172.178.23.33",
+      "login": "Administrator",
+      "password": "sd7hHgghkLL",
+      "activatedDate": "2018-04-01T13:56:30.509Z",
+      "deactivatedDate": "2018-04-01T13:56:30.509Z"
+    },
+    {
+      "id": 11,
+      "ip": "172.169.34.76",
+      "login": "Administrator",
+      "password": "sfhgHkLL",
+      "activatedDate": "2018-04-01T13:56:30.509Z",
+      "deactivatedDate": "2018-04-01T13:56:30.509Z"
+    },
+    {
+      "id": 12,
+      "ip": "172.168.84.54",
+      "login": "Administrator",
+      "password": "jg7hHkLL",
+      "activatedDate": "2018-04-01T13:56:30.509Z",
+      "deactivatedDate": "2018-04-01T13:56:30.509Z"
+    },
+    {
+      "id": 13,
+      "ip": "172.168.34.5",
+      "login": "Administrator",
+      "password": "sd7hHkfdL",
+      "activatedDate": "2018-04-01T13:56:30.509Z",
+      "deactivatedDate": "2018-04-01T13:56:30.509Z"
+    },
+    {
+      "id": 14,
+      "ip": "172.168.3844.5",
+      "login": "Administrator",
+      "password": "sd7hfE4tL",
+      "activatedDate": "2018-04-01T13:56:30.509Z",
+      "deactivatedDate": "2018-04-01T13:56:30.509Z"
+    },
+    {
+      "id": 15,
+      "ip": "172.168.784.5",
+      "login": "Administrator",
+      "password": "sdFFHkLL",
+      "activatedDate": "2018-04-01T13:56:30.509Z",
+      "deactivatedDate": "2018-04-01T13:56:30.509Z"
+    },
+    {
+      "id": 16,
+      "ip": "172.178.23.33",
+      "login": "Administrator",
+      "password": "sd7hHgghkLL",
+      "activatedDate": "2018-04-01T13:56:30.509Z",
+      "deactivatedDate": "2018-04-01T13:56:30.509Z"
+    },
+    {
+      "id": 17,
+      "ip": "172.169.34.76",
+      "login": "Administrator",
+      "password": "sfhgHkLL",
+      "activatedDate": "2018-04-01T13:56:30.509Z",
+      "deactivatedDate": "2018-04-01T13:56:30.509Z"
+    },
+    {
+      "id": 18,
+      "ip": "172.168.84.54",
+      "login": "Administrator",
+      "password": "jg7hHkLL",
+      "activatedDate": "2018-04-01T13:56:30.509Z",
+      "deactivatedDate": "2018-04-01T13:56:30.509Z"
+    },
+    {
+      "id": 19,
+      "ip": "172.168.84.54",
+      "login": "Administrator",
+      "password": "jg7hHkLL",
+      "activatedDate": "2018-04-01T13:56:30.509Z",
+      "deactivatedDate": "2018-04-01T13:56:30.509Z"
+    },
+    {
+      "id": 20,
+      "ip": "172.168.34.5",
+      "login": "Administrator",
+      "password": "sd7hHkfdL",
+      "activatedDate": "2018-04-01T13:56:30.509Z",
+      "deactivatedDate": "2018-04-01T13:56:30.509Z"
+    },
+    {
+      "id": 21,
+      "ip": "172.168.3844.5",
+      "login": "Administrator",
+      "password": "sd7hfE4tL",
+      "activatedDate": "2018-04-01T13:56:30.509Z",
+      "deactivatedDate": "2018-04-01T13:56:30.509Z"
+    },
+    {
+      "id": 22,
+      "ip": "172.168.784.5",
+      "login": "Administrator",
+      "password": "sdFFHkLL",
+      "activatedDate": "2018-04-01T13:56:30.509Z",
+      "deactivatedDate": "2018-04-01T13:56:30.509Z"
+    },
+    {
+      "id": 23,
+      "ip": "172.178.23.33",
+      "login": "Administrator",
+      "password": "sd7hHgghkLL",
+      "activatedDate": "2018-04-01T13:56:30.509Z",
+      "deactivatedDate": "2018-04-01T13:56:30.509Z"
+    },
+    {
+      "id": 24,
+      "ip": "172.169.34.76",
+      "login": "Administrator",
+      "password": "sfhgHkLL",
+      "activatedDate": "2018-04-01T13:56:30.509Z",
+      "deactivatedDate": "2018-04-01T13:56:30.509Z"
+    },
+    {
+      "id": 25,
+      "ip": "172.168.84.54",
+      "login": "Administrator",
+      "password": "jg7hHkLL",
+      "activatedDate": "2018-04-01T13:56:30.509Z",
+      "deactivatedDate": "2018-04-01T13:56:30.509Z"
+    },
+    {
+      "id": 26,
+      "ip": "172.168.84.54",
+      "login": "Administrator",
+      "password": "jg7hHkLL",
+      "activatedDate": "2018-04-01T13:56:30.509Z",
+      "deactivatedDate": "2018-04-01T13:56:30.509Z"
+    }
+  ],
+  "social-accounts": [
+    {
+      "id": 1,
+      "vdsId": 1,
+      "socialType": "Twitter",
+      "login": "test-login-value-3",
+      "password": "test-password-edited",
+      "phone": "+72639813",
+      "notes": "mock notes 3",
+      "regDate": "2018-04-01T23:56:30.509Z",
+      "status": "Eternal Ban"
+    },
+    {
+      "vdsId": 2,
+      "id": 2,
+      "socialType": "Instagram",
+      "login": "test-login-value-2",
+      "password": "test-password-value-2",
+      "phone": "+72639823",
+      "notes": "mock notes 2",
+      "regDate": "2018-04-01T23:56:30.509Z",
+      "status": "Temporary Ban"
+    },
+    {
+      "vdsId": 1,
+      "socialType": "Twitter",
+      "login": "test-login-value-3",
+      "password": "test-password-value-3",
+      "notes": "mock notes 3",
+      "phone": "+72639865",
+      "id": 4,
+      "regDate": "2018-04-01T23:56:30.509Z",
+      "status": "Active"
+    },
+    {
+      "id": 5,
+      "vdsId": 1,
+      "login": "test login",
+      "password": "test password",
+      "socialType": "YouTube",
+      "status": "Active",
+      "phone": "123456788990",
+      "notes": "Test notes \n",
+      "regDate": "2018-04-01T23:56:30.509Z"
+    },
+    {
+      "vdsId": 1,
+      "socialType": "YouTube",
+      "login": "LoinT",
+      "password": "PassT",
+      "notes": "some notes",
+      "phone": "99988887766",
+      "regDate": "2018-04-02T14:53:40.639Z",
+      "status": "Active",
+      "id": 6
+    }
+  ],
+  "phone-list": [
+    {
+      "isActive": true,
+      "num": "+790217882313",
+      "operatorType": "Beeline",
+      "operatorUrl": "https://spb.beeline.ru",
+      "regDate": "2018-04-01T10:56:30.509Z",
+      "socialAccountIds": [
+        "1",
+        "4",
+        "6"
+      ],
+      "operatorAccLogin": "vsia@test.ru",
+      "operatorAccPass": "icfgE6",
+      "id": 1
+    },
+    {
+      "isActive": false,
+      "num": "+790217882314",
+      "operatorType": "Beeline",
+      "operatorUrl": "https://spb.beeline.ru",
+      "regDate": "2018-03-01T12:56:30.509Z",
+      "socialAccountIds": [
+        "1",
+        "3",
+        "2"
+      ],
+      "operatorAccLogin": "vsia@test.ru",
+      "operatorAccPass": "iP9hjV6",
+      "id": 2
+    },
+    {
+      "isActive": true,
+      "num": "+790217882452",
+      "operatorType": "Beeline",
+      "operatorUrl": "https://spb.beeline.ru",
+      "regDate": "2018-04-01T13:56:30.509Z",
+      "socialAccountIds": [
+        "1",
+        "4",
+        "6"
+      ],
+      "operatorAccLogin": "vsia@test.ru",
+      "operatorAccPass": "iP9hjV6",
+      "id": 3
+    },
+    {
+      "isActive": true,
+      "num": "+790217882313",
+      "operatorType": "Beeline",
+      "operatorUrl": "https://spb.beeline.ru",
+      "regDate": "2018-04-01T13:56:30.509Z",
+      "socialAccountIds": [
+        "1",
+        "3",
+        "6"
+      ],
+      "operatorAccLogin": "vsia@test.ru",
+      "operatorAccPass": "iP9cvV6",
+      "id": 4
+    },
+    {
+      "isActive": false,
+      "num": "+7503356313",
+      "operatorType": "Beeline",
+      "operatorUrl": "https://spb.beeline.ru",
+      "regDate": "2018-04-01T13:56:30.509Z",
+      "socialAccountIds": [
+        "2",
+        "4",
+        "6"
+      ],
+      "operatorAccLogin": "vsia@test.ru",
+      "operatorAccPass": "iP9hjV6",
+      "id": 5
+    }
+  ]
 }
