@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {MatPaginator, MatTableDataSource} from '@angular/material';
+import {MatPaginator, MatTableDataSource, MatDialogRef, MatDialog} from '@angular/material';
 import * as moment from 'moment';
 
 import {Vds} from '../shared/model/vds.model';
@@ -7,6 +7,7 @@ import {FormControl, FormGroup} from '@angular/forms';
 import {VdsService} from '../shared/services/vds.service';
 import { Router } from '@angular/router';
 import { ClipboardService } from '../shared/services/clipboard.service';
+import { DialogAddVdsComponent } from './dialog-add-vds/dialog-add-vds.component';
 
 @Component({
 		selector: 'am-vds-list', 
@@ -56,7 +57,8 @@ export class VdsListComponent implements OnInit {
      * @param clipboardService for interactive with clipboard.
      * @param vdsService move to backend for data.
      */
-    constructor(private clipboardService: ClipboardService,
+    constructor(public dialog: MatDialog,
+                private clipboardService: ClipboardService,
                 private vdsService : VdsService,
                 private router: Router,) {}
 
@@ -126,6 +128,42 @@ export class VdsListComponent implements OnInit {
         this.dataSource = new MatTableDataSource(filteredData);
     }
 
+    /**
+     * Handle addition VDS event.
+     */
+    addVds(): void {
+        this.openAddDialog().afterClosed()
+            .subscribe((formData: Vds) => {
+                if (!!formData) {
+                    const vds = new Vds(
+                        formData.ip,
+                        formData.login,
+                        formData.password,
+                        formData.activatedDate,
+                        formData.deactivatedDate
+                    );
+                    this.vdsService.addVds(vds)
+                        .subscribe((result: Vds) => this.reqVdsList());
+            }
+        });
+    }
+    
+    /**
+     * Open dialog window for addition new VDS with corresponding form.
+     */
+    private openAddDialog(): MatDialogRef < DialogAddVdsComponent > {
+        return this.dialog.open(
+            DialogAddVdsComponent, 
+            { 
+                width: '33%', 
+                data: { 
+                    activatedDate: new Date(),
+                    deactivatedDate: new Date(new Date().setMonth(new Date().getMonth() + 1))
+                } 
+            }
+        );
+    }
+    
     private filterByEndDate(): Vds[] {
         const {dateFrom, dateTo} = this.filterForm.value;
         const from = moment(dateFrom, 'MM-DD-YYYY');

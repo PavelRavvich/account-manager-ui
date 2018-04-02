@@ -1,0 +1,33 @@
+<h1 mat-dialog-title>Add social account</h1>
+<mat-dialog-content>
+
+    <mat-form-field class="example-full-width">
+        <input matInput [(ngModel)]="data.ip" placeholder="IP">
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+        <input matInput [(ngModel)]="data.login" placeholder="Login">
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+        <input matInput [(ngModel)]="data.password" placeholder="Password">
+    </mat-form-field>
+
+    <br>
+    <mat-form-field>
+        <input matInput [matDatepicker]="picker1" placeholder="Choose activated date" [(ngModel)]="data.activatedDate">
+        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+        <mat-datepicker #picker1></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field>
+        <input matInput [matDatepicker]="picker2" placeholder="Choose deactivated" [(ngModel)]="data.deactivatedDate">
+        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+        <mat-datepicker #picker2></mat-datepicker>
+    </mat-form-field>
+
+</mat-dialog-content>
+
+<div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">No Thanks</button>
+    <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
+</div>

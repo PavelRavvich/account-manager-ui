@@ -20,4 +20,9 @@ export class VdsService extends CoreApi {
     getVdsById(id: string): Observable < Vds > {
         return this.get(`vds-list/${id}`)
     }
+
+    addVds(vds: Vds): Observable < Vds > {
+        debugger;
+        return this.post(`vds-list`, vds);
+    }
 }
