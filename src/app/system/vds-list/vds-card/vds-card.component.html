@@ -5,8 +5,8 @@
             <mat-card-subtitle>ID: {{vds.id}}</mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
-            <p>Activated date: {{vds.activatedDate}}</p>
-            <p>Deactivated date: {{vds.deactivatedDate}}</p>
+            <p>Activated date: {{vds.activatedDate | date: 'dd.MM.yyyy'}}</p>
+            <p>Deactivated date: {{vds.deactivatedDate | date: 'dd.MM.yyyy'}}</p>
             <p>IP: {{vds.ip}}</p>
             <p>Login: {{vds.login}}</p>
             <p>Password: {{vds.password}}</p>
