@@ -98,13 +98,13 @@
             <!-- Date Column -->
             <ng-container matColumnDef="startDate">
                 <mat-header-cell *matHeaderCellDef> Start Date </mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{element.activatedDate}} </mat-cell>
+                <mat-cell *matCellDef="let element"> {{element.activatedDate | date: 'dd.MM.yyyy'}} </mat-cell>
             </ng-container>
 
             <!-- Date Column -->
             <ng-container matColumnDef="endDate">
                 <mat-header-cell *matHeaderCellDef> End Date </mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{element.deactivatedDate}} </mat-cell>
+                <mat-cell *matCellDef="let element"> {{element.deactivatedDate | date: 'dd.MM.yyyy'}} </mat-cell>
             </ng-container>
 
             <!-- Detail button -->

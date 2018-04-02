@@ -124,7 +124,7 @@ export class PhonesListComponent implements OnInit {
                 if (!phone.regDate) {
                     return false;
                 }
-                const regDate = moment(phone.regDate, 'DD-MM-YYYY')
+                const regDate = moment(phone.regDate, 'YYYY-MM-DD')
                 return regDate.isBetween(from, to, 'days', '[]');
             });
             this.phones = new MatTableDataSource<Phone>(data);

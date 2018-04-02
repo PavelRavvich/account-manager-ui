@@ -132,7 +132,7 @@ export class VdsListComponent implements OnInit {
         const to = moment(dateTo, 'MM-DD-YYYY');
         return this.dataSource
             .data.filter((vds: Vds) => {
-                const deactivated = moment(vds.deactivatedDate, 'DD.MM.YYYY');
+                const deactivated = moment(vds.deactivatedDate, 'YYYY-MM-DD');
                 return deactivated.isBetween(from, to, 'days', '[]');
             });
     }
@@ -143,7 +143,7 @@ export class VdsListComponent implements OnInit {
         const to = moment(dateTo, 'MM-DD-YYYY');
         return this.dataSource
             .data.filter((vds: Vds) => {
-                const activated = moment(vds.activatedDate, 'DD.MM.YYYY');
+                const activated = moment(vds.activatedDate, 'YYYY-MM-DD');
                 return activated.isBetween(from, to, 'days', '[]');
             });
     }

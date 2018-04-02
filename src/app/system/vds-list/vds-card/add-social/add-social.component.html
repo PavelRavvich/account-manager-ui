@@ -1,5 +1,5 @@
 <h1 mat-dialog-title>Add social account</h1>
-<div mat-dialog-content>
+<mat-dialog-content>
     <mat-form-field>
         <mat-select placeholder="Social Type" [(ngModel)]="data.socialType">
             <mat-option value="YouTube">YouTube</mat-option>
@@ -36,7 +36,8 @@
     <mat-form-field class="example-full-width">
         <textarea matInput [(ngModel)]="data.notes" placeholder="notes"></textarea>
     </mat-form-field>
-    <div mat-dialog-actions>
-        <button mat-button (click)="onNoClick()">No Thanks</button>
-        <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
-    </div>
+</mat-dialog-content>
+<div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">No Thanks</button>
+    <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
+</div>
