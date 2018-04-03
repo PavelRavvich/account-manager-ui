@@ -60,7 +60,7 @@
 </mat-accordion>
 
 <div *ngIf="phonesIsLoaded">
-    <button mat-raised-button color="primary">Add Phone</button>
+    <button mat-raised-button color="primary" (click)="addPhone()">Add Phone</button>
     <div class="example-container mat-elevation-z8">
         <mat-table #table [dataSource]="phones">
 
@@ -79,7 +79,7 @@
             <!-- Active Column -->
             <ng-container matColumnDef="isActive">
                 <mat-header-cell *matHeaderCellDef> Active </mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{element.isActive ? 'Active' : 'Deactive'}} </mat-cell>
+                <mat-cell *matCellDef="let element"> {{element.isActive}} </mat-cell>
             </ng-container>
 
             <!-- Reg Date Column -->
@@ -96,9 +96,10 @@
 
             <!-- Site Column -->
             <ng-container matColumnDef="site">
-                <mat-header-cell *matHeaderCellDef> Site </mat-header-cell>
+                <mat-header-cell *matHeaderCellDef> Website link </mat-header-cell>
                 <mat-cell *matCellDef="let element">
-                    <a target="_blank" href="{{element.operatorUrl}}">To website</a></mat-cell>
+                    <a target="_blank" href="{{element.operatorUrl}}">↳ Sign In</a>
+                </mat-cell>
             </ng-container>
 
             <!-- Login Column -->
@@ -119,11 +120,27 @@
                 <mat-cell *matCellDef="let element"> {{element.socialAccountIds}} </mat-cell>
             </ng-container>
 
+            <!-- Edit Acc -->
+            <ng-container matColumnDef="edit">
+                <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                    <button mat-raised-button color="primary" (click)="editPhone(element)">Edit</button>
+                </mat-cell>
+            </ng-container>
+
+            <!-- Delete Acc -->
+            <ng-container matColumnDef="delete">
+                <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                    <button mat-raised-button color="warn" (click)="deletePhone(element.id)">Delete</button>
+                </mat-cell>
+            </ng-container>
+
             <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
             <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
         </mat-table>
 
-        <mat-paginator #paginator [pageSize]="15" [pageSizeOptions]="[15, 30]" [showFirstLastButtons]="true">
+        <mat-paginator #paginator [pageSize]="15" [pageSizeOptions]="[15, 30, 50, 100]" [showFirstLastButtons]="true">
 
         </mat-paginator>
     </div>

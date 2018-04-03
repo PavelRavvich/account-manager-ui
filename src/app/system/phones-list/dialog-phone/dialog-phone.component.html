@@ -1,0 +1,41 @@
+<h1 mat-dialog-title>Add phone number</h1>
+<mat-dialog-content>
+    <mat-form-field>
+        <input matInput [(ngModel)]="data.num" placeholder="Phone Number">
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-select placeholder="Status" [(ngModel)]="data.isActive">
+            <mat-option value="Active">Active</mat-option>
+            <mat-option value="Deacive">Deacive</mat-option>
+            <mat-option value="Сancelled">Сancelled</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+        <input matInput [matDatepicker]="picker" placeholder="Choose a Reg Date" [(ngModel)]="data.regDate">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <br>
+
+    <mat-form-field>
+        <input matInput [(ngModel)]="data.operatorType" placeholder="GSM Operator">
+    </mat-form-field>
+
+    <mat-form-field>
+        <input matInput [(ngModel)]="data.operatorAccLogin" placeholder="Login">
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+        <input matInput [(ngModel)]="data.operatorAccPass" placeholder="Password">
+    </mat-form-field>
+    <br>
+    <mat-form-field style="width: 100%;">
+        <textarea matInput [(ngModel)]="data.operatorUrl" placeholder="Link To Operator's Website (Sign In Form)"></textarea>
+    </mat-form-field>
+</mat-dialog-content>
+<div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">No Thanks</button>
+    <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
+</div>

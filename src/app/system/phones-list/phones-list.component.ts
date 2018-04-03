@@ -1,10 +1,11 @@
 import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
-import { MatTableDataSource, MatPaginator } from '@angular/material';
+import { MatTableDataSource, MatPaginator, MatDialog, MatDialogRef } from '@angular/material';
 import { FormGroup, FormControl } from '@angular/forms';
 import * as moment from 'moment';
 
 import { Phone } from '../shared/model/phone.model';
 import { PhoneService } from '../shared/services/phone.service';
+import { DialogPhoneComponent } from './dialog-phone/dialog-phone.component';
 
 @Component({
     selector: 'am-phones-list',
@@ -26,7 +27,9 @@ export class PhonesListComponent implements OnInit {
         'site', 
         'operatorLogin', 
         'operatorPassword', 
-        'socialAccountIds'
+        'socialAccountIds',
+        'edit',
+        'delete'
     ];
     /**
      * Pagination view.
@@ -41,7 +44,8 @@ export class PhonesListComponent implements OnInit {
     filterOpenState : boolean = false;
     filterForm : FormGroup;
 
-    constructor(private phoneService: PhoneService) {
+    constructor(public dialog: MatDialog, 
+                private phoneService: PhoneService) {
     }
 
     ngOnInit() {
@@ -65,6 +69,85 @@ export class PhonesListComponent implements OnInit {
     disableFilter(): void {
         this.getPhoneList();
         this.updateFilterInstance();
+    }
+
+    /**
+     * Handle addition Phone event.
+     */
+    addPhone(): void {
+        this.openAddDialog().afterClosed()
+            .subscribe((formData: Phone) => {
+                if (!!formData) {
+                    const phone = new Phone(
+                        formData.isActive,
+                        formData.num,
+                        formData.operatorType,
+                        formData.operatorUrl,
+                        formData.regDate,
+                        [],
+                        formData.operatorAccLogin,
+                        formData.operatorAccPass
+                    );
+                    this.phoneService.addPhone(phone)
+                        .subscribe((result: Phone) => this.getPhoneList());
+                }
+            });
+    }
+
+    /**
+     * Open dialog window for addition new SocialAccount with corresponding form.
+     */
+    private openAddDialog(): MatDialogRef < DialogPhoneComponent > {
+        return this.dialog.open(DialogPhoneComponent, { width: '33%', data: { isActive: 'Active', status: 'Active', regDate: new Date() } });
+    }
+
+    /**
+     * Edit phone obj.
+     * 
+     * @param phone for eddition.
+     */
+    editPhone(phone: Phone) {
+        this.dialog.open(
+            DialogPhoneComponent, { 
+                width: '33%', 
+                data: { 
+                    isActive: phone.isActive,
+                    num: phone.num,
+                    operatorType: phone.operatorType,
+                    operatorUrl: phone.operatorUrl,
+                    regDate: phone.regDate,
+                    socialAccountIds: phone.socialAccountIds,
+                    operatorAccLogin: phone.operatorAccLogin,
+                    operatorAccPass: phone.operatorAccPass,
+                    id: phone.id
+                } 
+            }).afterClosed().subscribe((updated: Phone) => {
+                if (!!updated && (JSON.stringify(phone) !== JSON.stringify(updated))) {
+                    updated.id = phone.id;
+                    this.updatePhone(updated);
+                }
+            });
+    }
+    
+    /**
+     * Exchange old in memory obj Phone version to new version from backend.
+     * 
+     * @param phone starting state of Phone for edition.
+     */
+    private updatePhone(phone: Phone): void {
+        this.phoneService.updatePhone(phone)
+            .subscribe((dbVersion: Phone) => {
+                const tmp = this.phones.data;
+                const target = tmp.find(localVersion => dbVersion.id === localVersion.id);
+                const index = tmp.indexOf(target);
+                tmp[index] = dbVersion;
+                this.phones = new MatTableDataSource(tmp);
+            }, error => alert(error));
+    }
+
+    deletePhone(id: number): void {
+        this.phoneService.deletePhone(id)
+            .subscribe(date => this.getPhoneList());
     }
 
     private filterById(): void {
@@ -147,7 +230,7 @@ export class PhonesListComponent implements OnInit {
     private getPhoneList() {
         this.phoneService.getPhoneList()
             .subscribe((phones: Phone[]) => {
-                this.phones = new MatTableDataSource<Phone>(phones);
+                this.phones = new MatTableDataSource<Phone>(phones.reverse());
                 this.phonesIsLoaded = true;
             });
     }
