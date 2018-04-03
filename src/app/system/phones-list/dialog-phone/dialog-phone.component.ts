@@ -8,6 +8,9 @@ import {Phone} from '../../shared/model/phone.model';
     styleUrls: ['./dialog-phone.component.css']
 })
 export class DialogPhoneComponent {
+    
+    phoneId: any = undefined;
+
     /**
      * Default constructor.
      *
@@ -15,7 +18,11 @@ export class DialogPhoneComponent {
      * @param data injecting througth MatDialog.open(`data`).MatDialogRef.openAddDialog().afterClosed() see vds-card.component.
      */
     constructor(public dialogRef : MatDialogRef < DialogPhoneComponent >, 
-                @Inject(MAT_DIALOG_DATA)public data : Phone) {}
+                @Inject(MAT_DIALOG_DATA)public data : Phone) {
+                    if (!!data.id) {
+                        this.phoneId = data.id;
+                    }
+                }
 
     onNoClick() : void {
         this.dialogRef.close();

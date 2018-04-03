@@ -292,7 +292,7 @@
   ],
   "phone-list": [
     {
-      "isActive": true,
+      "isActive": "Deacive",
       "num": "+790217882313",
       "operatorType": "Beeline",
       "operatorUrl": "https://spb.beeline.ru",
@@ -307,7 +307,7 @@
       "id": 1
     },
     {
-      "isActive": false,
+      "isActive": "Active",
       "num": "+790217882314",
       "operatorType": "Beeline",
       "operatorUrl": "https://spb.beeline.ru",
@@ -322,7 +322,7 @@
       "id": 2
     },
     {
-      "isActive": true,
+      "isActive": "Deactive",
       "num": "+790217882452",
       "operatorType": "Beeline",
       "operatorUrl": "https://spb.beeline.ru",
@@ -337,7 +337,7 @@
       "id": 3
     },
     {
-      "isActive": true,
+      "isActive": "Active",
       "num": "+790217882313",
       "operatorType": "Beeline",
       "operatorUrl": "https://spb.beeline.ru",
@@ -352,7 +352,7 @@
       "id": 4
     },
     {
-      "isActive": false,
+      "isActive": "Active",
       "num": "+7503356313",
       "operatorType": "Beeline",
       "operatorUrl": "https://spb.beeline.ru",

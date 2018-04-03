@@ -28,6 +28,6 @@ export class PhoneService extends CoreApi {
     }
 
     deletePhone(id: number): Observable < void > {
-        return this.delete('phone-list', id + '');
+        return this.delete('phone-list/', id + '');
     }
 }

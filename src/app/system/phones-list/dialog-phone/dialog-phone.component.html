@@ -1,4 +1,9 @@
-<h1 mat-dialog-title>Add phone number</h1>
+<h1 *ngIf="!!phoneId" mat-dialog-title>
+    Edit Phone Number
+    <p>ID: {{phoneId}}</p>
+</h1>
+<h1 *ngIf="!phoneId" mat-dialog-title>Add Phone Number</h1>
+
 <mat-dialog-content>
     <mat-form-field>
         <input matInput [(ngModel)]="data.num" placeholder="Phone Number">

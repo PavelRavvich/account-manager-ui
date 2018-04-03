@@ -1,5 +1,5 @@
 export class Phone {
-    constructor(public isActive: boolean,
+    constructor(public isActive: string,
                 public num: string,
                 public operatorType: string,
                 public operatorUrl: string,
