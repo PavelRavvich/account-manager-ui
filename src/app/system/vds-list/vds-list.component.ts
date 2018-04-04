@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {MatPaginator, MatTableDataSource, MatDialogRef, MatDialog} from '@angular/material';
+import {MatPaginator, MatTableDataSource, MatDialogRef, MatDialog, MatSnackBarConfig, MatSnackBar} from '@angular/material';
 import * as moment from 'moment';
 
 import {Vds} from '../shared/model/vds.model';
@@ -59,13 +59,14 @@ export class VdsListComponent implements OnInit {
      * @param vdsService move to backend for data.
      */
     constructor(public dialog: MatDialog,
+                public snackBar: MatSnackBar,
                 private clipboardService: ClipboardService,
                 private vdsService : VdsService,
                 private router: Router,) {}
 
     ngOnInit() {
         this.refreshFilter();
-        this.reqVdsList();
+        this.getVdsList();
     }
 
     /**
@@ -96,7 +97,7 @@ export class VdsListComponent implements OnInit {
      * Update all dynamic data on page.
      */
     disableFilter() : void {
-        this.reqVdsList();
+        this.getVdsList();
         this.refreshFilter();
     }
 
@@ -131,7 +132,14 @@ export class VdsListComponent implements OnInit {
 
     deleteVds(id: number): void {
         this.vdsService.deleteVds(id)
-            .subscribe(data => this.reqVdsList());
+            .subscribe(data => {
+                const snacConf = new MatSnackBarConfig();
+                snacConf.duration = 10000;
+                this.snackBar
+                    .open(`VDS with ID: ${id} has been deleted.`, 'OK', snacConf)
+                    ._open();
+                this.getVdsList();
+            });
     }
 
     /**
@@ -149,7 +157,7 @@ export class VdsListComponent implements OnInit {
                         formData.deactivatedDate
                     );
                     this.vdsService.addVds(vds)
-                        .subscribe((result: Vds) => this.reqVdsList());
+                        .subscribe((result: Vds) => this.getVdsList());
             }
         });
     }
@@ -208,7 +216,7 @@ export class VdsListComponent implements OnInit {
         }
     }
 
-    private reqVdsList() : void {
+    private getVdsList() : void {
         this.vdsService.getVdsList()
             .subscribe((vds : Vds[]) => {
                 this.dataSource = new MatTableDataSource(vds);
