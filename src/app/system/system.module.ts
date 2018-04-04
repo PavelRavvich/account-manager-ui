@@ -23,7 +23,6 @@ import { DialogPhoneComponent } from './phones-list/dialog-phone/dialog-phone.co
         VdsCardComponent, 
         DialogSocialAcc, 
         DialogAddVdsComponent, 
-        DialogPhoneComponent, 
         DialogPhoneComponent
     ],
     imports: [
