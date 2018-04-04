@@ -22,7 +22,10 @@ export class VdsService extends CoreApi {
     }
 
     addVds(vds: Vds): Observable < Vds > {
-        debugger;
         return this.post(`vds-list`, vds);
+    }
+
+    deleteVds(id: number): Observable < Vds > {
+        return this.delete('vds-list/', id.toString());
     }
 }

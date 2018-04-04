@@ -22,7 +22,8 @@ export class VdsListComponent implements OnInit {
         'password',
         'startDate',
         'endDate',
-        'detail'
+        'detail',
+        'delete'
     ];
 
     /**
@@ -126,6 +127,11 @@ export class VdsListComponent implements OnInit {
             ? this.filterByEndDate() : this.filterByStartDate());
 
         this.dataSource = new MatTableDataSource(filteredData);
+    }
+
+    deleteVds(id: number): void {
+        this.vdsService.deleteVds(id)
+            .subscribe(data => this.reqVdsList());
     }
 
     /**

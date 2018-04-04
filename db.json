@@ -9,14 +9,6 @@
   ],
   "vds-list": [
     {
-      "id": 1,
-      "ip": "172.168.34.5",
-      "login": "Administrator",
-      "password": "sd7hHkfdL",
-      "activatedDate": "2018-03-01T13:56:30.509Z",
-      "deactivatedDate": "2018-03-01T13:56:30.509Z"
-    },
-    {
       "id": 2,
       "ip": "172.168.3844.5",
       "login": "Administrator",
@@ -215,22 +207,6 @@
       "password": "jg7hHkLL",
       "activatedDate": "2018-04-01T13:56:30.509Z",
       "deactivatedDate": "2018-04-01T13:56:30.509Z"
-    },
-    {
-      "ip": "172.178.23.33",
-      "login": "test",
-      "password": "test",
-      "activatedDate": "2018-04-01T13:56:30.509Z",
-      "deactivatedDate": "2018-04-01T13:56:30.509Z",
-      "id": 27
-    },
-    {
-      "ip": "1234",
-      "login": "qer",
-      "password": "wert",
-      "activatedDate": "2018-03-31T21:00:00.000Z",
-      "deactivatedDate": "2018-04-09T21:00:00.000Z",
-      "id": 28
     }
   ],
   "social-accounts": [
