@@ -147,10 +147,11 @@ export class VdsListComponent implements OnInit {
         this.dialog.open(DialogConfirmationComponent, {
             width: '300px',
             data: {
-                vdsId: id
+                massage: `VDS with ID: ${id} will be permanently deleted!`
             }
         }).afterClosed()
             .subscribe(confirmed => {
+                debugger;
                 if (!!confirmed) {
                     this.deleteVds(id);
                 }
