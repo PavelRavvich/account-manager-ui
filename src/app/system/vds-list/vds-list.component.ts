@@ -151,7 +151,6 @@ export class VdsListComponent implements OnInit {
             }
         }).afterClosed()
             .subscribe(confirmed => {
-                debugger;
                 if (!!confirmed) {
                     this.deleteVds(id);
                 }

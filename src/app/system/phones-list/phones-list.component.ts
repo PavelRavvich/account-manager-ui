@@ -147,11 +147,6 @@ export class PhonesListComponent implements OnInit {
             }, error => alert(error));
     }
 
-    deletePhone(id: number): void {
-        this.phoneService.deletePhone(id)
-            .subscribe(date => this.getPhoneList());
-    }
-
     /**
      * Open dialog window for confirm or reject deleting Phone.
      * If user call confirm then call method @see#this.deletePhone(id);
@@ -166,14 +161,13 @@ export class PhonesListComponent implements OnInit {
             }
         }).afterClosed()
             .subscribe(confirmed => {
-                debugger;
                 if (!!confirmed) {
-                    this.deletePhoneReq(id);
+                    this.deletePhone(id);
                 }
         });
     }
 
-    private deletePhoneReq(id: number): void {
+    private deletePhone(id: number): void {
         this.phoneService.deletePhone(id)
             .subscribe(data => {
                 const snacConf = new MatSnackBarConfig();
