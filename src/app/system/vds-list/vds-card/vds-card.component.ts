@@ -1,7 +1,7 @@
 import {Component, OnInit, Input, OnDestroy, ViewChild} from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
-import { MatDialog, MatDialogRef, MatSort, MatTableDataSource } from '@angular/material';
+import { MatDialog, MatDialogRef, MatSort, MatTableDataSource, MatSnackBarConfig, MatSnackBar } from '@angular/material';
 import * as moment from 'moment';
 
 import { Vds } from '../../shared/model/vds.model';
@@ -10,6 +10,7 @@ import { SocialService } from '../../shared/services/social.service';
 import { SocialAccount } from '../../shared/model/socilal-account.model';
 import { ClipboardService } from '../../shared/services/clipboard.service';
 import { DialogSocialAcc } from './dialog-social-acc/dialog-social-acc.component';
+import { DialogConfirmationComponent } from '../../shared/components/dialog-confirmation/dialog-confirmation.component';
 
 @Component({
     selector: 'am-vds-card', 
@@ -45,6 +46,7 @@ export class VdsCardComponent implements OnInit, OnDestroy {
      * @param dialog a pop-up window with form for addition new SocialAccount and edit existed account.
      */
     constructor(public dialog: MatDialog,
+                public snackBar: MatSnackBar,
                 private router: Router,
                 private rote: ActivatedRoute,
                 private vdsSrrvice: VdsService,
@@ -107,10 +109,10 @@ export class VdsCardComponent implements OnInit, OnDestroy {
                     notes: account.notes,
                     regDate: account.regDate
                 } 
-            }).afterClosed().subscribe((updated: SocialAccount) => {
-                if (!!updated && (JSON.stringify(account) !== JSON.stringify(updated))) {
-                    updated.id = account.id;
-                    this.editAccount(updated);
+            }).afterClosed().subscribe((result: SocialAccount) => {
+                if (!!result && (JSON.stringify(account) !== JSON.stringify(result))) {
+                    result.id = account.id;
+                    this.editAccount(result);
                 }
             });
     }
@@ -178,14 +180,46 @@ export class VdsCardComponent implements OnInit, OnDestroy {
         this.clipboardService.copyToClipboard(text);
     }
 
+    // /**
+    //  * Delete SocialAccount.
+    //  * 
+    //  * @param id of SocialAccount for deleting.
+    //  */
+    // deleteAccount(id: number): void {
+    //     this.socialService.deleteSocialAccount(id)
+    //         .subscribe(data => this.loadSocialAccounts());
+    // }
+
     /**
-     * Delete SocialAccount.
+     * Open dialog window for confirm or reject deleting Social Account.
+     * If user call confirm then call method @see#this.deleteSocialAccount(id);
      * 
-     * @param id of SocialAccount for deleting.
+     * @param id of deleting Social Account.
      */
-    deleteAccount(id: number): void {
+    openDialogDeleteSocialAccount(id: number): void {
+        this.dialog.open(DialogConfirmationComponent, {
+            width: '300px',
+            data: {
+                massage: `Social Account with ID: ${id} will be permanently deleted!`
+            }
+        }).afterClosed()
+            .subscribe(confirmed => {
+                if (!!confirmed) {
+                    this.deleteSocialAccount(id);
+                }
+        });
+    }
+
+    private deleteSocialAccount(id: number): void {
         this.socialService.deleteSocialAccount(id)
-            .subscribe(data => this.loadSocialAccounts());
+            .subscribe(data => {
+                const snacConf = new MatSnackBarConfig();
+                snacConf.duration = 10000;
+                this.snackBar
+                    .open(`Social Account with ID: ${id} has been deleted.`, 'OK', snacConf)
+                    ._open();
+                this.loadSocialAccounts();
+            });
     }
 
     ngOnDestroy() {
