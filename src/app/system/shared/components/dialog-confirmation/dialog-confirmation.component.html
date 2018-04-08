@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>Warning!!!</h1>
+<hr>
+<p>VDS with ID: {{data.vdsId}}</p>
+<div>Will be permanently deleted!</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">No Thanks</button>
+    <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
+</div>

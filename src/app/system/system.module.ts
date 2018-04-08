@@ -14,6 +14,7 @@ import {PhoneService} from './shared/services/phone.service';
 import { DialogSocialAcc } from './vds-list/vds-card/dialog-social-acc/dialog-social-acc.component';
 import { DialogAddVdsComponent } from './vds-list/dialog-add-vds/dialog-add-vds.component';
 import { DialogPhoneComponent } from './phones-list/dialog-phone/dialog-phone.component';
+import { DialogConfirmationComponent } from './shared/components/dialog-confirmation/dialog-confirmation.component';
 
 @NgModule({
     declarations: [
@@ -23,7 +24,8 @@ import { DialogPhoneComponent } from './phones-list/dialog-phone/dialog-phone.co
         VdsCardComponent, 
         DialogSocialAcc, 
         DialogAddVdsComponent, 
-        DialogPhoneComponent
+        DialogPhoneComponent, 
+        DialogConfirmationComponent
     ],
     imports: [
         SharedModule, 
@@ -39,7 +41,8 @@ import { DialogPhoneComponent } from './phones-list/dialog-phone/dialog-phone.co
     entryComponents: [
         DialogSocialAcc,
         DialogAddVdsComponent,
-        DialogPhoneComponent
+        DialogPhoneComponent,
+        DialogConfirmationComponent
     ]
 })
 export class SystemModule {}

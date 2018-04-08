@@ -8,6 +8,7 @@ import {VdsService} from '../shared/services/vds.service';
 import { Router } from '@angular/router';
 import { ClipboardService } from '../shared/services/clipboard.service';
 import { DialogAddVdsComponent } from './dialog-add-vds/dialog-add-vds.component';
+import { DialogConfirmationComponent } from '../shared/components/dialog-confirmation/dialog-confirmation.component';
 
 @Component({
 		selector: 'am-vds-list', 
@@ -131,6 +132,20 @@ export class VdsListComponent implements OnInit {
     }
 
     deleteVds(id: number): void {
+        this.dialog.open(DialogConfirmationComponent, {
+            width: '300px',
+            data: {
+                vdsId: id
+            }
+        }).afterClosed()
+            .subscribe(confirmed => {
+                if (!!confirmed) {
+                    this.deleteVdsConfirmed(id);
+                }
+        });
+    }
+
+    deleteVdsConfirmed(id: number): void {
         this.vdsService.deleteVds(id)
             .subscribe(data => {
                 const snacConf = new MatSnackBarConfig();
