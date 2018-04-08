@@ -1,11 +1,28 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {MatPaginator, MatTableDataSource, MatDialogRef, MatDialog, MatSnackBarConfig, MatSnackBar} from '@angular/material';
+import {
+    Component, 
+    OnInit, 
+    ViewChild
+} from '@angular/core';
+
+import {
+    MatPaginator, 
+    MatTableDataSource, 
+    MatDialogRef, 
+    MatDialog, 
+    MatSnackBarConfig, 
+    MatSnackBar
+} from '@angular/material';
+
+import {
+    FormControl, 
+    FormGroup
+} from '@angular/forms';
+
 import * as moment from 'moment';
+import { Router } from '@angular/router';
 
 import {Vds} from '../shared/model/vds.model';
-import {FormControl, FormGroup} from '@angular/forms';
 import {VdsService} from '../shared/services/vds.service';
-import { Router } from '@angular/router';
 import { ClipboardService } from '../shared/services/clipboard.service';
 import { DialogAddVdsComponent } from './dialog-add-vds/dialog-add-vds.component';
 import { DialogConfirmationComponent } from '../shared/components/dialog-confirmation/dialog-confirmation.component';
@@ -120,18 +137,13 @@ export class VdsListComponent implements OnInit {
         this.router.navigate(['vds-list', id.toString()]);
     }
 
-    private filterByDate() : void {
-        const {dateFrom, dateTo, dateBy} = this.filterForm.value;
-        if (!dateFrom || !dateTo) {
-            return;
-        }
-        const filteredData: Vds[] = (dateBy === 'endDate' 
-            ? this.filterByEndDate() : this.filterByStartDate());
-
-        this.dataSource = new MatTableDataSource(filteredData);
-    }
-
-    deleteVds(id: number): void {
+    /**
+     * Open dialog window for confirm or reject deleting VDS.
+     * If user call confirm then call method @see#this.deleteVds(id);
+     * 
+     * @param id of deleting VDS.
+     */
+    openDialogDeleteVds(id: number): void {
         this.dialog.open(DialogConfirmationComponent, {
             width: '300px',
             data: {
@@ -140,12 +152,12 @@ export class VdsListComponent implements OnInit {
         }).afterClosed()
             .subscribe(confirmed => {
                 if (!!confirmed) {
-                    this.deleteVdsConfirmed(id);
+                    this.deleteVds(id);
                 }
         });
     }
 
-    deleteVdsConfirmed(id: number): void {
+    private deleteVds(id: number): void {
         this.vdsService.deleteVds(id)
             .subscribe(data => {
                 const snacConf = new MatSnackBarConfig();
@@ -191,6 +203,17 @@ export class VdsListComponent implements OnInit {
                 } 
             }
         );
+    }
+    
+    private filterByDate() : void {
+        const {dateFrom, dateTo, dateBy} = this.filterForm.value;
+        if (!dateFrom || !dateTo) {
+            return;
+        }
+        const filteredData: Vds[] = (dateBy === 'endDate' 
+            ? this.filterByEndDate() : this.filterByStartDate());
+
+        this.dataSource = new MatTableDataSource(filteredData);
     }
     
     private filterByEndDate(): Vds[] {

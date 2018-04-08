@@ -117,7 +117,7 @@
             <ng-container matColumnDef="delete">
                 <mat-header-cell [ngClass]="'ditailBtnCol'" *matHeaderCellDef></mat-header-cell>
                 <mat-cell [ngClass]="'ditailBtnCol'" *matCellDef="let element">
-                    <button mat-raised-button color="warn" (click)="deleteVds(element.id)">Delete</button>
+                    <button mat-raised-button color="warn" (click)="openDialogDeleteVds(element.id)">Delete</button>
                 </mat-cell>
             </ng-container>
 
