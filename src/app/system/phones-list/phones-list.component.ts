@@ -1,11 +1,12 @@
 import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
-import { MatTableDataSource, MatPaginator, MatDialog, MatDialogRef } from '@angular/material';
+import { MatTableDataSource, MatPaginator, MatDialog, MatDialogRef, MatSnackBarConfig, MatSnackBar } from '@angular/material';
 import { FormGroup, FormControl } from '@angular/forms';
 import * as moment from 'moment';
 
 import { Phone } from '../shared/model/phone.model';
 import { PhoneService } from '../shared/services/phone.service';
 import { DialogPhoneComponent } from './dialog-phone/dialog-phone.component';
+import { DialogConfirmationComponent } from '../shared/components/dialog-confirmation/dialog-confirmation.component';
 
 @Component({
     selector: 'am-phones-list',
@@ -45,6 +46,7 @@ export class PhonesListComponent implements OnInit {
     filterForm : FormGroup;
 
     constructor(public dialog: MatDialog, 
+                public snackBar: MatSnackBar,
                 private phoneService: PhoneService) {
     }
 
@@ -148,6 +150,39 @@ export class PhonesListComponent implements OnInit {
     deletePhone(id: number): void {
         this.phoneService.deletePhone(id)
             .subscribe(date => this.getPhoneList());
+    }
+
+    /**
+     * Open dialog window for confirm or reject deleting Phone.
+     * If user call confirm then call method @see#this.deletePhone(id);
+     * 
+     * @param id of deleting Phone.
+     */
+    openDialogDeletePhone(id: number): void {
+        this.dialog.open(DialogConfirmationComponent, {
+            width: '300px',
+            data: {
+                massage: `Phone number with ID: ${id} will be permanently deleted!`
+            }
+        }).afterClosed()
+            .subscribe(confirmed => {
+                debugger;
+                if (!!confirmed) {
+                    this.deletePhoneReq(id);
+                }
+        });
+    }
+
+    private deletePhoneReq(id: number): void {
+        this.phoneService.deletePhone(id)
+            .subscribe(data => {
+                const snacConf = new MatSnackBarConfig();
+                snacConf.duration = 10000;
+                this.snackBar
+                    .open(`Phone number with ID: ${id} has been deleted.`, 'OK', snacConf)
+                    ._open();
+                    this.getPhoneList();
+            });
     }
 
     private filterById(): void {

@@ -132,7 +132,7 @@
             <ng-container matColumnDef="delete">
                 <mat-header-cell *matHeaderCellDef> </mat-header-cell>
                 <mat-cell *matCellDef="let element">
-                    <button mat-raised-button color="warn" (click)="deletePhone(element.id)">Delete</button>
+                    <button mat-raised-button color="warn" (click)="openDialogDeletePhone(element.id)">Delete</button>
                 </mat-cell>
             </ng-container>
 
