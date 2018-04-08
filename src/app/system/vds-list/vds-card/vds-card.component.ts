@@ -180,16 +180,6 @@ export class VdsCardComponent implements OnInit, OnDestroy {
         this.clipboardService.copyToClipboard(text);
     }
 
-    // /**
-    //  * Delete SocialAccount.
-    //  * 
-    //  * @param id of SocialAccount for deleting.
-    //  */
-    // deleteAccount(id: number): void {
-    //     this.socialService.deleteSocialAccount(id)
-    //         .subscribe(data => this.loadSocialAccounts());
-    // }
-
     /**
      * Open dialog window for confirm or reject deleting Social Account.
      * If user call confirm then call method @see#this.deleteSocialAccount(id);
