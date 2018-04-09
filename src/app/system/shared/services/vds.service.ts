@@ -25,6 +25,10 @@ export class VdsService extends CoreApi {
         return this.post(`vds-list`, vds);
     }
 
+    updateVds(vds: Vds): Observable < Vds > {
+        return this.put(`vds-list/${vds.id}`, vds);
+    }
+
     deleteVds(id: number): Observable < Vds > {
         return this.delete('vds-list/', id.toString());
     }

@@ -12,11 +12,13 @@
             <p>Password: {{vds.password}}</p>
         </mat-card-content>
         <mat-card-actions>
-            <button mat-raised-button color="primary" (click)="navToVdsList()">Back to VDS list</button>
-            <button mat-raised-button (click)="addSocialAccount()">Add social account</button>
+            <button mat-raised-button color="primary" (click)="navToVdsList()">VDS-LIST</button>
+            <button mat-raised-button color="primary" (click)="openEditVdsDialog()">EDIT VDS</button>
         </mat-card-actions>
     </mat-card>
 </div>
+<br>
+<button mat-raised-button color="primary" (click)="addSocialAccount()">Add social account</button>
 <div *ngIf="socialAccountsIsLoaded">
     <div class="example-container mat-elevation-z8">
         <mat-table #table [dataSource]="dataSource" matSort>

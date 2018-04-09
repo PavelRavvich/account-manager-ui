@@ -1,16 +1,34 @@
-import {Component, OnInit, Input, OnDestroy, ViewChild} from '@angular/core';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import {
+    Input, 
+    OnInit, 
+    Component, 
+    OnDestroy, 
+    ViewChild
+} from '@angular/core';
+import { 
+    ActivatedRoute, 
+    Params, 
+    Router 
+} from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
-import { MatDialog, MatDialogRef, MatSort, MatTableDataSource, MatSnackBarConfig, MatSnackBar } from '@angular/material';
+import { 
+    MatSort, 
+    MatDialog, 
+    MatDialogRef, 
+    MatSnackBarConfig, 
+    MatTableDataSource,
+    MatSnackBar 
+} from '@angular/material';
+import { DialogConfirmationComponent } from '../../shared/components/dialog-confirmation/dialog-confirmation.component';
+import { DialogAddVdsComponent } from '../dialog-add-vds/dialog-add-vds.component';
+import { DialogSocialAcc } from './dialog-social-acc/dialog-social-acc.component';
 import * as moment from 'moment';
 
-import { Vds } from '../../shared/model/vds.model';
-import { VdsService } from '../../shared/services/vds.service';
-import { SocialService } from '../../shared/services/social.service';
-import { SocialAccount } from '../../shared/model/socilal-account.model';
 import { ClipboardService } from '../../shared/services/clipboard.service';
-import { DialogSocialAcc } from './dialog-social-acc/dialog-social-acc.component';
-import { DialogConfirmationComponent } from '../../shared/components/dialog-confirmation/dialog-confirmation.component';
+import { SocialAccount } from '../../shared/model/socilal-account.model';
+import { SocialService } from '../../shared/services/social.service';
+import { VdsService } from '../../shared/services/vds.service';
+import { Vds } from '../../shared/model/vds.model';
 
 @Component({
     selector: 'am-vds-card', 
@@ -29,7 +47,19 @@ export class VdsCardComponent implements OnInit, OnDestroy {
      * All social account attached to current VDS.
      */
     private subscriptionSocialData: Subscription;
-    displayedColumns = ['id', 'socialType', 'regDate', 'status', 'phone', 'login', 'password', 'notes', 'edit', 'delete'];
+    displayedColumns = [
+        'id', 
+        'socialType', 
+        'regDate', 
+        'status', 
+        'phone', 
+        'login', 
+        'password', 
+        'notes', 
+        'edit', 
+        'delete'
+    ]
+    ;
     dataSource = new MatTableDataSource([]);
     socialAccountsIsLoaded = false;
     
@@ -62,31 +92,46 @@ export class VdsCardComponent implements OnInit, OnDestroy {
      * Handle addition SocialAccount event.
      */
     addSocialAccount(): void {
-        this.openAddDialog().afterClosed()
+        this.dialog
+            .open(
+                DialogSocialAcc, { 
+                    width: '33%', 
+                    data: { 
+                        socialType: 'YouTube', 
+                        status: 'Active', 
+                        regDate: new Date() 
+                    } 
+                })
+            .afterClosed()
             .subscribe((formData: SocialAccount) => {
                 if (!!formData) {
-                    const account = new SocialAccount(
-                        this.vds.id, 
-                        formData.socialType, 
-                        formData.login, 
-                        formData.password, 
-                        formData.notes,
-                        formData.phone,
-                        formData.regDate, 
-                        formData.status,
-                        formData.id 
-                    );
-                    this.socialService.addSocialAccount(account)
+                    formData.vdsId = this.vds.id;
+                    this.socialService.addSocialAccount(formData)
                         .subscribe((result: SocialAccount) => this.loadSocialAccounts());
-            }
+                }
         });
     }
 
     /**
-     * Open dialog window for addition new SocialAccount with corresponding form.
+     * Edit current VDS.
      */
-    private openAddDialog(): MatDialogRef < DialogSocialAcc > {
-        return this.dialog.open(DialogSocialAcc, { width: '33%', data: { socialType: 'YouTube', status: 'Active', regDate: new Date() } });
+    openEditVdsDialog(): void {
+        this.dialog.open(DialogAddVdsComponent, {
+            width: '33%',
+            data: {
+                ip: this.vds.ip,
+                login: this.vds.login,
+                password: this.vds.password,
+                activatedDate: this.vds.activatedDate,
+                deactivatedDate: this.vds.deactivatedDate,
+                id: this.vds.id
+            }
+        }).afterClosed().subscribe((formData: Vds) => {
+            if (!!formData) {
+                this.vdsSrrvice.updateVds(formData)
+                    .subscribe((vds: Vds) => this.vds = vds);
+            }        
+        });
     }
 
     /**
