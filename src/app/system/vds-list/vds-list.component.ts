@@ -80,7 +80,7 @@ export class VdsListComponent implements OnInit {
                 public snackBar: MatSnackBar,
                 private clipboardService: ClipboardService,
                 private vdsService : VdsService,
-                private router: Router,) {}
+                private router: Router) {}
 
     ngOnInit() {
         this.refreshFilter();
@@ -94,6 +94,8 @@ export class VdsListComponent implements OnInit {
         this.filterForm = new FormGroup({
             'ip': new FormControl(null, []),
             'id': new FormControl(null, []),
+            'login': new FormControl(null, []),
+            'password': new FormControl(null, []),
             'dateFrom': new FormControl(null, []),
             'dateTo': new FormControl(null, []),
             'dateBy': new FormControl('endDate', [])
@@ -105,10 +107,13 @@ export class VdsListComponent implements OnInit {
      * Useing all FormConstrol with value not null. If value FormControl will be ignored.
      */
     applyFilter() : void {
-        const {ip, id} = this.filterForm.value;
-        this.filterByDate();
+        const {ip, id, login, password} = this.filterForm.value;
+        this.filterByPassword(password);
+        this.filterByLogin(login);
         this.filterById(id);
         this.filterByIp(ip);
+        this.filterByDate();
+        
     }
 
     /**
@@ -238,7 +243,7 @@ export class VdsListComponent implements OnInit {
             });
     }
 
-    private filterById(id : string) : void {
+    private filterById(id : string): void {
         if(!!id && id !== '') {
             const result = this.dataSource.data
                 .filter((vds : Vds) => id === (vds.id + ''));
@@ -246,11 +251,27 @@ export class VdsListComponent implements OnInit {
         }
     }
 
-    private filterByIp(ip : string) : void {
+    private filterByIp(ip : string): void {
         if(!!ip && ip !== '') {
             const result = this.dataSource.data
                 .filter((vds : Vds) => vds.ip.indexOf(ip) !== -1);
             this.dataSource = new MatTableDataSource(result);
+        }
+    }
+
+    private filterByLogin(login: string): void {
+        if (!!login && login !== '') {
+            const result = this.dataSource.data
+                .filter((vds: Vds) => vds.login.indexOf(login) !== -1);
+                this.dataSource = new MatTableDataSource(result);
+        }
+    }
+
+    private filterByPassword(password: string): void {
+        if (!!password && password !== '') {
+            const result = this.dataSource.data
+                .filter((vds: Vds) => vds.password.indexOf(password) !== -1);
+                this.dataSource = new MatTableDataSource(result);
         }
     }
 
