@@ -135,6 +135,25 @@ export class VdsCardComponent implements OnInit, OnDestroy {
     }
 
     /**
+     * Delete current VDS from DB.
+     */
+    openDialogDeleteVds(): void {
+        this.dialog.open(DialogConfirmationComponent, {
+            width: '300px',
+            data: {
+                massage: `This VDS with IP: ${this.vds.ip} will be permanently deleted!`
+            }
+        }).afterClosed()
+            .subscribe(confirmed => {
+                if (!!confirmed) {
+                    this.vdsSrrvice.deleteVds(this.vds.id).subscribe((data => {
+                        this.router.navigate(['vds-list']);
+                    }));
+                }
+        });
+    }
+
+    /**
      * Handle edition SocialAccount event.
      * 
      * @param account starting state of acc for edition.
