@@ -65,7 +65,7 @@ export class VdsCardComponent implements OnInit, OnDestroy {
     
     sort: MatSort;
     @ViewChild(MatSort)
-    set appBacon(sort : MatSort) {
+    set sorter(sort : MatSort) {
         this.sort = sort;
         this.dataSource.sort = this.sort;
     }

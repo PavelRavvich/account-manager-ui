@@ -65,7 +65,7 @@ export class VdsListComponent implements OnInit {
      */
     paginator : MatPaginator;
     @ViewChild(MatPaginator)
-    set appBacon(paginator : MatPaginator) {
+    set pagination(paginator : MatPaginator) {
         this.paginator = paginator;
         this.dataSource.paginator = this.paginator;
     }
