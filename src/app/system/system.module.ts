@@ -15,6 +15,7 @@ import { DialogSocialAcc } from './vds-list/vds-card/dialog-social-acc/dialog-so
 import { DialogAddVdsComponent } from './vds-list/dialog-add-vds/dialog-add-vds.component';
 import { DialogPhoneComponent } from './phones-list/dialog-phone/dialog-phone.component';
 import { DialogConfirmationComponent } from './shared/components/dialog-confirmation/dialog-confirmation.component';
+import { SocialAccountListComponent } from './social-account-list/social-account-list.component';
 
 @NgModule({
     declarations: [
@@ -25,7 +26,7 @@ import { DialogConfirmationComponent } from './shared/components/dialog-confirma
         DialogSocialAcc, 
         DialogAddVdsComponent, 
         DialogPhoneComponent, 
-        DialogConfirmationComponent
+        DialogConfirmationComponent, SocialAccountListComponent
     ],
     imports: [
         SharedModule, 

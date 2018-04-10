@@ -5,6 +5,7 @@ import {VdsListComponent} from './vds-list/vds-list.component';
 import {PhonesListComponent} from './phones-list/phones-list.component';
 import {AuthGuard} from '../shared/services/auth.guard';
 import { VdsCardComponent } from './vds-list/vds-card/vds-card.component';
+import { SocialAccountListComponent } from './social-account-list/social-account-list.component';
 
 const routes : Routes = [
   {
@@ -23,6 +24,10 @@ const routes : Routes = [
       {
         path: 'phone-list',
         component: PhonesListComponent
+      },
+      {
+        path: 'social-account-list',
+        component: SocialAccountListComponent
       }
     ]
   }

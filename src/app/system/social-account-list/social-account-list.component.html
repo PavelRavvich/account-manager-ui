@@ -1,0 +1,177 @@
+<mat-accordion>
+    <mat-expansion-panel (opened)="filterOpenState = true" (closed)="filterOpenState = false">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                Filters
+            </mat-panel-title>
+            <mat-panel-description>
+                You can use filters for select by Accounts's parameters. Click for open.
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <div class="filter">
+            <form [formGroup]="filterForm">
+                <mat-form-field style="width: 180px">
+                    <mat-select placeholder="Social Type" formControlName="socialType">
+                        <mat-option value="YouTube">YouTube</mat-option>
+                        <mat-option value="Twitter">Twitter</mat-option>
+                        <mat-option value="Instagram">Instagram</mat-option>
+                        <mat-option value="VK">VK</mat-option>
+                        <mat-option value="OK">OK</mat-option>
+                        <mat-option value="Facebook">Facebook</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+
+                <mat-form-field style="width: 180px">
+                    <mat-select placeholder="Status" formControlName="status">
+                        <mat-option value="Active">Active</mat-option>
+                        <mat-option value="Temporary Ban">Temporary Ban</mat-option>
+                        <mat-option value="Eternal Ban">Eternal Ban</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <input matInput placeholder="ID" id="id" formControlName="id">
+                </mat-form-field>
+
+                <mat-form-field>
+                    <input matInput placeholder="Phone" id="phone" formControlName="phone">
+                </mat-form-field>
+
+                <mat-form-field>
+                    <input matInput placeholder="Login" id="login" formControlName="login">
+                </mat-form-field>
+
+                <mat-form-field>
+                    <input matInput placeholder="Password" id="password" formControlName="password">
+                </mat-form-field>
+
+                <mat-form-field>
+                    <input matInput placeholder="Notes" id="notes" formControlName="notes">
+                </mat-form-field>
+
+                <!-- <br> -->
+                <mat-form-field style="width: 180px">
+                    <input matInput [matDatepicker]="picker1" placeholder="Range From" id="dateFrom" formControlName="dateFrom">
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                </mat-form-field>
+
+                <mat-form-field style="width: 180px">
+                    <input matInput [matDatepicker]="picker2" placeholder="Range To" id="dateTo" formControlName="dateTo">
+                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                    <mat-datepicker #picker2></mat-datepicker>
+                </mat-form-field>
+
+                <div class="in-row">
+                    <button mat-raised-button color="primary" (click)="applyFilter()">Search</button>
+                    <button mat-raised-button color="accent" (click)="disableFilter()">Clear</button>
+                    <mat-checkbox formControlName="unused">Unused accounts</mat-checkbox>
+                </div>
+                <br>
+            </form>
+        </div>
+
+    </mat-expansion-panel>
+</mat-accordion>
+<div *ngIf="dataIsLoaded">
+    <button mat-raised-button (click)="addSocialAccount()" color="primary">Add Social Account</button>
+    <div class="example-container mat-elevation-z8">
+        <mat-table #table [dataSource]="dataSource">
+
+            <!-- ID Column -->
+            <ng-container matColumnDef="id">
+                <mat-header-cell *matHeaderCellDef> ID </mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                    {{element.id}}
+                    <button class="material-icons" (click)="copyToClipboard(element.id)">content_copy</button>
+                </mat-cell>
+            </ng-container>
+
+            <!-- Social Type -->
+            <ng-container matColumnDef="socialType">
+                <mat-header-cell *matHeaderCellDef> Social Type </mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                    {{element.socialType}}
+                </mat-cell>
+            </ng-container>
+
+            <!-- Status -->
+            <ng-container matColumnDef="status">
+                <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                    {{element.status}}
+                </mat-cell>
+            </ng-container>
+
+            <!-- Phone -->
+            <ng-container matColumnDef="phone">
+                <mat-header-cell *matHeaderCellDef> Phone </mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                    {{element.phone}}
+                </mat-cell>
+            </ng-container>
+
+            <!-- Username Column -->
+            <ng-container matColumnDef="login">
+                <mat-header-cell *matHeaderCellDef>Login</mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                    {{element.login}}
+                </mat-cell>
+            </ng-container>
+
+            <!-- Password Column -->
+            <ng-container matColumnDef="password">
+                <mat-header-cell *matHeaderCellDef> Password </mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                    {{element.password}}
+                </mat-cell>
+            </ng-container>
+
+            <!-- Reg Date Column -->
+            <ng-container matColumnDef="regDate">
+                <mat-header-cell *matHeaderCellDef> Reg Date </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.regDate | date: 'dd.MM.yyyy'}} </mat-cell>
+            </ng-container>
+
+            <!-- VDS id Column -->
+            <ng-container matColumnDef="vdsId">
+                <mat-header-cell *matHeaderCellDef> VDS ID </mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                    {{element.vdsId}}
+                </mat-cell>
+            </ng-container>
+
+            <!-- Notes Column -->
+            <ng-container matColumnDef="notes">
+                <mat-header-cell *matHeaderCellDef> Notes </mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                    {{element.notes}}
+                </mat-cell>
+            </ng-container>
+
+            <!-- Edit button -->
+            <ng-container matColumnDef="edit">
+                <mat-header-cell [ngClass]="'ditailBtnCol'" *matHeaderCellDef></mat-header-cell>
+                <mat-cell [ngClass]="'ditailBtnCol'" *matCellDef="let element">
+                    <button mat-raised-button color="primary" (click)="openEditDialogSocialAccount(element)">Edit</button>
+                </mat-cell>
+            </ng-container>
+
+            <!-- Delete button -->
+            <ng-container matColumnDef="delete">
+                <mat-header-cell [ngClass]="'ditailBtnCol'" *matHeaderCellDef></mat-header-cell>
+                <mat-cell [ngClass]="'ditailBtnCol'" *matCellDef="let element">
+                    <button mat-raised-button color="warn" (click)="openDialogDeleteSocialAccount(element.id)">Delete</button>
+                </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+
+        <mat-paginator #paginator [pageSize]="15" [pageSizeOptions]="[15, 30, 50, 100]" [showFirstLastButtons]="true">
+        </mat-paginator>
+    </div>
+</div>

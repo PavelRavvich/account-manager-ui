@@ -19,4 +19,10 @@ export class SystemComponent implements OnInit {
       .router
       .navigate(['/phone-list']);
   }
+
+  navigateToSocialAccounts() {
+    this
+      .router
+      .navigate(['/social-account-list']);
+  }
 }

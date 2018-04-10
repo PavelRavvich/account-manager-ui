@@ -58,8 +58,7 @@ export class VdsCardComponent implements OnInit, OnDestroy {
         'notes', 
         'edit', 
         'delete'
-    ]
-    ;
+    ];
     dataSource = new MatTableDataSource([]);
     socialAccountsIsLoaded = false;
     
