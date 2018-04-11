@@ -21,7 +21,7 @@ import {
 } from '@angular/material';
 import { DialogConfirmationComponent } from '../../shared/components/dialog-confirmation/dialog-confirmation.component';
 import { DialogAddVdsComponent } from '../dialog-add-vds/dialog-add-vds.component';
-import { DialogSocialAcc } from './dialog-social-acc/dialog-social-acc.component';
+import { DialogSocialAcc } from '../../shared/components/dialog-social-acc/dialog-social-acc.component';
 import * as moment from 'moment';
 
 import { ClipboardService } from '../../shared/services/clipboard.service';
