@@ -28,26 +28,25 @@
                 </mat-form-field>
 
                 <mat-form-field>
-                    <input matInput placeholder="Operator Account Login" id="operatorAccLogin" formControlName="operatorAccLogin">
+                    <input matInput placeholder="GSM Operator Login" id="operatorAccLogin" formControlName="operatorAccLogin">
                 </mat-form-field>
 
                 <mat-form-field>
-                    <input matInput placeholder="Operator Account Password" id="operatorAccPass" formControlName="operatorAccPass">
+                    <input matInput placeholder="GSM Operator Password" id="operatorAccPass" formControlName="operatorAccPass">
                 </mat-form-field>
 
-                <div>
-                    <mat-form-field>
-                        <input matInput [matDatepicker]="picker1" placeholder="Active Date From" id="dateFrom" formControlName="dateFrom">
-                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-                        <mat-datepicker #picker1></mat-datepicker>
-                    </mat-form-field>
+                <mat-form-field>
+                    <input matInput [matDatepicker]="picker1" placeholder="Active Date From" id="dateFrom" formControlName="dateFrom">
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                </mat-form-field>
 
-                    <mat-form-field>
-                        <input matInput [matDatepicker]="picker2" placeholder="Active Date To" id="dateTo" formControlName="dateTo">
-                        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-                        <mat-datepicker #picker2></mat-datepicker>
-                    </mat-form-field>
-                </div>
+                <mat-form-field>
+                    <input matInput [matDatepicker]="picker2" placeholder="Active Date To" id="dateTo" formControlName="dateTo">
+                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                    <mat-datepicker #picker2></mat-datepicker>
+                </mat-form-field>
+
                 <div class="in-row">
                     <button mat-raised-button color="primary" (click)="applyFilter()">Apply</button>
                     <button mat-raised-button color="accent" (click)="disableFilter()">Clear</button>
@@ -60,7 +59,7 @@
 </mat-accordion>
 
 <div *ngIf="phonesIsLoaded">
-    <button mat-raised-button color="primary" (click)="addPhone()">Add Phone</button>
+    <button mat-raised-button color="primary" (click)="openDialogAddPhone()">Add Phone</button>
     <div class="example-container mat-elevation-z8">
         <mat-table #table [dataSource]="phones">
 
@@ -124,7 +123,7 @@
             <ng-container matColumnDef="edit">
                 <mat-header-cell *matHeaderCellDef> </mat-header-cell>
                 <mat-cell *matCellDef="let element">
-                    <button mat-raised-button color="primary" (click)="editPhone(element)">Edit</button>
+                    <button mat-raised-button color="primary" (click)="openDialogEditPhone(element)">Edit</button>
                 </mat-cell>
             </ng-container>
 

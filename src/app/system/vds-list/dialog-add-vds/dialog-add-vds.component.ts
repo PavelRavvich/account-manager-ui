@@ -1,6 +1,5 @@
 import {Component, OnInit, Inject} from '@angular/core';
 import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
-import {DialogSocialAcc} from '../vds-card/dialog-social-acc/dialog-social-acc.component';
 import {SocialAccount} from '../../shared/model/socilal-account.model';
 import { Vds } from '../../shared/model/vds.model';
 

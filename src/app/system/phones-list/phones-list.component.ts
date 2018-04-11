@@ -7,6 +7,7 @@ import { Phone } from '../shared/model/phone.model';
 import { PhoneService } from '../shared/services/phone.service';
 import { DialogPhoneComponent } from './dialog-phone/dialog-phone.component';
 import { DialogConfirmationComponent } from '../shared/components/dialog-confirmation/dialog-confirmation.component';
+import { Filters } from '../shared/filters/filters';
 
 @Component({
     selector: 'am-phones-list',
@@ -44,6 +45,7 @@ export class PhonesListComponent implements OnInit {
     
     filterOpenState : boolean = false;
     filterForm : FormGroup;
+    private filters: Filters = new Filters();
 
     constructor(public dialog: MatDialog, 
                 public snackBar: MatSnackBar,
@@ -59,13 +61,14 @@ export class PhonesListComponent implements OnInit {
      * Applying all filters.
      */
     applyFilter(): void {
-        this.filterById();
-        this.filterByNumber();
-        this.filterBySocialAccountId();
-        this.filterByGSMOperator();
-        this.filterByOperatorLogin();
-        this.filterByOperatorPassword();
-        this.filterByRegDate();
+        const {id, num, socialAccId, operator, operatorAccLogin, operatorAccPass, dateFrom, dateTo} = this.filterForm.value;
+        this.phones = new MatTableDataSource(this.filters.doEqualFilter(this.phones.data, 'id', id));
+        this.phones = new MatTableDataSource(this.filters.doIncludeFilter(this.phones.data, 'num', num));
+        this.phones = new MatTableDataSource(this.filters.doIncludeFilter(this.phones.data, 'socialAccountIds', socialAccId));
+        this.phones = new MatTableDataSource(this.filters.doIncludeFilter(this.phones.data, 'operatorType', operator));
+        this.phones = new MatTableDataSource(this.filters.doIncludeFilter(this.phones.data, 'operatorAccLogin', operatorAccLogin));
+        this.phones = new MatTableDataSource(this.filters.doIncludeFilter(this.phones.data, 'operatorAccPass', operatorAccPass));
+        this.phones = new MatTableDataSource(this.filters.doFilterByDate(this.phones.data, 'regDate', dateFrom, dateTo));
     }
     
     disableFilter(): void {
@@ -76,31 +79,14 @@ export class PhonesListComponent implements OnInit {
     /**
      * Handle addition Phone event.
      */
-    addPhone(): void {
-        this.openAddDialog().afterClosed()
+    openDialogAddPhone(): void {
+        this.dialog.open(DialogPhoneComponent, { width: '33%', data: { isActive: 'Active', regDate: new Date() } })
+            .afterClosed()
             .subscribe((formData: Phone) => {
                 if (!!formData) {
-                    const phone = new Phone(
-                        formData.isActive,
-                        formData.num,
-                        formData.operatorType,
-                        formData.operatorUrl,
-                        formData.regDate,
-                        [],
-                        formData.operatorAccLogin,
-                        formData.operatorAccPass
-                    );
-                    this.phoneService.addPhone(phone)
-                        .subscribe((result: Phone) => this.getPhoneList());
+                    this.phoneService.addPhone(formData).subscribe((result: Phone) => this.getPhoneList());
                 }
             });
-    }
-
-    /**
-     * Open dialog window for addition new SocialAccount with corresponding form.
-     */
-    private openAddDialog(): MatDialogRef < DialogPhoneComponent > {
-        return this.dialog.open(DialogPhoneComponent, { width: '33%', data: { isActive: 'Active', status: 'Active', regDate: new Date() } });
     }
 
     /**
@@ -108,27 +94,14 @@ export class PhonesListComponent implements OnInit {
      * 
      * @param phone for eddition.
      */
-    editPhone(phone: Phone) {
-        this.dialog.open(
-            DialogPhoneComponent, { 
-                width: '33%', 
-                data: { 
-                    isActive: phone.isActive,
-                    num: phone.num,
-                    operatorType: phone.operatorType,
-                    operatorUrl: phone.operatorUrl,
-                    regDate: phone.regDate,
-                    socialAccountIds: phone.socialAccountIds,
-                    operatorAccLogin: phone.operatorAccLogin,
-                    operatorAccPass: phone.operatorAccPass,
-                    id: phone.id
-                } 
-            }).afterClosed().subscribe((updated: Phone) => {
-                if (!!updated && (JSON.stringify(phone) !== JSON.stringify(updated))) {
-                    updated.id = phone.id;
-                    this.updatePhone(updated);
+    openDialogEditPhone(phone: Phone) {
+        const oldVersion = JSON.parse(JSON.stringify(phone));
+        this.dialog.open(DialogPhoneComponent, { width: '33%', data: phone })
+            .afterClosed().subscribe((updated: Phone) => {
+                if (JSON.stringify(oldVersion) !== JSON.stringify(updated)) {
+                    this.editPhone(updated);
                 }
-            });
+        }); 
     }
     
     /**
@@ -136,7 +109,7 @@ export class PhonesListComponent implements OnInit {
      * 
      * @param phone starting state of Phone for edition.
      */
-    private updatePhone(phone: Phone): void {
+    private editPhone(phone: Phone): void {
         this.phoneService.updatePhone(phone)
             .subscribe((dbVersion: Phone) => {
                 const tmp = this.phones.data;
@@ -155,18 +128,17 @@ export class PhonesListComponent implements OnInit {
      */
     openDialogDeletePhone(id: number): void {
         this.dialog.open(DialogConfirmationComponent, {
-            width: '300px',
-            data: {
-                massage: `Phone number with ID: ${id} will be permanently deleted!`
+            width: '300px', data: { massage: `Phone number with ID: ${id} will be permanently deleted!` }
+        }).afterClosed().subscribe(confirmed => {
+            if (!!confirmed) {
+                this.deletePhone(id);
             }
-        }).afterClosed()
-            .subscribe(confirmed => {
-                if (!!confirmed) {
-                    this.deletePhone(id);
-                }
         });
     }
 
+    /**
+     * Delete Phone from DB.
+     */
     private deletePhone(id: number): void {
         this.phoneService.deletePhone(id)
             .subscribe(data => {
@@ -177,70 +149,6 @@ export class PhonesListComponent implements OnInit {
                     ._open();
                     this.getPhoneList();
             });
-    }
-
-    private filterById(): void {
-        const { id } = this.filterForm.value;
-        if (!!id && id !== '') {
-            const data = this.phones.data.filter((phone: Phone) => id == phone.id);
-            this.phones = new MatTableDataSource<Phone>(data);
-        }
-    }
-
-    private filterByNumber(): void {
-        const { num } = this.filterForm.value;
-        if (!!num && num !== '') {
-            const data = this.phones.data.filter((phone: Phone) => phone.num.indexOf(num) !== -1);
-            this.phones = new MatTableDataSource<Phone>(data);
-        }
-    }
-
-    private filterBySocialAccountId(): void {
-        const { operator } = this.filterForm.value;
-        if (!!operator && operator !== '') {
-            const data = this.phones.data.filter((phone: Phone) => phone.operatorType.indexOf(operator) !== -1);
-            this.phones = new MatTableDataSource<Phone>(data);
-        }
-    }
-
-    private filterByGSMOperator(): void {
-        const { socialAccId } = this.filterForm.value;
-        if (!!socialAccId && socialAccId !== '') {
-            const data = this.phones.data.filter((phone: Phone) => phone.socialAccountIds.indexOf(socialAccId) !== -1);
-            this.phones = new MatTableDataSource<Phone>(data);
-        }
-    }
-
-    private filterByOperatorLogin(): void {
-        const { operatorAccLogin } = this.filterForm.value;
-        if (!!operatorAccLogin && operatorAccLogin !== '') {
-            const data = this.phones.data.filter((phone: Phone) => phone.operatorAccLogin.indexOf(operatorAccLogin) !== -1);
-            this.phones = new MatTableDataSource<Phone>(data);
-        }
-    }
-
-    private filterByOperatorPassword(): void {
-        const { operatorAccPass } = this.filterForm.value;
-        if (!!operatorAccPass && operatorAccPass !== '') {
-            const data = this.phones.data.filter((phone: Phone) => phone.operatorAccPass.indexOf(operatorAccPass) !== -1);
-            this.phones = new MatTableDataSource<Phone>(data);
-        }
-    }
-
-    private filterByRegDate(): void {
-        const { dateFrom, dateTo } = this.filterForm.value;
-        if (!!dateFrom && !!dateTo) {
-            const from = moment(dateFrom, 'MM-DD-YYYY');
-            const to = moment(dateTo, 'MM-DD-YYYY');
-            const data = this.phones.data.filter((phone: Phone) => {
-                if (!phone.regDate) {
-                    return false;
-                }
-                const regDate = moment(phone.regDate, 'YYYY-MM-DD')
-                return regDate.isBetween(from, to, 'days', '[]');
-            });
-            this.phones = new MatTableDataSource<Phone>(data);
-        }
     }
 
     private updateFilterInstance() : void {
