@@ -27,7 +27,6 @@
                     <input matInput placeholder="Password" id="password" formControlName="password">
                 </mat-form-field>
 
-                <br>
                 <mat-form-field>
                     <input matInput [matDatepicker]="picker1" placeholder="Range From" id="dateFrom" formControlName="dateFrom">
                     <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
@@ -43,12 +42,12 @@
                 <div class="in-row">
                     <section class="example-section">
                         <mat-radio-group formControlName="dateBy">
-                            <mat-radio-button class="example-margin" value="endDate">
-                                End Date
+                            <mat-radio-button class="example-margin" value="deactivatedDate">
+                                Deactivated Date
                             </mat-radio-button>
                             <br>
-                            <mat-radio-button class="example-margin" value="startDate">
-                                Start Date
+                            <mat-radio-button class="example-margin" value="activatedDate">
+                                Activated Date
                             </mat-radio-button>
                         </mat-radio-group>
                     </section>
@@ -103,13 +102,13 @@
 
             <!-- Date Column -->
             <ng-container matColumnDef="startDate">
-                <mat-header-cell *matHeaderCellDef> Start Date </mat-header-cell>
+                <mat-header-cell *matHeaderCellDef> Activated Date </mat-header-cell>
                 <mat-cell *matCellDef="let element"> {{element.activatedDate | date: 'dd.MM.yyyy'}} </mat-cell>
             </ng-container>
 
             <!-- Date Column -->
             <ng-container matColumnDef="endDate">
-                <mat-header-cell *matHeaderCellDef> End Date </mat-header-cell>
+                <mat-header-cell *matHeaderCellDef> Deactivated Date </mat-header-cell>
                 <mat-cell *matCellDef="let element"> {{element.deactivatedDate | date: 'dd.MM.yyyy'}} </mat-cell>
             </ng-container>
 

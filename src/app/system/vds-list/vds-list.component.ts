@@ -26,6 +26,7 @@ import {VdsService} from '../shared/services/vds.service';
 import { ClipboardService } from '../shared/services/clipboard.service';
 import { DialogAddVdsComponent } from './dialog-add-vds/dialog-add-vds.component';
 import { DialogConfirmationComponent } from '../shared/components/dialog-confirmation/dialog-confirmation.component';
+import { Filters } from '../shared/filters/filters';
 
 @Component({
 		selector: 'am-vds-list', 
@@ -33,6 +34,9 @@ import { DialogConfirmationComponent } from '../shared/components/dialog-confirm
 		styleUrls: ['./vds-list.component.css']
 })
 export class VdsListComponent implements OnInit {
+    /**
+     * Columns for display in data table.
+     */
     displayedColumns = [
         'id',
         'ip',
@@ -71,6 +75,11 @@ export class VdsListComponent implements OnInit {
     }
 
     /**
+     * Filtering local data.
+     */
+    private filters: Filters = new Filters();
+
+    /**
      * Default constructor.
      * 
      * @param clipboardService for interactive with clipboard.
@@ -98,22 +107,25 @@ export class VdsListComponent implements OnInit {
             'password': new FormControl(null, []),
             'dateFrom': new FormControl(null, []),
             'dateTo': new FormControl(null, []),
-            'dateBy': new FormControl('endDate', [])
+            'dateBy': new FormControl('deactivatedDate', [])
         });
     }
 
     /**
-     * Apply filter.
+     * Apply filter for local data.
      * Useing all FormConstrol with value not null. If value FormControl will be ignored.
      */
     applyFilter() : void {
-        const {ip, id, login, password} = this.filterForm.value;
-        this.filterByPassword(password);
-        this.filterByLogin(login);
-        this.filterById(id);
-        this.filterByIp(ip);
-        this.filterByDate();
-        
+        const {ip, id, login, password, dateFrom, dateTo, dateBy} = this.filterForm.value;
+        this.dataSource = new MatTableDataSource(this.filters.doEqualFilter(this.dataSource.data, 'id', id));
+        this.dataSource = new MatTableDataSource(this.filters.doIncludeFilter(this.dataSource.data, 'ip', ip));
+        this.dataSource = new MatTableDataSource(this.filters.doIncludeFilter(this.dataSource.data, 'login', login));
+        this.dataSource = new MatTableDataSource(this.filters.doIncludeFilter(this.dataSource.data, 'password', password));
+        this.dataSource = new MatTableDataSource(
+            dateBy === 'deactivatedDate' 
+            ? this.filters.doFilterByDate(this.dataSource.data, 'deactivatedDate', dateFrom, dateTo) 
+            : this.filters.doFilterByDate(this.dataSource.data, 'activatedDate', dateFrom, dateTo)
+        );
     }
 
     /**
@@ -162,6 +174,11 @@ export class VdsListComponent implements OnInit {
         });
     }
 
+    /**
+     * Delete VDS from server DB.
+     * 
+     * @param {number} id if VDS for delete.
+     */
     private deleteVds(id: number): void {
         this.vdsService.deleteVds(id)
             .subscribe(data => {
@@ -209,72 +226,10 @@ export class VdsListComponent implements OnInit {
             }
         );
     }
-    
-    private filterByDate() : void {
-        const {dateFrom, dateTo, dateBy} = this.filterForm.value;
-        if (!dateFrom || !dateTo) {
-            return;
-        }
-        const filteredData: Vds[] = (dateBy === 'endDate' 
-            ? this.filterByEndDate() : this.filterByStartDate());
 
-        this.dataSource = new MatTableDataSource(filteredData);
-    }
-    
-    private filterByEndDate(): Vds[] {
-        const {dateFrom, dateTo} = this.filterForm.value;
-        const from = moment(dateFrom, 'MM-DD-YYYY');
-        const to = moment(dateTo, 'MM-DD-YYYY');
-        return this.dataSource
-            .data.filter((vds: Vds) => {
-                const deactivated = moment(vds.deactivatedDate, 'YYYY-MM-DD');
-                return deactivated.isBetween(from, to, 'days', '[]');
-            });
-    }
-
-    private filterByStartDate(): Vds[] {
-        const {dateFrom, dateTo} = this.filterForm.value;
-        const from = moment(dateFrom, 'MM-DD-YYYY');
-        const to = moment(dateTo, 'MM-DD-YYYY');
-        return this.dataSource
-            .data.filter((vds: Vds) => {
-                const activated = moment(vds.activatedDate, 'YYYY-MM-DD');
-                return activated.isBetween(from, to, 'days', '[]');
-            });
-    }
-
-    private filterById(id : string): void {
-        if(!!id && id !== '') {
-            const result = this.dataSource.data
-                .filter((vds : Vds) => id === (vds.id + ''));
-            this.dataSource = new MatTableDataSource(result);
-        }
-    }
-
-    private filterByIp(ip : string): void {
-        if(!!ip && ip !== '') {
-            const result = this.dataSource.data
-                .filter((vds : Vds) => vds.ip.indexOf(ip) !== -1);
-            this.dataSource = new MatTableDataSource(result);
-        }
-    }
-
-    private filterByLogin(login: string): void {
-        if (!!login && login !== '') {
-            const result = this.dataSource.data
-                .filter((vds: Vds) => vds.login.indexOf(login) !== -1);
-                this.dataSource = new MatTableDataSource(result);
-        }
-    }
-
-    private filterByPassword(password: string): void {
-        if (!!password && password !== '') {
-            const result = this.dataSource.data
-                .filter((vds: Vds) => vds.password.indexOf(password) !== -1);
-                this.dataSource = new MatTableDataSource(result);
-        }
-    }
-
+    /**
+     * Pull VDS list from server.
+     */
     private getVdsList() : void {
         this.vdsService.getVdsList()
             .subscribe((vds : Vds[]) => {
