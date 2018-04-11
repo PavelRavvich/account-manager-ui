@@ -10,7 +10,7 @@ export class Filters {
     }
 
     doIncludeFilter(data: any[], by: string, filterData: string): any[] {
-        return this.isFilterable(data, filterData) ? data.filter((item) => (item[by] + '').indexOf(filterData) !== -1) : data;
+        return this.isFilterable(data, filterData) ? data.filter((item) => (item[by] + '').indexOf(filterData.trim()) !== -1) : data;
     }
 
     doFilterByDate(data: any[], by: string, filterDateFrom: Date | string, filterDateTo: Date | string): any[] {
@@ -27,6 +27,10 @@ export class Filters {
             const target = moment(date, 'YYYY-MM-DD');
             return target.isBetween(from, to, 'days', '[]');
         });
+    }
+
+    doFilterByEmptyField(data: any[], by: string):  any[] {
+        return data.filter((item) => !item[by]);
     }
 
     private isFilterable(data: any[], filterData: string | number): boolean {

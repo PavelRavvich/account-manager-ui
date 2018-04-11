@@ -7,6 +7,7 @@ import { ClipboardService } from '../shared/services/clipboard.service';
 import * as moment from 'moment';
 import { DialogConfirmationComponent } from '../shared/components/dialog-confirmation/dialog-confirmation.component';
 import { DialogSocialAcc } from '../shared/components/dialog-social-acc/dialog-social-acc.component';
+import { Filters } from '../shared/filters/filters';
 
 @Component({
     selector: 'am-social-account-list', 
@@ -41,7 +42,8 @@ export class SocialAccountListComponent implements OnInit {
      * Include all FormConstrols in main filter group.
      */
     filterForm : FormGroup;
-    
+    filters: Filters = new Filters();
+
     /**
      * Pagination properties.
      */
@@ -103,16 +105,20 @@ export class SocialAccountListComponent implements OnInit {
         });
     }
 
+    /**
+     * Apply all activated filter fields.
+     */
     applyFilter() {
-        this.filterById();
-        this.filterByLogin();
-        this.filterByPhone();
-        this.filterByNotes();
-        this.filterByStatus();
-        this.filterByUnused();
-        this.filterByRegDate();
-        this.filterByPassword();
-        this.filterBySocialType();
+        const {id, login, password, phone, notes, status, socialType, dateFrom, dateTo, unused} = this.filterForm.value;
+        this.dataSource = new MatTableDataSource(this.filters.doEqualFilter(this.dataSource.data, 'id', id));
+        this.dataSource = new MatTableDataSource(this.filters.doEqualFilter(this.dataSource.data, 'status', status));
+        this.dataSource = new MatTableDataSource(this.filters.doEqualFilter(this.dataSource.data, 'socialType', socialType));
+        this.dataSource = new MatTableDataSource(this.filters.doIncludeFilter(this.dataSource.data, 'login', login));
+        this.dataSource = new MatTableDataSource(this.filters.doIncludeFilter(this.dataSource.data, 'password', password));
+        this.dataSource = new MatTableDataSource(this.filters.doIncludeFilter(this.dataSource.data, 'notes', notes));
+        this.dataSource = new MatTableDataSource(this.filters.doIncludeFilter(this.dataSource.data, 'phone', phone));        
+        this.dataSource = new MatTableDataSource(this.filters.doFilterByDate(this.dataSource.data, 'regDate', dateFrom, dateTo));
+        this.dataSource = unused ?  new MatTableDataSource(this.filters.doFilterByEmptyField(this.dataSource.data, 'vdsId')) : this.dataSource;
     }
 
     disableFilter() {
@@ -120,28 +126,15 @@ export class SocialAccountListComponent implements OnInit {
         this.refreshFilter();
     }
 
-    copyToClipboard(id: number) {
-        this.clipboardService.copyToClipboard(id + '');
-    }
 
+    /**
+     * Edit account.
+     */
     openEditDialogSocialAccount(account: SocialAccount) {
-        this.dialog.open(
-            DialogSocialAcc, { 
-                width: '33%', 
-                data: { 
-                    id: account.id,
-                    vdsId: account.vdsId,
-                    login: account.login,
-                    password: account.password,
-                    socialType: account.socialType,
-                    status: account.status,
-                    phone: account.phone,
-                    notes: account.notes,
-                    regDate: account.regDate
-                } 
-            }).afterClosed().subscribe((result: SocialAccount) => {
-                if (!!result && (JSON.stringify(account) !== JSON.stringify(result))) {
-                    result.id = account.id;
+        const oldVersion = JSON.parse(JSON.stringify(account));
+        this.dialog.open(DialogSocialAcc, { width: '33%', data: account })
+            .afterClosed().subscribe((result: SocialAccount) => {
+                if (JSON.stringify(oldVersion) !== JSON.stringify(result)) {
                     this.editAccount(result);
                 }
             });
@@ -202,78 +195,7 @@ export class SocialAccountListComponent implements OnInit {
         });
     }
 
-    private filterBySocialType(): void {
-        if (!!this.filterForm.value.socialType) {
-            const result = this.dataSource.data
-                .filter((account: SocialAccount) => account.socialType === this.filterForm.value.socialType);
-            this.dataSource = new MatTableDataSource(result);
-        }
-    }
-
-    private filterById(): void {
-        if (!!this.filterForm.value.id) {
-            const result = this.dataSource.data
-                .filter((account: SocialAccount) => account.id === +this.filterForm.value.id);
-            this.dataSource = new MatTableDataSource(result);
-        }
-    }
-
-    private filterByStatus(): void {
-        if (!!this.filterForm.value.status) {
-            const result = this.dataSource.data
-                .filter((account: SocialAccount) => account.status === this.filterForm.value.status);
-            this.dataSource = new MatTableDataSource(result);
-        }
-    }
-
-    private filterByPhone(): void {
-        if (!!this.filterForm.value.phone) {
-            const result = this.dataSource.data
-                .filter((account: SocialAccount) => account.phone.indexOf(this.filterForm.value.phone) !== -1);
-            this.dataSource = new MatTableDataSource(result);
-        }
-    }
-
-    private filterByLogin(): void {
-        if (!!this.filterForm.value.login) {
-            const result = this.dataSource.data
-                .filter((account: SocialAccount) => account.login.indexOf(this.filterForm.value.login) !== -1);
-            this.dataSource = new MatTableDataSource(result);
-        }
-    }
-
-    private filterByPassword(): void {
-        if (!!this.filterForm.value.password) {
-            const result = this.dataSource.data
-                .filter((account: SocialAccount) => account.password.indexOf(this.filterForm.value.password) !== -1);
-            this.dataSource = new MatTableDataSource(result);
-        }
-    }
-
-    private filterByNotes(): void {
-        if (!!this.filterForm.value.notes) {
-            const result = this.dataSource.data
-                .filter((account: SocialAccount) => account.notes.indexOf(this.filterForm.value.notes) !== -1);
-            this.dataSource = new MatTableDataSource(result);
-        }
-    }
-
-    private filterByUnused(): void {
-        if (this.filterForm.value.unused) {
-            const result = this.dataSource.data
-                .filter((account: SocialAccount) => !account.vdsId);
-            this.dataSource = new MatTableDataSource(result);
-        }
-    }
-
-    private filterByRegDate(): void {
-        if (!!this.filterForm.value.dateFrom && !!this.filterForm.value.dateTo) {
-            const from = moment(this.filterForm.value.dateFrom, 'MM-DD-YYYY');
-            const to = moment(this.filterForm.value.dateTo, 'MM-DD-YYYY');
-            const result = this.dataSource.data.filter((account: SocialAccount) => {
-                return moment(account.regDate, 'YYYY-MM-DD').isBetween(from, to, 'days' ,'[]');
-            });
-            this.dataSource = new MatTableDataSource(result);
-        }
+    copyToClipboard(id: number) {
+        this.clipboardService.copyToClipboard(id + '');
     }
 }
