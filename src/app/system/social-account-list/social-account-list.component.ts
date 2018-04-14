@@ -176,6 +176,11 @@ export class SocialAccountListComponent implements OnInit {
         });
     }
 
+    /**
+     * Deleting Social account from database.
+     * 
+     * @param {number} id of SocialAccount for deleting.
+     */
     private deleteSocialAccount(id: number): void {
         this.socialService.deleteSocialAccount(id)
             .subscribe(data => {
