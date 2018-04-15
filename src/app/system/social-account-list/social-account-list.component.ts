@@ -5,9 +5,9 @@ import { SocialAccount } from '../shared/model/socilal-account.model';
 import { SocialService } from '../shared/services/social.service';
 import { ClipboardService } from '../shared/services/clipboard.service';
 import * as moment from 'moment';
-import { DialogConfirmationComponent } from '../shared/components/dialog-confirmation/dialog-confirmation.component';
-import { DialogSocialAcc } from '../shared/components/dialog-social-acc/dialog-social-acc.component';
+import { DialogConfirmationComponent } from '../shared/dialog/dialog-confirmation/dialog-confirmation.component';
 import { Filters } from '../shared/filters/filters';
+import { DialogSocialAcc } from '../shared/dialog/dialog-social-acc/dialog-social-acc.component';
 
 @Component({
     selector: 'am-social-account-list', 

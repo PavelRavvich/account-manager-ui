@@ -25,8 +25,8 @@ import {Vds} from '../shared/model/vds.model';
 import {VdsService} from '../shared/services/vds.service';
 import { ClipboardService } from '../shared/services/clipboard.service';
 import { DialogAddVdsComponent } from './dialog-add-vds/dialog-add-vds.component';
-import { DialogConfirmationComponent } from '../shared/components/dialog-confirmation/dialog-confirmation.component';
 import { Filters } from '../shared/filters/filters';
+import { DialogConfirmationComponent } from '../shared/dialog/dialog-confirmation/dialog-confirmation.component';
 
 @Component({
 		selector: 'am-vds-list', 

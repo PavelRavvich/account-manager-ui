@@ -19,9 +19,7 @@ import {
     MatTableDataSource,
     MatSnackBar 
 } from '@angular/material';
-import { DialogConfirmationComponent } from '../../shared/components/dialog-confirmation/dialog-confirmation.component';
 import { DialogAddVdsComponent } from '../dialog-add-vds/dialog-add-vds.component';
-import { DialogSocialAcc } from '../../shared/components/dialog-social-acc/dialog-social-acc.component';
 import * as moment from 'moment';
 
 import { ClipboardService } from '../../shared/services/clipboard.service';
@@ -29,6 +27,8 @@ import { SocialAccount } from '../../shared/model/socilal-account.model';
 import { SocialService } from '../../shared/services/social.service';
 import { VdsService } from '../../shared/services/vds.service';
 import { Vds } from '../../shared/model/vds.model';
+import { DialogConfirmationComponent } from '../../shared/dialog/dialog-confirmation/dialog-confirmation.component';
+import { DialogSocialAcc } from '../../shared/dialog/dialog-social-acc/dialog-social-acc.component';
 
 @Component({
     selector: 'am-vds-card', 
