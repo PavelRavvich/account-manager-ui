@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild, OnDestroy} from '@angular/core';
 import {FormGroup, FormControl} from '@angular/forms';
 import { MatTableDataSource, MatPaginator, MatSnackBar, MatDialog, MatSnackBarConfig } from '@angular/material';
 import { SocialAccount } from '../shared/model/socilal-account.model';
@@ -8,13 +8,17 @@ import * as moment from 'moment';
 import { DialogConfirmationComponent } from '../shared/dialog/dialog-confirmation/dialog-confirmation.component';
 import { Filters } from '../shared/filters/filters';
 import { DialogSocialAcc } from '../shared/dialog/dialog-social-acc/dialog-social-acc.component';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
     selector: 'am-social-account-list', 
     templateUrl: './social-account-list.component.html', 
     styleUrls: ['./social-account-list.component.css']
 })
-export class SocialAccountListComponent implements OnInit {
+export class SocialAccountListComponent implements OnInit, OnDestroy {
+    
+    subscribtions: Subscription[] = [];
+
     displayedColumns = [
         'id',
         'socialType',
@@ -132,12 +136,13 @@ export class SocialAccountListComponent implements OnInit {
      */
     openEditDialogSocialAccount(account: SocialAccount) {
         const oldVersion = JSON.parse(JSON.stringify(account));
-        this.dialog.open(DialogSocialAcc, { width: '33%', data: account })
+        const sub = this.dialog.open(DialogSocialAcc, { width: '33%', data: account })
             .afterClosed().subscribe((result: SocialAccount) => {
-                if (JSON.stringify(oldVersion) !== JSON.stringify(result)) {
+                if (!!result && JSON.stringify(oldVersion) !== JSON.stringify(result)) {
                     this.editAccount(result);
                 }
             });
+            this.subscribtions.push(sub);
     }
 
     /**
@@ -146,7 +151,7 @@ export class SocialAccountListComponent implements OnInit {
      * @param account starting state of acc for edition.
      */
     private editAccount(account: SocialAccount): void {
-        this.socialService.updateSocialAccount(account)
+        const sub = this.socialService.updateSocialAccount(account)
             .subscribe((dbVersion: SocialAccount) => {
                 const tmp = this.dataSource.data;
                 const target = tmp.find(localVersion => dbVersion.id === localVersion.id);
@@ -154,6 +159,7 @@ export class SocialAccountListComponent implements OnInit {
                 tmp[index] = dbVersion;
                 this.dataSource = new MatTableDataSource(tmp);
             }, error => alert(error));
+            this.subscribtions.push(sub);
     }
 
     /**
@@ -163,7 +169,7 @@ export class SocialAccountListComponent implements OnInit {
      * @param id of deleting Social Account.
      */
     openDialogDeleteSocialAccount(id: number): void {
-        this.dialog.open(DialogConfirmationComponent, {
+        const sub = this.dialog.open(DialogConfirmationComponent, {
             width: '300px',
             data: {
                 massage: `Social Account with ID: ${id} will be permanently deleted!`
@@ -174,6 +180,7 @@ export class SocialAccountListComponent implements OnInit {
                     this.deleteSocialAccount(id);
                 }
         });
+        this.subscribtions.push(sub);
     }
 
     /**
@@ -182,7 +189,7 @@ export class SocialAccountListComponent implements OnInit {
      * @param {number} id of SocialAccount for deleting.
      */
     private deleteSocialAccount(id: number): void {
-        this.socialService.deleteSocialAccount(id)
+        const sub = this.socialService.deleteSocialAccount(id)
             .subscribe(data => {
                 const snacConf = new MatSnackBarConfig();
                 snacConf.duration = 10000;
@@ -191,16 +198,31 @@ export class SocialAccountListComponent implements OnInit {
                     ._open();
                 this.getSocialAccounts();
             });
+            this.subscribtions.push(sub);
     }
 
     private getSocialAccounts() {
-        this.socialService.getSocialAccounts().subscribe((accounts: SocialAccount[]) => {
+        const sub = this.socialService.getSocialAccounts().subscribe((accounts: SocialAccount[]) => {
             this.dataSource = new MatTableDataSource(accounts);
             this.dataIsLoaded = true;
         });
+        this.subscribtions.push(sub);
     }
 
     copyToClipboard(id: number) {
         this.clipboardService.copyToClipboard(id + '');
+    }
+
+    /**
+     * Ubsubscribing for optimization.
+     */
+    ngOnDestroy(): void {
+        if (!!this.subscribtions) {
+            this.subscribtions.forEach(sub => {
+                if (!!sub) {
+                    sub.unsubscribe();
+                }
+            });
+        }
     }
 }

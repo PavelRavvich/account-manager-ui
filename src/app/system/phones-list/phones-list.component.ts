@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, OnDestroy } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatDialog, MatDialogRef, MatSnackBarConfig, MatSnackBar } from '@angular/material';
 import { FormGroup, FormControl } from '@angular/forms';
 import * as moment from 'moment';
@@ -8,13 +8,15 @@ import { PhoneService } from '../shared/services/phone.service';
 import { DialogPhoneComponent } from './dialog-phone/dialog-phone.component';
 import { Filters } from '../shared/filters/filters';
 import { DialogConfirmationComponent } from '../shared/dialog/dialog-confirmation/dialog-confirmation.component';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
     selector: 'am-phones-list',
     templateUrl: './phones-list.component.html',
     styleUrls: ['./phones-list.component.css']
 })
-export class PhonesListComponent implements OnInit {
+export class PhonesListComponent implements OnInit, OnDestroy {
+    subscribtions: Subscription[] = [];
     /**
      * Phones data.
      */
@@ -80,13 +82,14 @@ export class PhonesListComponent implements OnInit {
      * Handle addition Phone event.
      */
     openDialogAddPhone(): void {
-        this.dialog.open(DialogPhoneComponent, { width: '33%', data: { isActive: 'Active', regDate: new Date() } })
+        const sub = this.dialog.open(DialogPhoneComponent, { width: '33%', data: { isActive: 'Active', regDate: new Date() } })
             .afterClosed()
             .subscribe((formData: Phone) => {
                 if (!!formData) {
                     this.phoneService.addPhone(formData).subscribe((result: Phone) => this.getPhoneList());
                 }
             });
+            this.subscribtions.push(sub);
     }
 
     /**
@@ -96,12 +99,13 @@ export class PhonesListComponent implements OnInit {
      */
     openDialogEditPhone(phone: Phone) {
         const oldVersion = JSON.parse(JSON.stringify(phone));
-        this.dialog.open(DialogPhoneComponent, { width: '33%', data: phone })
+        const sub = this.dialog.open(DialogPhoneComponent, { width: '33%', data: phone })
             .afterClosed().subscribe((updated: Phone) => {
-                if (JSON.stringify(oldVersion) !== JSON.stringify(updated)) {
+                if (!!updated && JSON.stringify(oldVersion) !== JSON.stringify(updated)) {
                     this.editPhone(updated);
                 }
         }); 
+        this.subscribtions.push(sub);
     }
     
     /**
@@ -110,7 +114,7 @@ export class PhonesListComponent implements OnInit {
      * @param phone starting state of Phone for edition.
      */
     private editPhone(phone: Phone): void {
-        this.phoneService.updatePhone(phone)
+        const sub = this.phoneService.updatePhone(phone)
             .subscribe((dbVersion: Phone) => {
                 const tmp = this.phones.data;
                 const target = tmp.find(localVersion => dbVersion.id === localVersion.id);
@@ -118,6 +122,7 @@ export class PhonesListComponent implements OnInit {
                 tmp[index] = dbVersion;
                 this.phones = new MatTableDataSource(tmp);
             }, error => alert(error));
+            this.subscribtions.push(sub);
     }
 
     /**
@@ -127,20 +132,21 @@ export class PhonesListComponent implements OnInit {
      * @param id of deleting Phone.
      */
     openDialogDeletePhone(id: number): void {
-        this.dialog.open(DialogConfirmationComponent, {
+        const sub = this.dialog.open(DialogConfirmationComponent, {
             width: '300px', data: { massage: `Phone number with ID: ${id} will be permanently deleted!` }
         }).afterClosed().subscribe(confirmed => {
             if (!!confirmed) {
                 this.deletePhone(id);
             }
         });
+        this.subscribtions.push(sub);
     }
 
     /**
      * Delete Phone from DB.
      */
     private deletePhone(id: number): void {
-        this.phoneService.deletePhone(id)
+        const sub = this.phoneService.deletePhone(id)
             .subscribe(data => {
                 const snacConf = new MatSnackBarConfig();
                 snacConf.duration = 10000;
@@ -149,6 +155,7 @@ export class PhonesListComponent implements OnInit {
                     ._open();
                     this.getPhoneList();
             });
+            this.subscribtions.push(sub);
     }
 
     private updateFilterInstance() : void {
@@ -165,10 +172,21 @@ export class PhonesListComponent implements OnInit {
     }
 
     private getPhoneList() {
-        this.phoneService.getPhoneList()
+        const sub = this.phoneService.getPhoneList()
             .subscribe((phones: Phone[]) => {
                 this.phones = new MatTableDataSource<Phone>(phones.reverse());
                 this.phonesIsLoaded = true;
             });
+            this.subscribtions.push(sub);
+    }
+
+    ngOnDestroy() {
+        if (!!this.subscribtions) {
+            this.subscribtions.forEach(sub => {
+                if (!!sub) {
+                    sub.unsubscribe();
+                }
+            })
+        }
     }
 }

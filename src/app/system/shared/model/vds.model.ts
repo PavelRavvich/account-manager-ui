@@ -5,6 +5,5 @@ export class Vds {
               public activatedDate: string,
               public deactivatedDate: string,
               public id?: number) {
-
   }
 }

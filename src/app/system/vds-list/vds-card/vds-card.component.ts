@@ -36,17 +36,16 @@ import { DialogSocialAcc } from '../../shared/dialog/dialog-social-acc/dialog-so
     styleUrls: ['./vds-card.component.css']
 })
 export class VdsCardComponent implements OnInit, OnDestroy {
+    subscriptions: Subscription[] = [];
     /**
      * Base info about current VDS.
      */
     vds: Vds;
     vdsDataIsLoaded = false;
-    private subscriptionVdsData: Subscription;
 
     /**
      * All social account attached to current VDS.
      */
-    private subscriptionSocialData: Subscription;
     displayedColumns = [
         'id', 
         'socialType', 
@@ -91,7 +90,7 @@ export class VdsCardComponent implements OnInit, OnDestroy {
      * Handle addition SocialAccount event.
      */
     addSocialAccount(): void {
-        this.dialog
+        const subOpenDialog = this.dialog
             .open(
                 DialogSocialAcc, { 
                     width: '33%', 
@@ -105,17 +104,19 @@ export class VdsCardComponent implements OnInit, OnDestroy {
             .subscribe((formData: SocialAccount) => {
                 if (!!formData) {
                     formData.vdsId = this.vds.id;
-                    this.socialService.addSocialAccount(formData)
+                    const subCloseDialog =  this.socialService.addSocialAccount(formData)
                         .subscribe((result: SocialAccount) => this.loadSocialAccounts());
+                    this.subscriptions.push(subCloseDialog);
                 }
         });
+        this.subscriptions.push(subOpenDialog);
     }
 
     /**
      * Edit current VDS.
      */
     openEditVdsDialog(): void {
-        this.dialog.open(DialogAddVdsComponent, {
+        const subOpenDialog = this.dialog.open(DialogAddVdsComponent, {
             width: '33%',
             data: {
                 ip: this.vds.ip,
@@ -127,17 +128,19 @@ export class VdsCardComponent implements OnInit, OnDestroy {
             }
         }).afterClosed().subscribe((formData: Vds) => {
             if (!!formData) {
-                this.vdsSrrvice.updateVds(formData)
+                const subCloseDialog = this.vdsSrrvice.updateVds(formData)
                     .subscribe((vds: Vds) => this.vds = vds);
+                this.subscriptions.push(subCloseDialog);
             }        
         });
+        this.subscriptions.push(subOpenDialog);
     }
 
     /**
      * Delete current VDS from DB.
      */
     openDialogDeleteVds(): void {
-        this.dialog.open(DialogConfirmationComponent, {
+        const subOpenDialog = this.dialog.open(DialogConfirmationComponent, {
             width: '300px',
             data: {
                 massage: `This VDS with IP: ${this.vds.ip} will be permanently deleted!`
@@ -145,11 +148,13 @@ export class VdsCardComponent implements OnInit, OnDestroy {
         }).afterClosed()
             .subscribe(confirmed => {
                 if (!!confirmed) {
-                    this.vdsSrrvice.deleteVds(this.vds.id).subscribe((data => {
+                    const subCloseDialog = this.vdsSrrvice.deleteVds(this.vds.id).subscribe((data => {
                         this.router.navigate(['vds-list']);
                     }));
+                    this.subscriptions.push(subCloseDialog);
                 }
         });
+        this.subscriptions.push(subOpenDialog);
     }
 
     /**
@@ -158,7 +163,7 @@ export class VdsCardComponent implements OnInit, OnDestroy {
      * @param account starting state of acc for edition.
      */
     editSocialAccount(account: SocialAccount): void {
-        this.dialog.open(
+        const subOpenDialog = this.dialog.open(
             DialogSocialAcc, { 
                 width: '33%', 
                 data: { 
@@ -178,6 +183,7 @@ export class VdsCardComponent implements OnInit, OnDestroy {
                     this.editAccount(result);
                 }
             });
+        this.subscriptions.push(subOpenDialog);
     }
 
     /**
@@ -186,7 +192,7 @@ export class VdsCardComponent implements OnInit, OnDestroy {
      * @param account starting state of acc for edition.
      */
     private editAccount(account: SocialAccount): void {
-        this.socialService.updateSocialAccount(account)
+        const subOpenDialog = this.socialService.updateSocialAccount(account)
             .subscribe((dbVersion: SocialAccount) => {
                 const tmp = this.dataSource.data;
                 const target = tmp.find(localVersion => dbVersion.id === localVersion.id);
@@ -194,21 +200,25 @@ export class VdsCardComponent implements OnInit, OnDestroy {
                 tmp[index] = dbVersion;
                 this.dataSource = new MatTableDataSource(tmp);
             }, error => alert(error));
+            this.subscriptions.push(subOpenDialog);
     }
 
     /**
      * Loading basic data about VDS form bacend and filling corresponding field `this.vds`.
      */
     private loadVds(): void {
-        this.subscriptionVdsData = this.rote.params
+        let subSocial;
+        const subVds = this.rote.params
             .subscribe((params: Params) =>  {
-                return this.vdsSrrvice
+                return subSocial = this.vdsSrrvice
                     .getVdsById(params['id'])
                     .subscribe((vds: Vds) => {
                         this.vds = vds;
                         this.vdsDataIsLoaded = true;
                     });
             });
+            this.subscriptions.push(subSocial);
+            this.subscriptions.push(subVds);
     }
 
     /**
@@ -216,15 +226,18 @@ export class VdsCardComponent implements OnInit, OnDestroy {
      */
     private loadSocialAccounts(): void {
         this.socialAccountsIsLoaded = false;
-        this.subscriptionSocialData = this.rote.params
+        let subSocial;
+        const subRote = this.rote.params
             .subscribe((params: Params) =>  {
-                return this.socialService
+                return subSocial = this.socialService
                     .getSocialAccountsById(params['id'])
                     .subscribe((acc: SocialAccount[]) => {
                         this.dataSource = new MatTableDataSource(acc.reverse());
                         this.socialAccountsIsLoaded = true;
                     });
             });
+            this.subscriptions.push(subRote);
+            this.subscriptions.push(subSocial);
     }
 
     /**
@@ -250,7 +263,7 @@ export class VdsCardComponent implements OnInit, OnDestroy {
      * @param id of deleting Social Account.
      */
     openDialogDeleteSocialAccount(id: number): void {
-        this.dialog.open(DialogConfirmationComponent, {
+        const subDialog = this.dialog.open(DialogConfirmationComponent, {
             width: '300px',
             data: {
                 massage: `Social Account with ID: ${id} will be permanently deleted!`
@@ -261,10 +274,11 @@ export class VdsCardComponent implements OnInit, OnDestroy {
                     this.deleteSocialAccount(id);
                 }
         });
+        this.subscriptions.push(subDialog);
     }
 
     private deleteSocialAccount(id: number): void {
-        this.socialService.deleteSocialAccount(id)
+        const subSocial = this.socialService.deleteSocialAccount(id)
             .subscribe(data => {
                 const snacConf = new MatSnackBarConfig();
                 snacConf.duration = 10000;
@@ -273,14 +287,16 @@ export class VdsCardComponent implements OnInit, OnDestroy {
                     ._open();
                 this.loadSocialAccounts();
             });
+            this.subscriptions.push(subSocial);
     }
 
     ngOnDestroy() {
-        if (this.subscriptionVdsData) {
-            this.subscriptionVdsData.unsubscribe();
-        }
-        if (this.subscriptionSocialData) {
-            this.subscriptionSocialData.unsubscribe();
+        if (this.subscriptions.length !== 0) {
+            this.subscriptions.forEach(sub => {
+                if (!!sub) {
+                    sub.unsubscribe();
+                }
+            });
         }
     }
 }

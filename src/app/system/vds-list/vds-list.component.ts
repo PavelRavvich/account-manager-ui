@@ -1,7 +1,8 @@
 import {
     Component, 
     OnInit, 
-    ViewChild
+    ViewChild,
+    OnDestroy
 } from '@angular/core';
 
 import {
@@ -21,19 +22,21 @@ import {
 import * as moment from 'moment';
 import { Router } from '@angular/router';
 
-import {Vds} from '../shared/model/vds.model';
-import {VdsService} from '../shared/services/vds.service';
+import { Vds } from '../shared/model/vds.model';
+import { VdsService } from '../shared/services/vds.service';
 import { ClipboardService } from '../shared/services/clipboard.service';
 import { DialogAddVdsComponent } from './dialog-add-vds/dialog-add-vds.component';
 import { Filters } from '../shared/filters/filters';
 import { DialogConfirmationComponent } from '../shared/dialog/dialog-confirmation/dialog-confirmation.component';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
 		selector: 'am-vds-list', 
 		templateUrl: './vds-list.component.html', 
 		styleUrls: ['./vds-list.component.css']
 })
-export class VdsListComponent implements OnInit {
+export class VdsListComponent implements OnInit, OnDestroy {
+    subscribtions: Subscription[] = [];
     /**
      * Columns for display in data table.
      */
@@ -161,7 +164,7 @@ export class VdsListComponent implements OnInit {
      * @param id of deleting VDS.
      */
     openDialogDeleteVds(id: number): void {
-        this.dialog.open(DialogConfirmationComponent, {
+        const sub = this.dialog.open(DialogConfirmationComponent, {
             width: '300px',
             data: {
                 massage: `VDS with ID: ${id} will be permanently deleted!`
@@ -172,6 +175,7 @@ export class VdsListComponent implements OnInit {
                     this.deleteVds(id);
                 }
         });
+        this.subscribtions.push(sub);
     }
 
     /**
@@ -180,7 +184,7 @@ export class VdsListComponent implements OnInit {
      * @param {number} id if VDS for delete.
      */
     private deleteVds(id: number): void {
-        this.vdsService.deleteVds(id)
+        const sub =  this.vdsService.deleteVds(id)
             .subscribe(data => {
                 const snacConf = new MatSnackBarConfig();
                 snacConf.duration = 10000;
@@ -189,13 +193,14 @@ export class VdsListComponent implements OnInit {
                     ._open();
                 this.getVdsList();
             });
+            this.subscribtions.push(sub);
     }
 
     /**
      * Handle addition VDS event.
      */
     addVds(): void {
-        this.openAddDialog().afterClosed()
+        const sub =  this.openAddDialog().afterClosed()
             .subscribe((formData: Vds) => {
                 if (!!formData) {
                     const vds = new Vds(
@@ -205,10 +210,12 @@ export class VdsListComponent implements OnInit {
                         formData.activatedDate,
                         formData.deactivatedDate
                     );
-                    this.vdsService.addVds(vds)
+                    const sub1 = this.vdsService.addVds(vds)
                         .subscribe((result: Vds) => this.getVdsList());
+                        this.subscribtions.push(sub1);
             }
         });
+        this.subscribtions.push(sub);
     }
     
     /**
@@ -231,10 +238,24 @@ export class VdsListComponent implements OnInit {
      * Pull VDS list from server.
      */
     private getVdsList() : void {
-        this.vdsService.getVdsList()
-            .subscribe((vds : Vds[]) => {
-                this.dataSource = new MatTableDataSource(vds);
+        const sub = this.vdsService.getVdsList()
+            .subscribe((data: Vds[]) => {
+                this.dataSource = new MatTableDataSource(data);
                 this.dataIsLoaded = true;
             });
+            this.subscribtions.push(sub);
+    }
+
+    /**
+     * Ubsubscribing for optimization.
+     */
+    ngOnDestroy(): void {
+        if (!!this.subscribtions) {
+            this.subscribtions.forEach(sub => {
+                if (!!sub) {
+                    sub.unsubscribe();
+                }
+            });
+        }
     }
 }
