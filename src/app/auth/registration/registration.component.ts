@@ -36,7 +36,7 @@ export class RegistrationComponent implements OnInit {
             return;
         }
         this.userService
-            .getUserByEmail(this.form.value.email)
+            .regisyration(this.form.value.email, this.form.value.password)
             .subscribe((user : User) => {
                 this.emailIsUnique = user === undefined;
             });

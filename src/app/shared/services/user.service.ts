@@ -13,9 +13,11 @@ export class UserService extends CoreApi {
     super(http);
   }
 
-  getUserByEmail(email: string): Observable<User> {
-    return this.get(`users?email=${email}`).map((data: User[]) => {
-      return data.length > 0 ? data[0] : undefined;
-    });
+  login(username: string, password: string): Observable<any> {
+    return this.post(`user/login?username=${username}&password=${password}`);
+  }
+
+  regisyration(username: string, password: string): Observable<User> {
+    return this.post(`user/registration?username=${username}&password=${password}`).map((user: User) => user);
   }
 }

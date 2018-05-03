@@ -40,9 +40,9 @@ export class LoginComponent implements OnInit {
     onSubmit() {
         const formData = this.form.value;
         this.userService
-            .getUserByEmail(formData.email)
-            .subscribe((user : User) => {
-                if (user !== undefined && user.password === formData.password) {
+            .login(formData.email, formData.password)
+            .subscribe((user) => {
+                if (!!user) {
                     this.authService.login(this.form.value);
                 } else {
                     this.userNotFound = true;
