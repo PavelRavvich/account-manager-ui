@@ -14,7 +14,7 @@ export class VdsService extends CoreApi {
     }
 
     getVdsList() : Observable < Vds[] > {
-        return this.get(`vds-list`).map((data : Vds[]) => data);
+        return this.get(`vds/list?pageNumber=0&pageSize=15`).map((data : Vds[]) => data);
     }
 
     getVdsById(id: string): Observable < Vds > {

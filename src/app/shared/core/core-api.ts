@@ -10,11 +10,11 @@ export class CoreApi {
   }
   
   public get(url: string = ''): Observable<any> {
-    return this.http.get(this.getUrl(url));
+    return this.http.get(this.getUrl(url), { withCredentials: true });
   }
 
   public post(url: string, data: any = {}): Observable < any > {
-    return this.http.post(this.getUrl(url), data);
+    return this.http.post(this.getUrl(url), data, { withCredentials: true });
   }
 
   public put(url: string, data: any = {}): Observable < any > {
