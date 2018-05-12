@@ -29,6 +29,8 @@ import { DialogAddVdsComponent } from './dialog-add-vds/dialog-add-vds.component
 import { Filters } from '../shared/filters/filters';
 import { DialogConfirmationComponent } from '../shared/dialog/dialog-confirmation/dialog-confirmation.component';
 import { Subscription } from 'rxjs/Subscription';
+import { VdsList } from '../shared/model/vds-list.model';
+import { VdsFilter } from '../shared/model/vds-filter.model';
 
 @Component({
 		selector: 'am-vds-list', 
@@ -237,10 +239,11 @@ export class VdsListComponent implements OnInit, OnDestroy {
     /**
      * Pull VDS list from server.
      */
-    private getVdsList() : void {
-        const sub = this.vdsService.getVdsList()
-            .subscribe((data: Vds[]) => {
-                this.dataSource = new MatTableDataSource(data);
+    private getVdsList(filter: VdsFilter = new VdsFilter()) : void {
+        const sub = this.vdsService.getVdsList(filter)
+            .subscribe((list: VdsList) => {
+                const vds :Vds[] = list.data;
+                this.dataSource = new MatTableDataSource(vds);
                 this.dataIsLoaded = true;
             });
             this.subscribtions.push(sub);
